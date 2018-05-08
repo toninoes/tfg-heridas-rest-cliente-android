@@ -77,9 +77,11 @@ public class ProcesoAdapter extends RecyclerView.Adapter<ProcesoAdapter.ViewHold
     @Override
     public int getItemCount() {
         // si es despues de filtrar aqui hay que hacer cosas diferentes,
-        // calculando el tamaño de los objetos tras el filtro
+        // calculando el tamaño de los objetos tras el filtroo
         return mDataSet.size();
     }
+
+
 
 
 }
