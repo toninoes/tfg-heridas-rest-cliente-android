@@ -13,7 +13,27 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorNaranja"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:id="@+id/tv_listado_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Listado"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/rv_listado"
+            app:layout_constraintLeft_toLeftOf="@+id/rv_listado"
+            app:layout_constraintRight_toRightOf="@+id/rv_listado"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_listado"
@@ -35,12 +55,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            app:backgroundTint="@color/colorNaranja"
-            app:srcCompat="@android:drawable/ic_menu_add"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBottom_creator="1"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="@+id/rv_listado"
-            app:layout_constraintRight_toRightOf="@+id/rv_listado" />
+            app:layout_constraintRight_toRightOf="@+id/rv_listado"
+            app:srcCompat="@drawable/fab_add"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintRight_creator="1" />
 
     </android.support.constraint.ConstraintLayout>
 

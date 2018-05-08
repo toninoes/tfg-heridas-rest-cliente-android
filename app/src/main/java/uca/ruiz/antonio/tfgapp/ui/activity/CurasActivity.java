@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.model.Cura;
+import uca.ruiz.antonio.tfgapp.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CuraAdapter;
 
 public class CurasActivity extends AppCompatActivity implements Callback<ArrayList<Cura>> {
@@ -29,8 +31,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_curas);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +41,9 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
                         .setAction("Action", null).show();
             }
         });
+
+        TextView mTextView = (TextView) findViewById(R.id.tv_listado_titulo);
+        mTextView.setText(R.string.curas);
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rv_listado);
         mRecyclerView.setHasFixedSize(true); //la altura de los elmtos es la misma
@@ -52,9 +56,10 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         mAdapter = new CuraAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        Long proceso_id = getIntent().getExtras().getLong("proceso_id");
-        Call<ArrayList<Cura>> call = MyApiAdapter.getApiService().getCurasByProcesoId(proceso_id);
-        call.enqueue(this);
+        //Long proceso_id = getIntent().getExtras().getLong("proceso_id");
+        Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
+        Call<ArrayList<Cura>> curasByProcesoId = MyApiAdapter.getApiService().getCurasByProcesoId(proceso.getId());
+        curasByProcesoId.enqueue(this);
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

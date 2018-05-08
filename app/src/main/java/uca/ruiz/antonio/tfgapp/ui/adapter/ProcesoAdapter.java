@@ -2,6 +2,7 @@ package uca.ruiz.antonio.tfgapp.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +68,7 @@ public class ProcesoAdapter extends RecyclerView.Adapter<ProcesoAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, CurasActivity.class);
-                intent.putExtra("proceso_id", mDataSet.get(position).getId());
+                intent.putExtra("proceso", mDataSet.get(position));
                 context.startActivity(intent);
 
             }

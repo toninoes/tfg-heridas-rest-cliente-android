@@ -1,10 +1,11 @@
 package uca.ruiz.antonio.tfgapp.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 
-public class Proceso {
+public class Proceso implements Serializable {
     private long id;
     private String anamnesis;
     private String diagnostico;

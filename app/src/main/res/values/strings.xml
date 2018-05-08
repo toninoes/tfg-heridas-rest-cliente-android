@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">TfgApp</string>
-    <string name="title_activity_cur">Curas</string>
+
+    <string name="paciente">Paciente</string>
+    <string name="pacientes">Pacientes</string>
+
+    <string name="proceso">Proceso</string>
+    <string name="procesos">Procesos</string>
+
+    <string name="cura">Cura</string>
+    <string name="curas">Curas</string>
 </resources>

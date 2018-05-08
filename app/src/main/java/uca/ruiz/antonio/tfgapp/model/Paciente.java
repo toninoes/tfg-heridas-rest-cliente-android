@@ -1,8 +1,9 @@
 package uca.ruiz.antonio.tfgapp.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Paciente {
+public class Paciente implements Serializable {
     private long id;
     private String dni;
     private String nombre;

@@ -1,10 +1,11 @@
 package uca.ruiz.antonio.tfgapp.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 
-public class Cura {
+public class Cura implements Serializable {
     private long id;
     private String evolucion;
     private String tratamiento;
