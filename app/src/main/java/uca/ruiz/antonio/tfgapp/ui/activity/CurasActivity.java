@@ -32,7 +32,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,7 +41,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
             }
         });
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rv_cur);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rv_listado);
         mRecyclerView.setHasFixedSize(true); //la altura de los elmtos es la misma
 
         //El RecyclerView usará un LinearLayoutManager
@@ -56,7 +56,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         Call<ArrayList<Cura>> call = MyApiAdapter.getApiService().getCurasByProcesoId(proceso_id);
         call.enqueue(this);
 
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.rl_curas);
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
