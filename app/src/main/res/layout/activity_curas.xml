@@ -15,9 +15,48 @@
             android:id="@+id/ll_proceso"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
             android:layout_weight="2"
-            android:orientation="vertical">
+            android:background="@drawable/border"
+            android:orientation="vertical"
+            android:padding="5dp">
 
+            <TextView
+                android:id="@+id/tv_diagnostico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_fecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_anamnesis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_observaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:elevation="0dp"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
         <LinearLayout
