@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.model.Cura;
+import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
 public class CuraAdapter extends RecyclerView.Adapter<CuraAdapter.ViewHolder> {
 
@@ -53,7 +54,8 @@ public class CuraAdapter extends RecyclerView.Adapter<CuraAdapter.ViewHolder> {
         // obtenemos un elemento del dataset según su posición
         // reemplazamos el contenido de los views según tales datos
 
-        holder.textView.setText(mDataSet.get(position).getTratamiento());
+        //holder.textView.setText(mDataSet.get(position).getTratamiento());
+        holder.textView.setText(FechaHoraUtils.formatoFechaUI(mDataSet.get(position).getCreacion()));
 
     }
 

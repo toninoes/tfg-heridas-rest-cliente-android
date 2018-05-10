@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.activity.CurasActivity;
+import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
 
 public class ProcesoAdapter extends RecyclerView.Adapter<ProcesoAdapter.ViewHolder> {
@@ -60,8 +61,9 @@ public class ProcesoAdapter extends RecyclerView.Adapter<ProcesoAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // obtenemos un elemento del dataset según su posición
         // reemplazamos el contenido de los views según tales datos
-
-        holder.textView.setText(mDataSet.get(position).getDiagnostico());
+        Proceso p = mDataSet.get(position);
+        String cad = FechaHoraUtils.formatoFechaUI(p.getCreacion()) + " " + p.getDiagnostico();
+        holder.textView.setText(cad);
 
         // click sobre cada elemento de los procesos
         holder.textView.setOnClickListener(new View.OnClickListener() {

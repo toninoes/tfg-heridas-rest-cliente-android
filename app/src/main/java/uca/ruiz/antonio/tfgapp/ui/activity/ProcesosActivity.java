@@ -16,12 +16,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.model.Cura;
 import uca.ruiz.antonio.tfgapp.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.ProcesoAdapter;
 
@@ -79,8 +82,18 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
     public void onResponse(Call<ArrayList<Proceso>> call, Response<ArrayList<Proceso>> response) {
         if(response.isSuccessful()) {
             ArrayList<Proceso> procesos = response.body();
-            if(procesos != null)
+            if(procesos != null) {
                 Log.d("PROCESOS", "Tamaño ==> " + procesos.size());
+
+                // Ordenar los procesos según fecha en orden descendiente
+                // Prefiero hacerlo en cliente para descargar al servidor
+                Collections.sort(procesos, new Comparator<Proceso>() {
+                    @Override
+                    public int compare(Proceso p1, Proceso p2) {
+                        return p2.getCreacion().compareTo(p1.getCreacion());
+                    }
+                });
+            }
             mAdapter.setDataSet(procesos);
         }
     }

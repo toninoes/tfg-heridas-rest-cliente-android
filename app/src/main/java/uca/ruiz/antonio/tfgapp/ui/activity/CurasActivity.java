@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,8 +76,20 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
     public void onResponse(Call<ArrayList<Cura>> call, Response<ArrayList<Cura>> response) {
         if(response.isSuccessful()) {
             ArrayList<Cura> curas = response.body();
-            if(curas != null)
+
+            if(curas != null) {
                 Log.d("CURAS", "Tamaño ==> " + curas.size());
+
+                // Ordenar las curas según fecha en orden descendiente
+                // Prefiero hacerlo en cliente para descargar al servidor
+                Collections.sort(curas, new Comparator<Cura>() {
+                    @Override
+                    public int compare(Cura cura1, Cura cura2) {
+                        return cura2.getCreacion().compareTo(cura1.getCreacion());
+                    }
+                });
+            }
+
             mAdapter.setDataSet(curas);
         }
     }
