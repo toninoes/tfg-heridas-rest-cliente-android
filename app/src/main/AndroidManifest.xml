@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation"
@@ -33,6 +34,11 @@
             android:name=".ui.activity.ProcesosActivity"
             android:configChanges="orientation"
             android:label="@string/paciente"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.activity.AddProcesoActivity"
+            android:configChanges="orientation"
+            android:label="@string/addproceso"
             android:screenOrientation="portrait" />
     </application>
 

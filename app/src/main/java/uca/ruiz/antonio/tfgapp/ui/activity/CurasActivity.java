@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -19,24 +18,37 @@ import java.util.Comparator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import uca.ruiz.antonio.tfgapp.R;
-import uca.ruiz.antonio.tfgapp.io.MyApiAdapter;
-import uca.ruiz.antonio.tfgapp.model.Cura;
-import uca.ruiz.antonio.tfgapp.model.Proceso;
+import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
+import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CuraAdapter;
+import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
+
 
 public class CurasActivity extends AppCompatActivity implements Callback<ArrayList<Cura>> {
 
+    private FloatingActionButton fab_add_elemento;
+    private TextView tv_listado_titulo;
+    private RecyclerView rv_listado;
+    private LinearLayoutManager mLayoutManager;
     private CuraAdapter mAdapter;
+
+    private TextView tv_diagnostico;
+    private TextView tv_fecha;
+    private TextView tv_anamnesis;
+    private TextView tv_observaciones;
+
+    private SwipeRefreshLayout srl_listado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_curas);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab_add_elemento = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
+        fab_add_elemento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -44,27 +56,40 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
             }
         });
 
-        TextView mTextView = (TextView) findViewById(R.id.tv_listado_titulo);
-        mTextView.setText(R.string.curas);
+        tv_listado_titulo = (TextView) findViewById(R.id.tv_listado_titulo);
+        tv_listado_titulo.setText(R.string.curas);
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rv_listado);
-        mRecyclerView.setHasFixedSize(true); //la altura de los elmtos es la misma
+        rv_listado = (RecyclerView) findViewById(R.id.rv_listado);
+        rv_listado.setHasFixedSize(true); //la altura de los elmtos es la misma
 
         //El RecyclerView usará un LinearLayoutManager
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mLayoutManager = new LinearLayoutManager(this);
+        rv_listado.setLayoutManager(mLayoutManager);
 
         //Asociamos un adapter. Define cómo se renderizará la informacion que tenemos
         mAdapter = new CuraAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        rv_listado.setAdapter(mAdapter);
 
-        //Long proceso_id = getIntent().getExtras().getLong("proceso_id");
         Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
-        Call<ArrayList<Cura>> curasByProcesoId = MyApiAdapter.getApiService().getCurasByProcesoId(proceso.getId());
-        curasByProcesoId.enqueue(this);
+        Call<ArrayList<Cura>> curasByProcesoId;
 
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        tv_diagnostico = (TextView) findViewById(R.id.tv_diagnostico);
+        tv_fecha = (TextView) findViewById(R.id.tv_fecha);
+        tv_anamnesis = (TextView) findViewById(R.id.tv_anamnesis);
+        tv_observaciones = (TextView) findViewById(R.id.tv_observaciones);
+
+        if (proceso != null) {
+            tv_diagnostico.setText(proceso.getDiagnostico());
+            tv_fecha.setText(FechaHoraUtils.formatoFechaUI(proceso.getCreacion()));
+            tv_anamnesis.setText(proceso.getAnamnesis());
+            tv_observaciones.setText(proceso.getObservaciones());
+
+            curasByProcesoId = MyApiAdapter.getApiService().getCurasByProcesoId(proceso.getId());
+            curasByProcesoId.enqueue(this);
+        }
+
+        srl_listado = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
+        srl_listado.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 recreate();

@@ -1,4 +1,4 @@
-package uca.ruiz.antonio.tfgapp.model;
+package uca.ruiz.antonio.tfgapp.data.api.model;
 
 import java.io.Serializable;
 import java.util.Date;

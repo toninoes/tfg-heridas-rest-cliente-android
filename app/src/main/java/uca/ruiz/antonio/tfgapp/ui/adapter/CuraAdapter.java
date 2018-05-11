@@ -8,7 +8,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import uca.ruiz.antonio.tfgapp.R;
-import uca.ruiz.antonio.tfgapp.model.Cura;
+import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
 public class CuraAdapter extends RecyclerView.Adapter<CuraAdapter.ViewHolder> {

@@ -1,4 +1,4 @@
-package uca.ruiz.antonio.tfgapp.model;
+package uca.ruiz.antonio.tfgapp.data.api.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +13,15 @@ public class Proceso implements Serializable {
     private List<Cura> curas;
     private String observaciones;
     private Date creacion;
+    private Paciente paciente;
+
+    public Proceso(String anamnesis, String diagnostico, String tipo, String observaciones, Paciente paciente) {
+        this.anamnesis = anamnesis;
+        this.diagnostico = diagnostico;
+        this.tipo = tipo;
+        this.observaciones = observaciones;
+        this.paciente = paciente;
+    }
 
     public long getId() {
         return id;
@@ -68,5 +77,13 @@ public class Proceso implements Serializable {
 
     public void setCreacion(Date creacion) {
         this.creacion = creacion;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 }

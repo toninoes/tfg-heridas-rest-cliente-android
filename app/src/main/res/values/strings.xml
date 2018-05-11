@@ -6,7 +6,15 @@
 
     <string name="proceso">Proceso</string>
     <string name="procesos">Procesos</string>
+    <string name="addproceso">Nuevo Proceso</string>
+    <string name="anamnesis">Anamnesis</string>
+    <string name="diagnostico">Diagnóstico</string>
+    <string name="tipo">Tipo</string>
+    <string name="observaciones">Observaciones</string>
+    <string name="msg_proceso_guardado_ok">Proceso creado correctamente</string>
 
     <string name="cura">Cura</string>
     <string name="curas">Curas</string>
+
+    <string name="guardar">Guardar</string>
 </resources>

@@ -1,4 +1,4 @@
-package uca.ruiz.antonio.tfgapp.io;
+package uca.ruiz.antonio.tfgapp.data.api.io;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

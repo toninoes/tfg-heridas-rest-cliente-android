@@ -2,7 +2,6 @@ package uca.ruiz.antonio.tfgapp.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import uca.ruiz.antonio.tfgapp.R;
-import uca.ruiz.antonio.tfgapp.model.Proceso;
+import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.activity.CurasActivity;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
