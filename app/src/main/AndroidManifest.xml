@@ -36,7 +36,7 @@
             android:label="@string/paciente"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.AddProcesoActivity"
+        <activity android:name=".ui.activity.NuevoProcesoActivity"
             android:configChanges="orientation"
             android:label="@string/addproceso"
             android:screenOrientation="portrait" />

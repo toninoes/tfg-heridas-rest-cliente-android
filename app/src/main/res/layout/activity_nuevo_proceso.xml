@@ -7,7 +7,7 @@
     android:background="@color/colorNaranja"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.AddProcesoActivity">
+    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.NuevoProcesoActivity">
 
     <TextView
         android:id="@+id/tv_anamnesis"
@@ -24,6 +24,7 @@
         android:background="@android:color/background_light"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="255"
         android:minHeight="40dp"
         android:textColor="@color/colorPrimary" />
 
@@ -42,6 +43,7 @@
         android:background="@android:color/background_light"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="255"
         android:minHeight="40dp"
         android:textColor="@color/colorPrimary" />
 
@@ -60,6 +62,7 @@
         android:background="@android:color/background_light"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="255"
         android:minHeight="40dp"
         android:textColor="@color/colorPrimary" />
 
@@ -78,6 +81,7 @@
         android:background="@android:color/background_light"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="255"
         android:minHeight="40dp"
         android:textColor="@color/colorPrimary" />
 
@@ -87,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/bg_button"
         android:text="@string/guardar"
         android:textColor="@android:color/background_light" />
 

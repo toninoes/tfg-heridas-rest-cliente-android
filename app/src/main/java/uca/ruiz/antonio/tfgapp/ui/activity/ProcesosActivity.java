@@ -100,19 +100,14 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (REQUEST_ADD == requestCode && RESULT_OK == resultCode) {
-            showSuccesfullySavedMessage();
+            recreate();
         }
     }
 
     private void showAddProcesoActivity() {
-        Intent intent = new Intent(this, AddProcesoActivity.class);
+        Intent intent = new Intent(this, NuevoProcesoActivity.class);
         startActivityForResult(intent, REQUEST_ADD);
     }
 
-    private void showSuccesfullySavedMessage() {
-        Snackbar.make(fab_add_elemento, R.string.msg_proceso_guardado_ok,
-                Snackbar.LENGTH_LONG).show();
-        recreate();
-    }
 
 }

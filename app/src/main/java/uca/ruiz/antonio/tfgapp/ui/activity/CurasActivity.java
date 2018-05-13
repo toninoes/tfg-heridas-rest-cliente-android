@@ -1,5 +1,6 @@
 package uca.ruiz.antonio.tfgapp.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,10 +38,10 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
     private LinearLayoutManager mLayoutManager;
     private CuraAdapter mAdapter;
 
-    private TextView tv_diagnostico;
+    private TextView tv_diagnostico, tv_diagnostico_tit;
     private TextView tv_fecha;
-    private TextView tv_anamnesis;
-    private TextView tv_observaciones;
+    private TextView tv_anamnesis, tv_anamnesis_tit;
+    private TextView tv_observaciones, tv_observaciones_tit;
 
     private SwipeRefreshLayout srl_listado;
 
@@ -73,15 +76,21 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
         Call<ArrayList<Cura>> curasByProcesoId;
 
+        tv_diagnostico_tit = (TextView) findViewById(R.id.tv_diagnostico_tit);
         tv_diagnostico = (TextView) findViewById(R.id.tv_diagnostico);
         tv_fecha = (TextView) findViewById(R.id.tv_fecha);
         tv_anamnesis = (TextView) findViewById(R.id.tv_anamnesis);
+        tv_anamnesis_tit = (TextView) findViewById(R.id.tv_anamnesis_tit);
+        tv_observaciones_tit = (TextView) findViewById(R.id.tv_observaciones_tit);
         tv_observaciones = (TextView) findViewById(R.id.tv_observaciones);
 
         if (proceso != null) {
+            tv_diagnostico_tit.setText(getText(R.string.diagnostico));
             tv_diagnostico.setText(proceso.getDiagnostico());
             tv_fecha.setText(FechaHoraUtils.formatoFechaUI(proceso.getCreacion()));
+            tv_anamnesis_tit.setText(getText(R.string.anamnesis));
             tv_anamnesis.setText(proceso.getAnamnesis());
+            tv_observaciones_tit.setText(getText(R.string.observaciones));
             tv_observaciones.setText(proceso.getObservaciones());
 
             curasByProcesoId = MyApiAdapter.getApiService().getCurasByProcesoId(proceso.getId());
@@ -95,6 +104,27 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
                 recreate();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_proceso, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_editar_proceso:
+                //Intent intentComite = new Intent(MainActivity.this, ComiteActivity.class);
+                //startActivity(intentComite);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

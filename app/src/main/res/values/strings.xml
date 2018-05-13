@@ -17,4 +17,7 @@
     <string name="curas">Curas</string>
 
     <string name="guardar">Guardar</string>
+
+    <string name="errores">ERRORES</string>
+    <string name="editar">EDITAR</string>
 </resources>

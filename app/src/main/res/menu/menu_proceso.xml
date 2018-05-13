@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="es.uca.oftapp.MainActivity">
+
+    <item
+        android:id="@+id/action_editar_proceso"
+        android:orderInCategory="5"
+        android:title="@string/editar"
+        android:icon="@drawable/ic_action_edit"
+        app:showAsAction="always" />
+</menu>

@@ -1,7 +1,6 @@
 package uca.ruiz.antonio.tfgapp.ui.activity;
 
 import android.app.Activity;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,16 +24,16 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 
 
-public class AddProcesoActivity extends AppCompatActivity  {
+public class NuevoProcesoActivity extends AppCompatActivity  {
 
-    private static final String TAG = AddProcesoActivity.class.getSimpleName();
+    private static final String TAG = NuevoProcesoActivity.class.getSimpleName();
     private EditText et_anamnesis, et_diagnostico, et_tipo, et_observaciones;
     private Button btn_guardar_proceso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_proceso);
+        setContentView(R.layout.activity_nuevo_proceso);
 
         et_anamnesis = (EditText) findViewById(R.id.et_anamnesis);
         et_diagnostico = (EditText) findViewById(R.id.et_diagnostico);
@@ -67,23 +65,22 @@ public class AddProcesoActivity extends AppCompatActivity  {
                             Proceso res = response.body();
                             Log.d(TAG, res.getDiagnostico());
                             showProcesosUi();
-
                         } else {
-                            ArrayList<Error> error = null;
+                            ArrayList<Error> errores = null;
 
                             if (response.errorBody().contentType().subtype().equals("json")) {
                                 ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                                error = apiError.getErrors();
+                                errores = apiError.getErrors();
                                 Log.d(TAG, apiError.getPath());
-                            }/* else {
+                            } else {
                                 try {
                                     Log.d(TAG, response.errorBody().string());
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                            }*/
+                            }
 
-                            showApiErrores(error);
+                            showApiErrores(errores);
                         }
 
                     }
@@ -102,7 +99,7 @@ public class AddProcesoActivity extends AppCompatActivity  {
     }
 
     private void showApiErrores(ArrayList<Error> errores) {
-        String e = "ERRORES";
+        String e = getString(R.string.errores);
         for (Error error: errores) {
             e += "\n" + error.getDefaultMessage();
         }
@@ -110,13 +107,8 @@ public class AddProcesoActivity extends AppCompatActivity  {
     }
 
     private void showApiError(String error) {
-       // Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG).show();
-        Toast toast =
-                Toast.makeText(getApplicationContext(),
-                        error, Toast.LENGTH_LONG);
-
+        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER,0,0);
-
         toast.show();
     }
 }
