@@ -2,7 +2,6 @@ package uca.ruiz.antonio.tfgapp.ui.activity;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -105,7 +104,7 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
     }
 
     private void showAddProcesoActivity() {
-        Intent intent = new Intent(this, NuevoProcesoActivity.class);
+        Intent intent = new Intent(this, ProcesoNuevoEditarActivity.class);
         startActivityForResult(intent, REQUEST_ADD);
     }
 

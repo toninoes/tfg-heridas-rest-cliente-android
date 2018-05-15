@@ -1,6 +1,7 @@
 package uca.ruiz.antonio.tfgapp.ui.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,11 +25,12 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 
 
-public class NuevoProcesoActivity extends AppCompatActivity  {
+public class ProcesoNuevoEditarActivity extends AppCompatActivity  {
 
-    private static final String TAG = NuevoProcesoActivity.class.getSimpleName();
+    private static final String TAG = ProcesoNuevoEditarActivity.class.getSimpleName();
     private EditText et_anamnesis, et_diagnostico, et_tipo, et_observaciones;
     private Button btn_guardar_proceso;
+    private Proceso proceso = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +43,28 @@ public class NuevoProcesoActivity extends AppCompatActivity  {
         et_observaciones = (EditText) findViewById(R.id.et_observaciones);
 
         btn_guardar_proceso = (Button) findViewById(R.id.btn_guardar_proceso);
+
+        try {
+            proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
+        } catch (Exception e) {
+            proceso = null;
+        }
+
+        if(proceso != null) {// para editar un proceso existente
+            setTitle(R.string.editproceso);
+            et_anamnesis.setText(proceso.getAnamnesis());
+            et_diagnostico.setText(proceso.getDiagnostico());
+            et_tipo.setText(proceso.getTipo());
+            et_observaciones.setText(proceso.getObservaciones());
+        }
+
         btn_guardar_proceso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                crearProceso();
+                if(proceso == null)
+                    crearProceso();
+                else
+                    editarProceso(proceso);
             }
         });
     }
@@ -62,9 +82,9 @@ public class NuevoProcesoActivity extends AppCompatActivity  {
                     @Override
                     public void onResponse(Call<Proceso> call, Response<Proceso> response) {
                         if (response.isSuccessful()) {
-                            Proceso res = response.body();
-                            Log.d(TAG, res.getDiagnostico());
-                            showProcesosUi();
+                            Proceso proceso = response.body();
+                            Log.d(TAG, proceso.getDiagnostico());
+                            showAnteriorUi(proceso);
                         } else {
                             ArrayList<Error> errores = null;
 
@@ -93,8 +113,61 @@ public class NuevoProcesoActivity extends AppCompatActivity  {
         );
     }
 
-    private void showProcesosUi() {
-        setResult(Activity.RESULT_OK);
+    private void editarProceso(Proceso proceso) {
+        proceso.setAnamnesis(et_anamnesis.getText().toString());
+        proceso.setDiagnostico(et_diagnostico.getText().toString());
+        proceso.setObservaciones(et_observaciones.getText().toString());
+        proceso.setTipo(et_tipo.getText().toString());
+
+        proceso.getPaciente().setNacimiento(proceso.getPaciente().getNacimiento());
+
+        MyApiAdapter.getApiService().editarProceso(proceso.getId(), proceso).enqueue(
+                new Callback<Proceso>() {
+                    @Override
+                    public void onResponse(Call<Proceso> call, Response<Proceso> response) {
+                        if (response.isSuccessful()) {
+                            Proceso proceso = response.body();
+                            Log.d(TAG, proceso.getDiagnostico());
+                            volverProcesoTrasEditar(proceso);
+                        } else {
+                            ArrayList<Error> errores = null;
+
+                            if (response.errorBody().contentType().subtype().equals("json")) {
+                                ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                                errores = apiError.getErrors();
+                                Log.d(TAG, apiError.getPath());
+                            } else {
+                                try {
+                                    Log.d(TAG, response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            showApiErrores(errores);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Proceso> call, Throwable t) {
+                        showApiError(t.getMessage());
+                    }
+                }
+        );
+    }
+
+    private void volverProcesoTrasEditar(Proceso proceso) {
+        Intent intent = new Intent(this, CurasActivity.class);
+        intent.putExtra("proceso", proceso);
+        startActivity(intent);
+    }
+
+    private void showAnteriorUi(Proceso proceso) {
+        //setResult(Activity.RESULT_OK);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("proceso", proceso);
+        setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
 

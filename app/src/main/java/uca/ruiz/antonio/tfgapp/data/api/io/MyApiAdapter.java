@@ -1,5 +1,8 @@
 package uca.ruiz.antonio.tfgapp.data.api.io;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -23,9 +26,13 @@ public class MyApiAdapter {
 
         if (API_SERVICE == null) {  // Patrón Singleton
 
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+                    .create();
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(httpClient.build()) // <-- usamos el log level
                     .build();
             API_SERVICE = retrofit.create(MyApiService.class);

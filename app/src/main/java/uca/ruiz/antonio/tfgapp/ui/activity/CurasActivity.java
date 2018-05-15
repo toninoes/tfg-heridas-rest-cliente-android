@@ -29,6 +29,8 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CuraAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
+import static uca.ruiz.antonio.tfgapp.R.string.proceso;
+
 
 public class CurasActivity extends AppCompatActivity implements Callback<ArrayList<Cura>> {
 
@@ -49,6 +51,10 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_curas);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         fab_add_elemento = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
         fab_add_elemento.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +79,6 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         mAdapter = new CuraAdapter();
         rv_listado.setAdapter(mAdapter);
 
-        Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
-        Call<ArrayList<Cura>> curasByProcesoId;
-
         tv_diagnostico_tit = (TextView) findViewById(R.id.tv_diagnostico_tit);
         tv_diagnostico = (TextView) findViewById(R.id.tv_diagnostico);
         tv_fecha = (TextView) findViewById(R.id.tv_fecha);
@@ -84,6 +87,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         tv_observaciones_tit = (TextView) findViewById(R.id.tv_observaciones_tit);
         tv_observaciones = (TextView) findViewById(R.id.tv_observaciones);
 
+        Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
         if (proceso != null) {
             tv_diagnostico_tit.setText(getText(R.string.diagnostico));
             tv_diagnostico.setText(proceso.getDiagnostico());
@@ -93,7 +97,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
             tv_observaciones_tit.setText(getText(R.string.observaciones));
             tv_observaciones.setText(proceso.getObservaciones());
 
-            curasByProcesoId = MyApiAdapter.getApiService().getCurasByProcesoId(proceso.getId());
+            Call<ArrayList<Cura>> curasByProcesoId = MyApiAdapter.getApiService().getCurasByProcesoId(proceso.getId());
             curasByProcesoId.enqueue(this);
         }
 
@@ -118,9 +122,16 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         int id = item.getItemId();
 
         switch (id) {
+            case android.R.id.home:
+                Intent intentBack = new Intent(this, ProcesosActivity.class);
+                startActivity(intentBack);
+                this.finish();
+                return true;
             case R.id.action_editar_proceso:
-                //Intent intentComite = new Intent(MainActivity.this, ComiteActivity.class);
-                //startActivity(intentComite);
+                Intent intentEditar = new Intent(this, ProcesoNuevoEditarActivity.class);
+                Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
+                intentEditar.putExtra("proceso", proceso);
+                startActivity(intentEditar);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -153,5 +164,6 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
     public void onFailure(Call<ArrayList<Cura>> call, Throwable t) {
 
     }
+
 
 }

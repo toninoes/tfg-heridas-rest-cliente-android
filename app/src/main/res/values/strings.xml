@@ -7,6 +7,7 @@
     <string name="proceso">Proceso</string>
     <string name="procesos">Procesos</string>
     <string name="addproceso">Nuevo Proceso</string>
+    <string name="editproceso">Editar Proceso</string>
     <string name="anamnesis">Anamnesis</string>
     <string name="diagnostico">Diagnóstico</string>
     <string name="tipo">Tipo</string>

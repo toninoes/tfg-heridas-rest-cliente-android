@@ -7,7 +7,7 @@
     android:background="@color/colorNaranja"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.NuevoProcesoActivity">
+    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.ProcesoNuevoEditarActivity">
 
     <TextView
         android:id="@+id/tv_anamnesis"

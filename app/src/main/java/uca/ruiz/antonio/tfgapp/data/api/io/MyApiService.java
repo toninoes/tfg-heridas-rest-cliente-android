@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
@@ -22,6 +23,8 @@ public interface MyApiService {
     @GET("pacientes/{id}")
     Call<Paciente> getPacienteById(@Path("id") Long id);
 
+    /* PROCESOS */
+
     @GET("procesos")
     Call<ArrayList<Proceso>> getProcesos();
 
@@ -34,5 +37,9 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @POST("procesos")
     Call<Proceso> crearProceso(@Body Proceso p);
+
+    @Headers("Content-Type: application/json")
+    @PUT("procesos/{id}")
+    Call<Proceso> editarProceso(@Path("id") Long id, @Body Proceso p);
 
 }
