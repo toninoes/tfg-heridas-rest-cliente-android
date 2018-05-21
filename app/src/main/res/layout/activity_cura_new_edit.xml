@@ -7,18 +7,20 @@
     android:background="@color/colorNaranja"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.ProcesoNuevoEditarActivity">
+    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.CuraNuevaActivity">
 
     <TextView
-        android:id="@+id/tv_anamnesis"
+        android:id="@+id/tv_evolucion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="@string/anamnesis"
-        android:textColor="@color/colorPrimary" />
+        android:text="@string/evolucion"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/et_anamnesis"
+        android:id="@+id/et_evolucion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/background_light"
@@ -29,15 +31,17 @@
         android:textColor="@color/colorPrimary" />
 
     <TextView
-        android:id="@+id/tv_diagnostico"
+        android:id="@+id/tv_tratamiento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="@string/diagnostico"
-        android:textColor="@color/colorPrimary" />
+        android:text="@string/tratamiento"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/et_diagnostico"
+        android:id="@+id/et_tratamiento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/background_light"
@@ -48,15 +52,17 @@
         android:textColor="@color/colorPrimary" />
 
     <TextView
-        android:id="@+id/tv_tipo"
+        android:id="@+id/tv_recomendaciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="@string/tipo"
-        android:textColor="@color/colorPrimary" />
+        android:text="@string/recomendaciones"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/et_tipo"
+        android:id="@+id/et_recomendaciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/background_light"
@@ -66,33 +72,5 @@
         android:minHeight="40dp"
         android:textColor="@color/colorPrimary" />
 
-    <TextView
-        android:id="@+id/tv_observaciones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/observaciones"
-        android:textColor="@color/colorPrimary" />
-
-    <EditText
-        android:id="@+id/et_observaciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/background_light"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:maxLength="255"
-        android:minHeight="40dp"
-        android:textColor="@color/colorPrimary" />
-
-    <Button
-        android:id="@+id/btn_guardar_proceso"
-        style="@android:style/Widget.DeviceDefault.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/bg_button"
-        android:text="@string/guardar"
-        android:textColor="@android:color/background_light" />
 
 </LinearLayout>

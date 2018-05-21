@@ -12,6 +12,14 @@ public class Cura implements Serializable {
     private String recomendaciones;
     private List<Imagen> imagenes;
     private Date creacion;
+    private Proceso proceso;
+
+    public Cura(String evolucion, String tratamiento, String recomendaciones, Proceso proceso) {
+        this.evolucion = evolucion;
+        this.tratamiento = tratamiento;
+        this.recomendaciones = recomendaciones;
+        this.proceso = proceso;
+    }
 
     public long getId() {
         return id;
@@ -59,5 +67,13 @@ public class Cura implements Serializable {
 
     public void setCreacion(Date creacion) {
         this.creacion = creacion;
+    }
+
+    public Proceso getProceso() {
+        return proceso;
+    }
+
+    public void setProceso(Proceso proceso) {
+        this.proceso = proceso;
     }
 }

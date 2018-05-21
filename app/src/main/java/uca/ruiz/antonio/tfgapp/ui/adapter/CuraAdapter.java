@@ -1,7 +1,10 @@
 package uca.ruiz.antonio.tfgapp.ui.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -9,11 +12,14 @@ import java.util.ArrayList;
 
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
+import uca.ruiz.antonio.tfgapp.ui.activity.CurasActivity;
+import uca.ruiz.antonio.tfgapp.ui.activity.ImagenesActivity;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
 public class CuraAdapter extends RecyclerView.Adapter<CuraAdapter.ViewHolder> {
 
     private ArrayList<Cura> mDataSet;
+    private Context context;
 
     //obtener referencias de los componentes visuales para cada elemento
     // es decir, referencias de los edittext, textviews, buttons
@@ -26,7 +32,8 @@ public class CuraAdapter extends RecyclerView.Adapter<CuraAdapter.ViewHolder> {
         }
     }
 
-    public CuraAdapter() {
+    public CuraAdapter(Context context) {
+        this.context = context;
         mDataSet = new ArrayList<>();
     }
 
@@ -50,12 +57,23 @@ public class CuraAdapter extends RecyclerView.Adapter<CuraAdapter.ViewHolder> {
     //este método reemplaza el contenido de cada view,
     // para cada elemento de la lista
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         // obtenemos un elemento del dataset según su posición
         // reemplazamos el contenido de los views según tales datos
 
-        //holder.textView.setText(mDataSet.get(position).getTratamiento());
-        holder.textView.setText(FechaHoraUtils.formatoFechaUI(mDataSet.get(position).getCreacion()));
+        Cura cura = mDataSet.get(position);
+        String cad = FechaHoraUtils.formatoFechaUI(cura.getCreacion()) + " " + cura.getTratamiento();
+        holder.textView.setText(cad);
+
+        // click sobre cada elemento de las curas
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ImagenesActivity.class);
+                intent.putExtra("cura", mDataSet.get(position));
+                context.startActivity(intent);
+            }
+        });
 
     }
 

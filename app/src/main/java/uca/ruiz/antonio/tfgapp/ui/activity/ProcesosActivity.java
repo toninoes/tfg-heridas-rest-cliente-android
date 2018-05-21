@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,20 +31,26 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
     private TextView tv_listado_titulo;
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
-    SwipeRefreshLayout srl_listado;
     private ProcesoAdapter mAdapter;
-    private static final int REQUEST_ADD = 1;
+
+
+    private SwipeRefreshLayout srl_listado;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_procesos);
 
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         fab_add_elemento = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
         fab_add_elemento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAddProcesoActivity();
+                irProcesoNuevoActivity();
             }
         });
 
@@ -73,6 +81,32 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_proceso, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                Intent intentBack = new Intent(this, MainActivity.class); //VOLVER A PACIENTES
+                startActivity(intentBack);
+                return true;
+            /*case R.id.action_editar_proceso: //EDITAR PACIENTE
+                Intent intentEditar = new Intent(this, ProcesoNuevoActivity.class);
+                Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
+                intentEditar.putExtra("proceso", proceso);
+                startActivity(intentEditar);
+                return true;*/
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onResponse(Call<ArrayList<Proceso>> call, Response<ArrayList<Proceso>> response) {
         if(response.isSuccessful()) {
             ArrayList<Proceso> procesos = response.body();
@@ -96,16 +130,10 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
     public void onFailure(Call<ArrayList<Proceso>> call, Throwable t) {
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (REQUEST_ADD == requestCode && RESULT_OK == resultCode) {
-            recreate();
-        }
-    }
 
-    private void showAddProcesoActivity() {
-        Intent intent = new Intent(this, ProcesoNuevoEditarActivity.class);
-        startActivityForResult(intent, REQUEST_ADD);
+    private void irProcesoNuevoActivity() {
+        Intent intent = new Intent(this, ProcesoNuevoActivity.class);
+        startActivity(intent);
     }
 
 

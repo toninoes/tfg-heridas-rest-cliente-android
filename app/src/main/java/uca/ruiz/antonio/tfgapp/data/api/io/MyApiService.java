@@ -42,4 +42,14 @@ public interface MyApiService {
     @PUT("procesos/{id}")
     Call<Proceso> editarProceso(@Path("id") Long id, @Body Proceso p);
 
+    /* CURAS */
+
+    @Headers("Content-Type: application/json")
+    @POST("curas")
+    Call<Cura> crearCura(@Body Cura c);
+
+    @Headers("Content-Type: application/json")
+    @PUT("curas/{id}")
+    Call<Cura> editarCura(@Path("id") Long id, @Body Cura c);
+
 }

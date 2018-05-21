@@ -3,7 +3,6 @@ package uca.ruiz.antonio.tfgapp.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,8 +28,6 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CuraAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
-import static uca.ruiz.antonio.tfgapp.R.string.proceso;
-
 
 public class CurasActivity extends AppCompatActivity implements Callback<ArrayList<Cura>> {
 
@@ -47,6 +44,8 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
 
     private SwipeRefreshLayout srl_listado;
 
+    private Proceso proceso;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,15 +54,6 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        fab_add_elemento = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
-        fab_add_elemento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         tv_listado_titulo = (TextView) findViewById(R.id.tv_listado_titulo);
         tv_listado_titulo.setText(R.string.curas);
@@ -76,7 +66,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         rv_listado.setLayoutManager(mLayoutManager);
 
         //Asociamos un adapter. Define cómo se renderizará la informacion que tenemos
-        mAdapter = new CuraAdapter();
+        mAdapter = new CuraAdapter(this);
         rv_listado.setAdapter(mAdapter);
 
         tv_diagnostico_tit = (TextView) findViewById(R.id.tv_diagnostico_tit);
@@ -87,7 +77,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         tv_observaciones_tit = (TextView) findViewById(R.id.tv_observaciones_tit);
         tv_observaciones = (TextView) findViewById(R.id.tv_observaciones);
 
-        Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
+        proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
         if (proceso != null) {
             tv_diagnostico_tit.setText(getText(R.string.diagnostico));
             tv_diagnostico.setText(proceso.getDiagnostico());
@@ -101,6 +91,14 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
             curasByProcesoId.enqueue(this);
         }
 
+        fab_add_elemento = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
+        fab_add_elemento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irCuraNuevaActivity();
+            }
+        });
+
         srl_listado = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
         srl_listado.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -112,7 +110,6 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_proceso, menu);
         return true;
     }
@@ -128,8 +125,8 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
                 this.finish();
                 return true;
             case R.id.action_editar_proceso:
-                Intent intentEditar = new Intent(this, ProcesoNuevoEditarActivity.class);
-                Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
+                Intent intentEditar = new Intent(this, ProcesoEditarActivity.class);
+                proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
                 intentEditar.putExtra("proceso", proceso);
                 startActivity(intentEditar);
                 return true;
@@ -163,6 +160,12 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
     @Override
     public void onFailure(Call<ArrayList<Cura>> call, Throwable t) {
 
+    }
+
+    private void irCuraNuevaActivity() {
+        Intent intent = new Intent(this, CuraNuevaActivity.class);
+        intent.putExtra("proceso", proceso);
+        startActivity(intent);
     }
 
 

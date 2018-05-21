@@ -15,6 +15,9 @@ public class Proceso implements Serializable {
     private Date creacion;
     private Paciente paciente;
 
+    public Proceso() {
+    }
+
     public Proceso(String anamnesis, String diagnostico, String tipo, String observaciones, Paciente paciente) {
         this.anamnesis = anamnesis;
         this.diagnostico = diagnostico;

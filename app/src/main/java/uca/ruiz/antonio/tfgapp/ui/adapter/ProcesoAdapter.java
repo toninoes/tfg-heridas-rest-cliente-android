@@ -60,8 +60,8 @@ public class ProcesoAdapter extends RecyclerView.Adapter<ProcesoAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // obtenemos un elemento del dataset según su posición
         // reemplazamos el contenido de los views según tales datos
-        Proceso p = mDataSet.get(position);
-        String cad = FechaHoraUtils.formatoFechaUI(p.getCreacion()) + " " + p.getDiagnostico();
+        Proceso proceso = mDataSet.get(position);
+        String cad = FechaHoraUtils.formatoFechaUI(proceso.getCreacion()) + " " + proceso.getDiagnostico();
         holder.textView.setText(cad);
 
         // click sobre cada elemento de los procesos
@@ -71,7 +71,6 @@ public class ProcesoAdapter extends RecyclerView.Adapter<ProcesoAdapter.ViewHold
                 Intent intent = new Intent(context, CurasActivity.class);
                 intent.putExtra("proceso", mDataSet.get(position));
                 context.startActivity(intent);
-
             }
         });
     }

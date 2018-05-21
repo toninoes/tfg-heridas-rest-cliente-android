@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation"
@@ -23,23 +22,37 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activity.CurasActivity"
             android:configChanges="orientation"
             android:label="@string/proceso"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.ProcesosActivity"
             android:configChanges="orientation"
             android:label="@string/paciente"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ui.activity.ProcesoNuevoEditarActivity"
+        <activity
+            android:name=".ui.activity.ProcesoNuevoActivity"
             android:configChanges="orientation"
             android:label="@string/addproceso"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ProcesoEditarActivity"
+            android:configChanges="orientation"
+            android:label="@string/editproceso"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CuraNuevaActivity"
+            android:configChanges="orientation"
+            android:label="@string/addcura"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CuraEditarActivity"
+            android:configChanges="orientation"
+            android:label="@string/editcura"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.ImagenesActivity"></activity>
     </application>
 
 </manifest>

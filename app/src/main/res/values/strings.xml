@@ -21,4 +21,10 @@
 
     <string name="errores">ERRORES</string>
     <string name="editar">EDITAR</string>
+
+    <string name="evolucion">Evolución</string>
+    <string name="tratamiento">Tratamiento</string>
+    <string name="recomendaciones">Recomendaciones</string>
+    <string name="addcura">Nueva Cura</string>
+    <string name="editcura">Editar Cura</string>
 </resources>
