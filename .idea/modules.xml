@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tfg-heridas-rest-client-android.iml" filepath="$PROJECT_DIR$/tfg-heridas-rest-client-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tfg-heridas-rest-cliente-android.iml" filepath="$PROJECT_DIR$/tfg-heridas-rest-cliente-android.iml" />
     </modules>
   </component>
 </project>
