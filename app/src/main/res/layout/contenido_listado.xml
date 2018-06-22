@@ -13,7 +13,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorNaranja"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
@@ -25,7 +24,7 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/background_light"
+            android:textColor="@color/naranja"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/rv_listado"

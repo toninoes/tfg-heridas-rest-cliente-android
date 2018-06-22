@@ -1,21 +1,16 @@
 package uca.ruiz.antonio.tfgapp.data.api.mapping;
 
-/**
- * Created by toni on 17/06/2018.
- */
-
 import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.lang.Error;
 import java.util.ArrayList;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import okhttp3.ResponseBody;
 
-public class ApiError implements Serializable
+public class Errores implements Serializable
 {
 
     @SerializedName("timestamp")
@@ -29,7 +24,7 @@ public class ApiError implements Serializable
     private String error;
     @SerializedName("errors")
     @Expose
-    private ArrayList<java.lang.Error> errors = null;
+    private ArrayList<Error> errors = null;
     @SerializedName("message")
     @Expose
     private String message;
@@ -42,7 +37,7 @@ public class ApiError implements Serializable
      * No args constructor for use in serialization
      *
      */
-    public ApiError() {
+    public Errores() {
     }
 
     /**
@@ -54,7 +49,7 @@ public class ApiError implements Serializable
      * @param status
      * @param path
      */
-    public ApiError(String timestamp, Integer status, String error, ArrayList<java.lang.Error> errors, String message, String path) {
+    public Errores(String timestamp, Integer status, String error, ArrayList<Error> errors, String message, String path) {
         super();
         this.timestamp = timestamp;
         this.status = status;
@@ -88,7 +83,7 @@ public class ApiError implements Serializable
         this.error = error;
     }
 
-    public ArrayList<java.lang.Error> getErrors() {
+    public ArrayList<Error> getErrors() {
         return errors;
     }
 
@@ -112,10 +107,10 @@ public class ApiError implements Serializable
         this.path = path;
     }
 
-    public static ApiError fromResponseBody(ResponseBody responseBody) {
+    public static Errores fromResponseBody(ResponseBody responseBody) {
         Gson gson = new Gson();
         try {
-            return gson.fromJson(responseBody.string(), ApiError.class);
+            return gson.fromJson(responseBody.string(), Errores.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,4 +119,5 @@ public class ApiError implements Serializable
     }
 
 }
+
 

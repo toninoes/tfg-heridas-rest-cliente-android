@@ -18,12 +18,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
-import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.Errores;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Error;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
-
-import static uca.ruiz.antonio.tfgapp.R.string.proceso;
+import uca.ruiz.antonio.tfgapp.utils.Token;
 
 
 public class ProcesoNuevoActivity extends AppCompatActivity  {
@@ -47,7 +46,7 @@ public class ProcesoNuevoActivity extends AppCompatActivity  {
         et_tipo = (EditText) findViewById(R.id.et_tipo);
         et_observaciones = (EditText) findViewById(R.id.et_observaciones);
 
-        paciente = (Paciente) getIntent().getExtras().getSerializable("paciente");
+        //paciente = (Paciente) getIntent().getExtras().getSerializable("paciente");
     }
 
     @Override
@@ -81,7 +80,7 @@ public class ProcesoNuevoActivity extends AppCompatActivity  {
                 et_diagnostico.getText().toString(), et_tipo.getText().toString(),
                 et_observaciones.getText().toString(), paciente);
 
-        MyApiAdapter.getApiService().crearProceso(proceso).enqueue(
+        MyApiAdapter.getApiService().crearProceso(proceso, Token.get()).enqueue(
                 new Callback<Proceso>() {
                     @Override
                     public void onResponse(Call<Proceso> call, Response<Proceso> response) {
@@ -93,7 +92,7 @@ public class ProcesoNuevoActivity extends AppCompatActivity  {
                             ArrayList<Error> errores = null;
 
                             if (response.errorBody().contentType().subtype().equals("json")) {
-                                ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                                Errores apiError = Errores.fromResponseBody(response.errorBody());
                                 errores = apiError.getErrors();
                                 Log.d(TAG, apiError.getPath());
                             } else {

@@ -21,9 +21,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
+import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.ProcesoAdapter;
+import uca.ruiz.antonio.tfgapp.utils.Token;
 
 public class ProcesosActivity extends AppCompatActivity implements Callback<ArrayList<Proceso>> {
 
@@ -32,10 +34,7 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
     private ProcesoAdapter mAdapter;
-
-
     private SwipeRefreshLayout srl_listado;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,7 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
         mAdapter = new ProcesoAdapter(this);
         rv_listado.setAdapter(mAdapter);
 
-        Call<ArrayList<Proceso>> call = MyApiAdapter.getApiService().getProcesos();
+        Call<ArrayList<Proceso>> call = MyApiAdapter.getApiService().getProcesos(Token.get());
         call.enqueue(this);
 
         srl_listado = (SwipeRefreshLayout) findViewById(R.id.srl_listado);

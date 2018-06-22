@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#006484</color>
-    <color name="colorPrimaryDark">#006484</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorNaranja">#d1711a</color>
-    <color name="colorGris">#868b8f</color>
-    <color name="colorGrisFondoLL">#ededed</color>
+    <color name="colorPrimary">#d1711a</color>
+    <color name="colorPrimaryDark">#d1711a</color>
+    <color name="colorAccent">#d1711a</color>
+    <color name="azul">#006484</color>
+    <color name="naranja">#d1711a</color>
+    <color name="gris">#868b8f</color>
+    <color name="grisFondoLL">#ededed</color>
 </resources>

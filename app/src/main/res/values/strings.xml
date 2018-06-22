@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TfgApp</string>
+    <string name="app_name">RestHeridApp</string>
 
     <string name="paciente">Paciente</string>
     <string name="pacientes">Pacientes</string>
@@ -19,7 +19,6 @@
 
     <string name="guardar">Guardar</string>
 
-    <string name="errores">ERRORES</string>
     <string name="editar">EDITAR</string>
 
     <string name="evolucion">Evolución</string>
@@ -27,4 +26,27 @@
     <string name="recomendaciones">Recomendaciones</string>
     <string name="addcura">Nueva Cura</string>
     <string name="editcura">Editar Cura</string>
+
+    <string name="title_activity_login">Entrar</string>
+
+    <!-- Cadenas de LoginActivity -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Acceder</string>
+    <string name="action_sign_in_short">Entrar</string>
+    <string name="error_formato_email_invalido">Formato de email no válido</string>
+    <string name="error_tam_email_invalido">El email debe contener entre 4 y 100 caracteres</string>
+    <string name="error_tam_password_invalida">La contraseña debe contener entre 4 y 100 caracteres</string>
+    <string name="entrando">Accediendo a la aplicación</string>
+    <string name="recordar">Recordar email</string>
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
+
+    <!-- Cadenas de RegistroActivity -->
+    <string name="error_tam_nombre_invalido">El nombre debe contener entre 3 y 50 caracteres</string>
+    <string name="error_tam_apellidos_invalido">Los apellidos deben contener entre 3 y 100 caracteres</string>
+    <string name="registrando">Registrando...</string>
+    <string name="registro">Registro</string>
+
+    <string name="errores">ERRORES</string>
 </resources>

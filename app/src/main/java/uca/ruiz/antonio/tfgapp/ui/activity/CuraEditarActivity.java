@@ -18,10 +18,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
-import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.Errores;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Error;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
+import uca.ruiz.antonio.tfgapp.utils.Token;
 
 public class CuraEditarActivity extends AppCompatActivity {
 
@@ -84,7 +85,7 @@ public class CuraEditarActivity extends AppCompatActivity {
         Cura cura = new Cura(et_evolucion.getText().toString(), et_tratamiento.getText().toString(),
                 et_recomendaciones.getText().toString(), proceso);
 
-        MyApiAdapter.getApiService().crearCura(cura).enqueue(
+        MyApiAdapter.getApiService().crearCura(cura, Token.get()).enqueue(
                 new Callback<Cura>() {
                     @Override
                     public void onResponse(Call<Cura> call, Response<Cura> response) {
@@ -96,7 +97,7 @@ public class CuraEditarActivity extends AppCompatActivity {
                             ArrayList<Error> errores = null;
 
                             if (response.errorBody().contentType().subtype().equals("json")) {
-                                ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                                Errores apiError = Errores.fromResponseBody(response.errorBody());
                                 errores = apiError.getErrors();
                                 Log.d(TAG, apiError.getPath());
                             } else {
@@ -125,7 +126,7 @@ public class CuraEditarActivity extends AppCompatActivity {
         cura.setTratamiento(et_tratamiento.getText().toString());
         cura.setEvolucion(et_evolucion.getText().toString());
 
-        MyApiAdapter.getApiService().editarCura(cura.getId(), cura).enqueue(
+        MyApiAdapter.getApiService().editarCura(cura.getId(), cura, Token.get()).enqueue(
                 new Callback<Cura>() {
                     @Override
                     public void onResponse(Call<Cura> call, Response<Cura> response) {
@@ -137,7 +138,7 @@ public class CuraEditarActivity extends AppCompatActivity {
                             ArrayList<Error> errores = null;
 
                             if (response.errorBody().contentType().subtype().equals("json")) {
-                                ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                                Errores apiError = Errores.fromResponseBody(response.errorBody());
                                 errores = apiError.getErrors();
                                 Log.d(TAG, apiError.getPath());
                             } else {
