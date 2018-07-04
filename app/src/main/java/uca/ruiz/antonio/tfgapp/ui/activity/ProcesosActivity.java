@@ -21,11 +21,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
-import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.ProcesoAdapter;
-import uca.ruiz.antonio.tfgapp.utils.Token;
+import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 public class ProcesosActivity extends AppCompatActivity implements Callback<ArrayList<Proceso>> {
 
@@ -67,7 +66,7 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
         mAdapter = new ProcesoAdapter(this);
         rv_listado.setAdapter(mAdapter);
 
-        Call<ArrayList<Proceso>> call = MyApiAdapter.getApiService().getProcesos(Token.get());
+        Call<ArrayList<Proceso>> call = MyApiAdapter.getApiService().getProcesos(Pref.getToken());
         call.enqueue(this);
 
         srl_listado = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
@@ -90,10 +89,10 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
         int id = item.getItemId();
 
         switch (id) {
-            case android.R.id.home:
-                Intent intentBack = new Intent(this, MainActivity.class); //VOLVER A PACIENTES
+            /*case android.R.id.home:
+                Intent intentBack = new Intent(this, MainAdminActivity.class); //VOLVER A PACIENTES
                 startActivity(intentBack);
-                return true;
+                return true;*/
             /*case R.id.action_editar_proceso: //EDITAR PACIENTE
                 Intent intentEditar = new Intent(this, ProcesoNuevoActivity.class);
                 Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");

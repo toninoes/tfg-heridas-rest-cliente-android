@@ -22,7 +22,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.Errores;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Error;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
-import uca.ruiz.antonio.tfgapp.utils.Token;
+import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 public class CuraEditarActivity extends AppCompatActivity {
 
@@ -85,7 +85,7 @@ public class CuraEditarActivity extends AppCompatActivity {
         Cura cura = new Cura(et_evolucion.getText().toString(), et_tratamiento.getText().toString(),
                 et_recomendaciones.getText().toString(), proceso);
 
-        MyApiAdapter.getApiService().crearCura(cura, Token.get()).enqueue(
+        MyApiAdapter.getApiService().crearCura(cura, Pref.getToken()).enqueue(
                 new Callback<Cura>() {
                     @Override
                     public void onResponse(Call<Cura> call, Response<Cura> response) {
@@ -126,7 +126,7 @@ public class CuraEditarActivity extends AppCompatActivity {
         cura.setTratamiento(et_tratamiento.getText().toString());
         cura.setEvolucion(et_evolucion.getText().toString());
 
-        MyApiAdapter.getApiService().editarCura(cura.getId(), cura, Token.get()).enqueue(
+        MyApiAdapter.getApiService().editarCura(cura.getId(), cura, Pref.getToken()).enqueue(
                 new Callback<Cura>() {
                     @Override
                     public void onResponse(Call<Cura> call, Response<Cura> response) {

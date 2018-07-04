@@ -49,4 +49,21 @@
     <string name="registro">Registro</string>
 
     <string name="errores">ERRORES</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="email">Email</string>
+    <string name="administrador">Administrador</string>
+    <string name="sanitario">Sanitario</string>
+    <string name="registrar">Registrar</string>
+    <string name="logotipo_de_la_aplicacion">Logotipo de la Aplicación</string>
+    <string name="login">Login</string>
+    <string name="panel_de_administracion">Panel de Administración</string>
+    <string name="centros">Centros</string>
+    <string name="salas">Salas</string>
+    <string name="grupos_diagnosticos">Grupos Diagnósticos</string>
+    <string name="diagnosticos">Diagnósticos</string>
+    <string name="procedimientos">Procedimientos</string>
+    <string name="cuidados">Cuidados</string>
+    <string name="sanitarios">Sanitarios</string>
+    <string name="valoraciones">Valoraciones</string>
 </resources>

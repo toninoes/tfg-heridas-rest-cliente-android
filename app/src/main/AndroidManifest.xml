@@ -12,59 +12,71 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".ui.activity.MainSanitarioActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MainPacienteActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.RegistroActivity"
             android:configChanges="orientation"
             android:label="@string/registro"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.CurasActivity"
             android:configChanges="orientation"
             android:label="@string/proceso"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.ProcesosActivity"
             android:configChanges="orientation"
             android:label="@string/paciente"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.ProcesoNuevoActivity"
             android:configChanges="orientation"
             android:label="@string/addproceso"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.ProcesoEditarActivity"
             android:configChanges="orientation"
             android:label="@string/editproceso"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.CuraNuevaActivity"
             android:configChanges="orientation"
             android:label="@string/addcura"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.CuraEditarActivity"
             android:configChanges="orientation"
             android:label="@string/editcura"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.ImagenesActivity"></activity>
+        <activity android:name=".ui.activity.ImagenesActivity" />
+        <activity
+            android:name=".ui.activity.admin.MainAdminActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.CentroActivity"
+            android:configChanges="orientation"
+            android:label="@string/centros"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

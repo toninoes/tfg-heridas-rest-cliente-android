@@ -21,7 +21,7 @@ import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Errores;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Error;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
-import uca.ruiz.antonio.tfgapp.utils.Token;
+import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 public class ProcesoEditarActivity extends AppCompatActivity  {
 
@@ -83,7 +83,7 @@ public class ProcesoEditarActivity extends AppCompatActivity  {
 
         proceso.getPaciente().setNacimiento(proceso.getPaciente().getNacimiento());
 
-        MyApiAdapter.getApiService().editarProceso(proceso.getId(), proceso, Token.get()).enqueue(
+        MyApiAdapter.getApiService().editarProceso(proceso.getId(), proceso, Pref.getToken()).enqueue(
                 new Callback<Proceso>() {
                     @Override
                     public void onResponse(Call<Proceso> call, Response<Proceso> response) {

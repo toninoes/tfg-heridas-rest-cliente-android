@@ -27,7 +27,7 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CuraAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
-import uca.ruiz.antonio.tfgapp.utils.Token;
+import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 
 public class CurasActivity extends AppCompatActivity implements Callback<ArrayList<Cura>> {
@@ -89,7 +89,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
             tv_observaciones.setText(proceso.getObservaciones());
 
             Call<ArrayList<Cura>> curasByProcesoId = MyApiAdapter.getApiService()
-                    .getCurasByProcesoId(proceso.getId(), Token.get());
+                    .getCurasByProcesoId(proceso.getId(), Pref.getToken());
             curasByProcesoId.enqueue(this);
         }
 

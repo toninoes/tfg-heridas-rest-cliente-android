@@ -19,13 +19,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
-import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Authority;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.User;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
-import uca.ruiz.antonio.tfgapp.utils.Token;
+import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
 public class RegistroActivity extends AppCompatActivity {
@@ -130,7 +129,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     private void registrar(User user) {
         progressDialog.show();
-        Call<UserResponse> call = MyApiAdapter.getApiService().registro(user, Token.get());
+        Call<UserResponse> call = MyApiAdapter.getApiService().registro(user, Pref.getToken());
 
         call.enqueue(new Callback<UserResponse>() {
             @Override

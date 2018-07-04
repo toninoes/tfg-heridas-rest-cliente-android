@@ -24,6 +24,8 @@ import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Authority;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
+import uca.ruiz.antonio.tfgapp.ui.activity.admin.MainAdminActivity;
+import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
 
@@ -143,7 +145,6 @@ public class LoginActivity extends AppCompatActivity {
                     token = "Bearer " + response.body().getToken();
                     definirPreferencias(token);
                     obtenerUsuario(token);
-                    irProcesos(token);
                 } else {
                     progressDialog.cancel();
                     Toast.makeText(LoginActivity.this, "Login incorrecto !", Toast.LENGTH_SHORT).show();
@@ -156,11 +157,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "error :(", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void irProcesos(String token) {
-        Intent intent = new Intent(this, ProcesosActivity.class);
-        startActivity(intent);
     }
 
     private void definirPreferencias(String token) {
@@ -176,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if(response.isSuccessful()) {
                     UserResponse user = response.body();
-                    definirUsuario(user);
+                    definirUsuarioAndMain(user);
                 } else {
                     Toast.makeText(LoginActivity.this, "Token incorrecto !", Toast.LENGTH_SHORT).show();
                 }
@@ -190,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void definirUsuario(UserResponse user) {
+    private void definirUsuarioAndMain(UserResponse user) {
 
         Preferencias.getEditor(this).putString("nombre", user.getFirstname()).commit();
         Preferencias.getEditor(this).putString("apellidos", user.getLastname()).commit();
@@ -206,6 +202,20 @@ public class LoginActivity extends AppCompatActivity {
             Preferencias.getEditor(this).putBoolean(rol.getName().toString(), true).commit();
         }
 
+        irMain();
+    }
+
+    private void irMain() {
+        Intent intent;
+
+        if(Pref.esAdmin())
+            intent = new Intent(this, MainAdminActivity.class);
+        else if(Pref.esSanitario())
+            intent = new Intent(this, MainSanitarioActivity.class);
+        else
+            intent = new Intent(this, MainPacienteActivity.class);
+
+        startActivity(intent);
     }
 
 }

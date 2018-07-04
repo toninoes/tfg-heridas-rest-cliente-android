@@ -22,7 +22,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.Errores;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Error;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
-import uca.ruiz.antonio.tfgapp.utils.Token;
+import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 
 public class ProcesoNuevoActivity extends AppCompatActivity  {
@@ -80,7 +80,7 @@ public class ProcesoNuevoActivity extends AppCompatActivity  {
                 et_diagnostico.getText().toString(), et_tipo.getText().toString(),
                 et_observaciones.getText().toString(), paciente);
 
-        MyApiAdapter.getApiService().crearProceso(proceso, Token.get()).enqueue(
+        MyApiAdapter.getApiService().crearProceso(proceso, Pref.getToken()).enqueue(
                 new Callback<Proceso>() {
                     @Override
                     public void onResponse(Call<Proceso> call, Response<Proceso> response) {
