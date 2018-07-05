@@ -15,6 +15,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.Login;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.User;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
+import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
@@ -76,5 +77,11 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @PUT("api/curas/{id}")
     Call<Cura> editarCura(@Path("id") Long id, @Body Cura c, @Header("Authorization") String token);
+
+    /* CENTROS */
+    @Headers("Content-Type: application/json")
+    @GET("api/centros")
+    Call<ArrayList<Centro>> getCentros(@Header("Authorization") String token);
+
 
 }

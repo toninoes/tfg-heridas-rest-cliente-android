@@ -16,7 +16,7 @@ public class MainAdminActivity extends AppCompatActivity {
     }
 
     public void centros(View view) {
-        Intent intent = new Intent(this, CentroActivity.class);
+        Intent intent = new Intent(this, CentrosActivity.class);
         startActivity(intent);
     }
 
