@@ -44,14 +44,14 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/centros"
+                    android:id="@+id/ib_centros"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/background_light"
+                    android:contentDescription="@string/centros"
                     android:onClick="centros"
-                    app:srcCompat="@drawable/ic_centro"
-                    android:contentDescription="@string/centros" />
+                    app:srcCompat="@drawable/ic_centro" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -80,14 +80,14 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/salas"
+                    android:id="@+id/ib_salas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/background_light"
+                    android:contentDescription="@string/salas"
                     android:onClick="salas"
-                    app:srcCompat="@drawable/ic_sala"
-                    android:contentDescription="@string/salas" />
+                    app:srcCompat="@drawable/ic_sala" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -116,14 +116,14 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/gruposdiagnosticos"
+                    android:id="@+id/ib_gruposdiagnosticos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/background_light"
+                    android:contentDescription="@string/grupos_diagnosticos"
                     android:onClick="gruposdiagnosticos"
-                    app:srcCompat="@drawable/ic_grupodiagnostico"
-                    android:contentDescription="@string/grupos_diagnosticos" />
+                    app:srcCompat="@drawable/ic_grupodiagnostico" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -162,14 +162,14 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/diagnosticos"
+                    android:id="@+id/ib_diagnosticos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/background_light"
+                    android:contentDescription="@string/diagnosticos"
                     android:onClick="diagnosticos"
-                    app:srcCompat="@drawable/ic_diagnostico"
-                    android:contentDescription="@string/diagnosticos" />
+                    app:srcCompat="@drawable/ic_diagnostico" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -198,14 +198,14 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/procedimientos"
+                    android:id="@+id/ib_procedimientos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/background_light"
+                    android:contentDescription="@string/procedimientos"
                     android:onClick="procedimientos"
-                    app:srcCompat="@drawable/ic_procedimiento"
-                    android:contentDescription="@string/procedimientos" />
+                    app:srcCompat="@drawable/ic_procedimiento" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -234,14 +234,14 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/cuidados"
+                    android:id="@+id/ib_cuidados"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/background_light"
+                    android:contentDescription="@string/cuidados"
                     android:onClick="cuidados"
-                    app:srcCompat="@drawable/ic_cuidado"
-                    android:contentDescription="@string/cuidados" />
+                    app:srcCompat="@drawable/ic_cuidado" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -280,14 +280,14 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/pacientes"
+                    android:id="@+id/ib_pacientes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/background_light"
+                    android:contentDescription="@string/pacientes"
                     android:onClick="pacientes"
-                    app:srcCompat="@drawable/ic_paciente"
-                    android:contentDescription="@string/pacientes" />
+                    app:srcCompat="@drawable/ic_paciente" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -316,14 +316,14 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/sanitarios"
+                    android:id="@+id/ib_sanitarios"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/background_light"
+                    android:contentDescription="@string/sanitarios"
                     android:onClick="sanitarios"
-                    app:srcCompat="@drawable/ic_sanitario"
-                    android:contentDescription="@string/sanitarios" />
+                    app:srcCompat="@drawable/ic_sanitario" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -352,14 +352,14 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/valoraciones"
+                    android:id="@+id/ib_valoraciones"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/background_light"
+                    android:contentDescription="@string/valoraciones"
                     android:onClick="valoraciones"
-                    app:srcCompat="@drawable/ic_valoracion"
-                    android:contentDescription="@string/valoraciones" />
+                    app:srcCompat="@drawable/ic_valoracion" />
 
                 <TextView
                     android:layout_width="wrap_content"

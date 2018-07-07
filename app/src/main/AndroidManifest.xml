@@ -76,7 +76,12 @@
             android:name=".ui.activity.admin.CentrosActivity"
             android:configChanges="orientation"
             android:label="@string/centros"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:configChanges="orientation"
+            android:label="@string/centro"
+            android:screenOrientation="portrait"
+            android:name=".ui.activity.admin.CentroNewEditActivity"/>
     </application>
 
 </manifest>

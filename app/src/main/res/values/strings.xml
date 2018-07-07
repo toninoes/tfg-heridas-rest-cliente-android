@@ -66,4 +66,21 @@
     <string name="cuidados">Cuidados</string>
     <string name="sanitarios">Sanitarios</string>
     <string name="valoraciones">Valoraciones</string>
+    <string name="cargando">Cargando...</string>
+    <string name="titulo">Título</string>
+    <string name="subtitulo">Subtítulo</string>
+    <string name="borrar">Borrar</string>
+    <string name="quiere_borrar">¿Realmente quiere borrar este elemento?</string>
+    <string name="seleccione_opcion">Seleccione una opción</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
+    <string name="centro">Centro</string>
+    <string name="direccion">Dirección</string>
+    <string name="telefono">Teléfono</string>
+    <string name="creando_nuevo_registro">Creando nuevo registro</string>
+    <string name="error_tam_direccion_invalido">La dirección debe contener entre 10 y 200 caracteres</string>
+    <string name="guardando">Guardando</string>
+    <string name="creado_registro">Creado registro: </string>
+    <string name="editado_registro">Editado registro: </string>
+    <string name="borrado_registro">Registro borrado correctamente.</string>
 </resources>

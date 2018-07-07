@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -24,8 +25,8 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 
 public interface MyApiService {
 
-    /* AUTENTICACION Y REGISTRO CON JWT */
 
+    /* ======================= AUTENTICACION Y REGISTRO CON JWT ======================= */
     @Headers("Content-Type: application/json")
     @POST("auth")
     Call<TokenResponse> login(@Body Login login);
@@ -46,8 +47,8 @@ public interface MyApiService {
     @GET("api/pacientes/{id}")
     Call<Paciente> getPacienteById(@Path("id") Long id, @Header("Authorization") String token);
 
-    /* PROCESOS */
 
+    /* ======================= PROCESOS ======================= */
     @Headers("Content-Type: application/json")
     @GET("api/procesos")
     Call<ArrayList<Proceso>> getProcesos(@Header("Authorization") String token);
@@ -68,8 +69,8 @@ public interface MyApiService {
     @PUT("api/procesos/{id}")
     Call<Proceso> editarProceso(@Path("id") Long id, @Body Proceso p, @Header("Authorization") String token);
 
-    /* CURAS */
 
+    /* ======================= CURAS ======================= */
     @Headers("Content-Type: application/json")
     @POST("api/curas")
     Call<Cura> crearCura(@Body Cura c, @Header("Authorization") String token);
@@ -78,10 +79,23 @@ public interface MyApiService {
     @PUT("api/curas/{id}")
     Call<Cura> editarCura(@Path("id") Long id, @Body Cura c, @Header("Authorization") String token);
 
-    /* CENTROS */
+
+    /* ======================= CENTROS ======================= */
     @Headers("Content-Type: application/json")
     @GET("api/centros")
     Call<ArrayList<Centro>> getCentros(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @DELETE("api/centros/{id}")
+    Call<String> borrarCentro(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/centros")
+    Call<Centro> crearCentro(@Body Centro c, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/centros/{id}")
+    Call<Centro> editarCentro(@Path("id") Long id, @Body Centro c, @Header("Authorization") String token);
 
 
 }

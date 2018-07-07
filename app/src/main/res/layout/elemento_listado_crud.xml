@@ -7,21 +7,21 @@
     android:baselineAligned="false">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="10"
+        android:id="@+id/ll_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="20"
         android:orientation="vertical">
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/tv_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
             android:maxLines="1"
-            android:text="Titulo"
+            android:text="@string/titulo"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -29,16 +29,14 @@
             android:id="@+id/tv_subtitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:maxLines="1"
-            android:text="Subtítulo"
+            android:text="@string/subtitulo"
             tools:ignore="NestedWeights" />
+
     </LinearLayout>
-
-
 
     <ImageButton
         android:id="@+id/ib_edit"
@@ -46,8 +44,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@android:color/background_light"
-        app:srcCompat="@drawable/ic_action_edit_naranja"
-        android:contentDescription="Editar" />
+        android:contentDescription="@string/editar"
+        app:srcCompat="@drawable/ic_action_edit_naranja" />
 
     <ImageButton
         android:id="@+id/ib_delete"
@@ -55,7 +53,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@android:color/background_light"
-        app:srcCompat="@drawable/ic_action_delete_naranja"
-        android:contentDescription="Borrar" />
+        android:contentDescription="@string/borrar"
+        app:srcCompat="@drawable/ic_action_delete_naranja" />
 
 </LinearLayout>

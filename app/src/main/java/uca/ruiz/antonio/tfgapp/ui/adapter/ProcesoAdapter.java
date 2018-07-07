@@ -49,7 +49,7 @@ public class ProcesoAdapter extends RecyclerView.Adapter<ProcesoAdapter.ViewHold
 
         //Creamos una nueva vista
         TextView tv = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.elemento_listado_view, parent, false);
+                .inflate(R.layout.elemento_listado_simple, parent, false);
 
         return new ViewHolder(tv);
     }

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
-import uca.ruiz.antonio.tfgapp.ui.activity.CurasActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.ImagenesActivity;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
@@ -49,7 +48,7 @@ public class CuraAdapter extends RecyclerView.Adapter<CuraAdapter.ViewHolder> {
 
         //Creamos una nueva vista
         TextView tv = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.elemento_listado_view, parent, false);
+                .inflate(R.layout.elemento_listado_simple, parent, false);
 
         return new ViewHolder(tv);
     }
