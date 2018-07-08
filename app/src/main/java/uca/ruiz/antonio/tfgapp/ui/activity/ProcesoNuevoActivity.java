@@ -51,7 +51,7 @@ public class ProcesoNuevoActivity extends AppCompatActivity  {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add_edit_item, menu);
+        getMenuInflater().inflate(R.menu.menu_guardar_item, menu);
         return true;
     }
 

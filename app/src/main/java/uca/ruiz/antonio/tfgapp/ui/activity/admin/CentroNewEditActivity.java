@@ -62,7 +62,7 @@ public class CentroNewEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add_edit_item, menu);
+        getMenuInflater().inflate(R.menu.menu_guardar_item, menu);
         return true;
     }
 
@@ -137,8 +137,8 @@ public class CentroNewEditActivity extends AppCompatActivity {
             public void onResponse(Call<Centro> call, Response<Centro> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(CentroNewEditActivity.this, getString(R.string.creado_registro) +
-                                    response.body().getNombre(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CentroNewEditActivity.this, getString(R.string.creado_registro),
+                            Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(CentroNewEditActivity.this, CentrosActivity.class));
                 } else {
                     progressDialog.cancel();
@@ -174,8 +174,7 @@ public class CentroNewEditActivity extends AppCompatActivity {
             public void onResponse(Call<Centro> call, Response<Centro> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(CentroNewEditActivity.this, getString(R.string.editado_registro) +
-                            response.body().getNombre(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CentroNewEditActivity.this, getString(R.string.editado_registro), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(CentroNewEditActivity.this, CentrosActivity.class));
                 } else {
                     progressDialog.cancel();

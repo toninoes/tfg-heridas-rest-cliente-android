@@ -21,12 +21,8 @@ import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
-import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
-import uca.ruiz.antonio.tfgapp.ui.activity.ProcesoEditarActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CentroAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
-
-import static uca.ruiz.antonio.tfgapp.R.string.proceso;
 
 public class CentrosActivity extends AppCompatActivity {
 
@@ -40,6 +36,10 @@ public class CentrosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_crud);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         rv_listado = (RecyclerView) findViewById(R.id.rv_listado);
         rv_listado.setHasFixedSize(true); // la altura de los elementos será la misma
@@ -71,7 +71,7 @@ public class CentrosActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add_item, menu);
+        getMenuInflater().inflate(R.menu.menu_nuevo_item, menu);
         return true;
     }
 
@@ -80,6 +80,9 @@ public class CentrosActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
+            case android.R.id.home:
+                startActivity(new Intent(this, MainAdminActivity.class));
+                return true;
             case R.id.add_item:
                 startActivity(new Intent(this, CentroNewEditActivity.class));
                 return true;

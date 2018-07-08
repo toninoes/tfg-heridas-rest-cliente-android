@@ -26,7 +26,10 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
 import uca.ruiz.antonio.tfgapp.ui.activity.admin.MainAdminActivity;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
+import uca.ruiz.antonio.tfgapp.utils.Utils;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
+
+import static uca.ruiz.antonio.tfgapp.utils.Utils.preguntarQuiereSalir;
 
 
 /**
@@ -80,6 +83,11 @@ public class LoginActivity extends AppCompatActivity {
         if(recordarMail) {
             et_email.setText(Preferencias.get(this).getString("email", "email"));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Utils.preguntarQuiereSalir(this);
     }
 
 

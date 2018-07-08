@@ -1,13 +1,16 @@
 package uca.ruiz.antonio.tfgapp.ui.activity.admin;
 
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 
 import uca.ruiz.antonio.tfgapp.R;
+import uca.ruiz.antonio.tfgapp.utils.Utils;
 
 public class MainAdminActivity extends AppCompatActivity {
 
@@ -15,6 +18,28 @@ public class MainAdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_admin);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                Utils.preguntarQuiereSalir(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Utils.preguntarQuiereSalir(this);
     }
 
     public void centros(View view) {
@@ -45,4 +70,5 @@ public class MainAdminActivity extends AppCompatActivity {
 
     public void valoraciones(View view) {
     }
+
 }

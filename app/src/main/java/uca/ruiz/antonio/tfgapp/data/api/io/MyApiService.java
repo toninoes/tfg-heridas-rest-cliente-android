@@ -39,13 +39,15 @@ public interface MyApiService {
     @GET("user")
     Call<UserResponse> getUser(@Header("Authorization") String token);
 
+
+    /* ======================= PACIENTES ======================= */
     @Headers("Content-Type: application/json")
     @GET("api/pacientes")
     Call<ArrayList<Paciente>> getPacientes(@Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @GET("api/pacientes/{id}")
-    Call<Paciente> getPacienteById(@Path("id") Long id, @Header("Authorization") String token);
+    Call<Paciente> getPaciente(@Path("id") Long id, @Header("Authorization") String token);
 
 
     /* ======================= PROCESOS ======================= */
@@ -55,11 +57,7 @@ public interface MyApiService {
 
     @Headers("Content-Type: application/json")
     @GET("api/procesos/{id}")
-    Call<Proceso> getProcesoById(@Path("id") Long id, @Header("Authorization") String token);
-
-    @Headers("Content-Type: application/json")
-    @GET("api/procesos/{id}/curas")
-    Call<ArrayList<Cura>> getCurasByProcesoId(@Path("id") Long id, @Header("Authorization") String token);
+    Call<Proceso> getProceso(@Path("id") Long id, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @POST("api/procesos")
@@ -71,6 +69,10 @@ public interface MyApiService {
 
 
     /* ======================= CURAS ======================= */
+    @Headers("Content-Type: application/json")
+    @GET("api/procesos/{id}/curas")
+    Call<ArrayList<Cura>> getCurasByProcesoId(@Path("id") Long id, @Header("Authorization") String token);
+
     @Headers("Content-Type: application/json")
     @POST("api/curas")
     Call<Cura> crearCura(@Body Cura c, @Header("Authorization") String token);
@@ -84,6 +86,10 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/centros")
     Call<ArrayList<Centro>> getCentros(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/centros/{id}")
+    Call<Centro> getCentro(@Path("id") Long id, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @DELETE("api/centros/{id}")

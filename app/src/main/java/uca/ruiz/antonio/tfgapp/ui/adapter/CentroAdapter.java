@@ -24,6 +24,8 @@ import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
+import uca.ruiz.antonio.tfgapp.ui.activity.CurasActivity;
+import uca.ruiz.antonio.tfgapp.ui.activity.admin.CentroActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.admin.CentroNewEditActivity;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
@@ -93,10 +95,9 @@ public class CentroAdapter extends RecyclerView.Adapter<CentroAdapter.ViewHolder
             public void onClick(View view) {
                 int pos = holder.getAdapterPosition();
                 Centro centro = mDataSet.get(pos);
-                /*Intent intent = new Intent(context, CurasActivity.class);
-                intent.putExtra("proceso", mDataSet.get(position));
-                context.startActivity(intent);*/
-                Toast.makeText(context, "Has pinchado sobre " + centro.getNombre(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, CentroActivity.class);
+                intent.putExtra("centro", centro);
+                context.startActivity(intent);
             }
         });
 
@@ -126,6 +127,7 @@ public class CentroAdapter extends RecyclerView.Adapter<CentroAdapter.ViewHolder
 
                             case DialogInterface.BUTTON_NEGATIVE:
                                 // Usuario no confirma la acción
+                                dialog.cancel();
                                 break;
                         }
                     }
