@@ -85,4 +85,7 @@
     <string name="borrado_registro">Registro BORRADO correctamente.</string>
     <string name="quiere_salir">¿Quiere salir de la aplicación?</string>
     <string name="descripcion">Descripción</string>
+    <string name="sala">Sala</string>
+    <string name="seleccione_centro">Seleccione un Centro</string>
+    <string name="debes_seleccionar_centro">Debes seleccionar un Centro.</string>
 </resources>

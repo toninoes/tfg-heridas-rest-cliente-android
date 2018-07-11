@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 
 import uca.ruiz.antonio.tfgapp.R;
 
@@ -34,9 +35,10 @@ public class Utils {
                     case DialogInterface.BUTTON_POSITIVE:
                         // Usuario confirma la acción y sale de la aplicación
                         Activity activity = (Activity) ctx;
-                        activity.moveTaskToBack(true);
+                        /*activity.moveTaskToBack(true);
                         android.os.Process.killProcess(android.os.Process.myPid());
-                        System.exit(1);
+                        System.exit(1);*/
+                        activity.finishAffinity();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:

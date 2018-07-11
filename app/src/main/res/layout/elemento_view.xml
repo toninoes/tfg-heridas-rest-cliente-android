@@ -40,7 +40,8 @@
             android:text="@string/titulo"
             android:textColor="@color/naranja"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_2_2"
@@ -49,7 +50,8 @@
             android:layout_marginBottom="15dp"
             android:layout_marginTop="0dp"
             android:text="@string/descripcion"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone" />
 
         <!-- Campo 3 -->
         <TextView
@@ -59,7 +61,8 @@
             android:text="@string/titulo"
             android:textColor="@color/naranja"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_3_2"
@@ -68,7 +71,8 @@
             android:layout_marginBottom="15dp"
             android:layout_marginTop="0dp"
             android:text="@string/descripcion"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone" />
 
         <!-- Campo 4 -->
         <TextView

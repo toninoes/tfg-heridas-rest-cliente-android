@@ -87,6 +87,21 @@
             android:configChanges="orientation"
             android:label="@string/centro"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.SalasActivity"
+            android:configChanges="orientation"
+            android:label="@string/salas"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.SalaNewEditActivity"
+            android:configChanges="orientation"
+            android:label="@string/sala"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.SalaActivity"
+            android:configChanges="orientation"
+            android:label="@string/sala"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

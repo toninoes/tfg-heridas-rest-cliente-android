@@ -2,9 +2,9 @@ package uca.ruiz.antonio.tfgapp.ui.activity.admin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,14 +23,17 @@ import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
+import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
+import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.CentroAdapter;
+import uca.ruiz.antonio.tfgapp.ui.adapter.admin.SalaAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
-public class CentrosActivity extends AppCompatActivity {
+public class SalasActivity extends AppCompatActivity {
 
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
-    private CentroAdapter mAdapter;
+    private SalaAdapter mAdapter;
     private SwipeRefreshLayout srl_listado;
     private ProgressDialog progressDialog;
 
@@ -52,13 +57,13 @@ public class CentrosActivity extends AppCompatActivity {
         rv_listado.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         // Asociamos un adapter. Define cómo se renderizará la información que tenemos
-        mAdapter = new CentroAdapter(this);
+        mAdapter = new SalaAdapter(this);
         rv_listado.setAdapter(mAdapter);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.cargando));
 
-        cargarCentros();
+        cargarSalas();
 
         srl_listado = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
         srl_listado.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -68,6 +73,8 @@ public class CentrosActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,36 +91,47 @@ public class CentrosActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MainAdminActivity.class));
                 return true;
             case R.id.add_item:
-                startActivity(new Intent(this, CentroNewEditActivity.class));
+                startActivity(new Intent(this, SalaNewEditActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void cargarCentros() {
+    private void cargarSalas() {
         progressDialog.show();
-        Call<ArrayList<Centro>> call = MyApiAdapter.getApiService().getCentros(Pref.getToken());
-        call.enqueue(new Callback<ArrayList<Centro>>() {
+        Call<ArrayList<Sala>> call = MyApiAdapter.getApiService().getSalas(Pref.getToken());
+        call.enqueue(new Callback<ArrayList<Sala>>() {
             @Override
-            public void onResponse(Call<ArrayList<Centro>> call, Response<ArrayList<Centro>> response) {
+            public void onResponse(Call<ArrayList<Sala>> call, Response<ArrayList<Sala>> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    ArrayList<Centro> centros = response.body();
-                    if(centros != null) {
-                        Log.d("CENTROS", "Tamaño ==> " + centros.size());
+                    ArrayList<Sala> salas = response.body();
+                    if(salas != null) {
+                        Log.d("SALAS", "Tamaño ==> " + salas.size());
+
+                        // Ordenar las Salas según el nombre del Centro al que pertenecen
+                        // Prefiero hacerlo en cliente para descargar al servidor
+                        Collections.sort(salas, new Comparator<Sala>() {
+                            @Override
+                            public int compare(Sala s1, Sala s2) {
+                                return s1.getCentro().getNombre().compareTo(s2.getCentro().getNombre());
+                            }
+                        });
+
                     }
-                    mAdapter.setDataSet(centros);
+                    mAdapter.setDataSet(salas);
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Centro>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Sala>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(CentrosActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SalasActivity.this, "error :(", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
+
 
 }

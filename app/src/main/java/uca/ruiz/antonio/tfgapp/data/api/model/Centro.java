@@ -14,6 +14,10 @@ public class Centro implements Serializable {
     public Centro() {
     }
 
+    public Centro(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Centro(String nombre, String direccion, String telefono) {
         this.nombre = nombre;
         this.direccion = direccion;
@@ -50,5 +54,33 @@ public class Centro implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Centro centro = (Centro) o;
+
+        if (id != centro.id) return false;
+        if (!nombre.equals(centro.nombre)) return false;
+        if (!direccion.equals(centro.direccion)) return false;
+        return telefono != null ? telefono.equals(centro.telefono) : centro.telefono == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + nombre.hashCode();
+        result = 31 * result + direccion.hashCode();
+        result = 31 * result + (telefono != null ? telefono.hashCode() : 0);
+        return result;
     }
 }

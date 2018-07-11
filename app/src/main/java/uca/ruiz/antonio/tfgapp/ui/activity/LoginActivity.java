@@ -85,12 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        Utils.preguntarQuiereSalir(this);
-    }
-
-
     /**
      * Intenta iniciar sesión mediante el formulario de inicio de sesión.
      * Si hay errores de formulario (correo electrónico no válido, campos faltantes, etc.), se

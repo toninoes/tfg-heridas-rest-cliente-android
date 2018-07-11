@@ -48,6 +48,8 @@ public class MainAdminActivity extends AppCompatActivity {
     }
 
     public void salas(View view) {
+        Intent intent = new Intent(this, SalasActivity.class);
+        startActivity(intent);
     }
 
     public void gruposdiagnosticos(View view) {

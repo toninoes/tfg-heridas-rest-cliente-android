@@ -1,4 +1,4 @@
-package uca.ruiz.antonio.tfgapp.ui.adapter;
+package uca.ruiz.antonio.tfgapp.ui.adapter.admin;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,7 +24,6 @@ import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
-import uca.ruiz.antonio.tfgapp.ui.activity.CurasActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.admin.CentroActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.admin.CentroNewEditActivity;
 import uca.ruiz.antonio.tfgapp.utils.Pref;

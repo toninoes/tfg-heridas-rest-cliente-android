@@ -20,7 +20,7 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
-
+import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 
 
 public interface MyApiService {
@@ -103,5 +103,26 @@ public interface MyApiService {
     @PUT("api/centros/{id}")
     Call<Centro> editarCentro(@Path("id") Long id, @Body Centro c, @Header("Authorization") String token);
 
+
+    /* ======================= SALAS ======================= */
+    @Headers("Content-Type: application/json")
+    @GET("api/salas")
+    Call<ArrayList<Sala>> getSalas(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/salas/{id}")
+    Call<Sala> getSala(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @DELETE("api/salas/{id}")
+    Call<String> borrarSala(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/salas")
+    Call<Sala> crearSala(@Body Sala s, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/salas/{id}")
+    Call<Sala> editarSala(@Path("id") Long id, @Body Sala s, @Header("Authorization") String token);
 
 }
