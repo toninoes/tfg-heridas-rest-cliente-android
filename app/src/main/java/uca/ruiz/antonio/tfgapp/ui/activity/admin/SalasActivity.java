@@ -11,6 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,6 +39,8 @@ public class SalasActivity extends AppCompatActivity {
     private SalaAdapter mAdapter;
     private SwipeRefreshLayout srl_listado;
     private ProgressDialog progressDialog;
+    private EditText et_buscar;
+    private Button bt_buscar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,9 @@ public class SalasActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        et_buscar = (EditText) findViewById(R.id.et_buscar);
+        bt_buscar = (Button) findViewById(R.id.bt_buscar);
 
         rv_listado = (RecyclerView) findViewById(R.id.rv_listado);
         rv_listado.setHasFixedSize(true); // la altura de los elementos será la misma
@@ -72,9 +80,14 @@ public class SalasActivity extends AppCompatActivity {
                 recreate();
             }
         });
+
+        bt_buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cargarSalas(et_buscar.getText().toString());
+            }
+        });
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,6 +114,41 @@ public class SalasActivity extends AppCompatActivity {
     private void cargarSalas() {
         progressDialog.show();
         Call<ArrayList<Sala>> call = MyApiAdapter.getApiService().getSalas(Pref.getToken());
+        call.enqueue(new Callback<ArrayList<Sala>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Sala>> call, Response<ArrayList<Sala>> response) {
+                if(response.isSuccessful()) {
+                    progressDialog.cancel();
+                    ArrayList<Sala> salas = response.body();
+                    if(salas != null) {
+                        Log.d("SALAS", "Tamaño ==> " + salas.size());
+
+                        // Ordenar las Salas según el nombre del Centro al que pertenecen
+                        // Prefiero hacerlo en cliente para descargar al servidor
+                        Collections.sort(salas, new Comparator<Sala>() {
+                            @Override
+                            public int compare(Sala s1, Sala s2) {
+                                return s1.getCentro().getNombre().compareTo(s2.getCentro().getNombre());
+                            }
+                        });
+
+                    }
+                    mAdapter.setDataSet(salas);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Sala>> call, Throwable t) {
+                progressDialog.cancel();
+                Toast.makeText(SalasActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void cargarSalas(String s) {
+        progressDialog.show();
+        Call<ArrayList<Sala>> call = MyApiAdapter.getApiService().getSalasByFiltro(s, Pref.getToken());
         call.enqueue(new Callback<ArrayList<Sala>>() {
             @Override
             public void onResponse(Call<ArrayList<Sala>> call, Response<ArrayList<Sala>> response) {

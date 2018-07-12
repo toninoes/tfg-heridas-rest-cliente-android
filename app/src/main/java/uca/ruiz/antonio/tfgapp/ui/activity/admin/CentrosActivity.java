@@ -11,6 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,6 +34,8 @@ public class CentrosActivity extends AppCompatActivity {
     private CentroAdapter mAdapter;
     private SwipeRefreshLayout srl_listado;
     private ProgressDialog progressDialog;
+    private EditText et_buscar;
+    private Button bt_buscar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,9 @@ public class CentrosActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        et_buscar = (EditText) findViewById(R.id.et_buscar);
+        bt_buscar = (Button) findViewById(R.id.bt_buscar);
 
         rv_listado = (RecyclerView) findViewById(R.id.rv_listado);
         rv_listado.setHasFixedSize(true); // la altura de los elementos será la misma
@@ -65,6 +73,13 @@ public class CentrosActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 recreate();
+            }
+        });
+
+        bt_buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cargarCentros(et_buscar.getText().toString());
             }
         });
     }
@@ -113,7 +128,30 @@ public class CentrosActivity extends AppCompatActivity {
                 Toast.makeText(CentrosActivity.this, "error :(", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void cargarCentros(String s) {
+        progressDialog.show();
+        Call<ArrayList<Centro>> call = MyApiAdapter.getApiService().getCentrosByFiltro(s, Pref.getToken());
+        call.enqueue(new Callback<ArrayList<Centro>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Centro>> call, Response<ArrayList<Centro>> response) {
+                if(response.isSuccessful()) {
+                    progressDialog.cancel();
+                    ArrayList<Centro> centros = response.body();
+                    if(centros != null) {
+                        Log.d("CENTROS", "Tamaño ==> " + centros.size());
+                    }
+                    mAdapter.setDataSet(centros);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Centro>> call, Throwable t) {
+                progressDialog.cancel();
+                Toast.makeText(CentrosActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

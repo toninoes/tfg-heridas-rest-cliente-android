@@ -12,6 +12,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Login;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.User;
@@ -88,6 +89,11 @@ public interface MyApiService {
     Call<ArrayList<Centro>> getCentros(@Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
+    @GET("api/centros/filtro")
+    Call<ArrayList<Centro>> getCentrosByFiltro(@Query("filtro") String filtro,
+                                           @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
     @GET("api/centros/{id}")
     Call<Centro> getCentro(@Path("id") Long id, @Header("Authorization") String token);
 
@@ -108,6 +114,11 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/salas")
     Call<ArrayList<Sala>> getSalas(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/salas/filtro")
+    Call<ArrayList<Sala>> getSalasByFiltro(@Query("filtro") String filtro,
+                                           @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @GET("api/salas/{id}")

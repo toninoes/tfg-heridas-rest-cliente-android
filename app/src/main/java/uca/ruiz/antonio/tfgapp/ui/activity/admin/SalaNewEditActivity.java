@@ -29,11 +29,6 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
-import static uca.ruiz.antonio.tfgapp.R.id.et_direccion;
-import static uca.ruiz.antonio.tfgapp.R.id.et_telefono;
-import static uca.ruiz.antonio.tfgapp.R.string.centro;
-import static uca.ruiz.antonio.tfgapp.R.string.sala;
-
 
 public class SalaNewEditActivity extends AppCompatActivity {
 
@@ -57,7 +52,7 @@ public class SalaNewEditActivity extends AppCompatActivity {
 
         et_nombre = (EditText) findViewById(R.id.et_nombre);
         sp_centros = (Spinner) findViewById(R.id.sp_centros);
-        sp_centros_text = (TextView) findViewById(R.id.sp_centros_text);
+        sp_centros_text = (TextView) findViewById(R.id.sp_centros_error);
 
         try { // editar
             sala = (Sala) getIntent().getExtras().getSerializable("sala");
