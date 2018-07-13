@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@android:color/background_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/centros"
                     android:onClick="centros"
                     app:srcCompat="@drawable/ic_centro" />
@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@android:color/background_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/salas"
                     android:onClick="salas"
                     app:srcCompat="@drawable/ic_sala" />
@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@android:color/background_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/grupos_diagnosticos"
                     android:onClick="gruposdiagnosticos"
                     app:srcCompat="@drawable/ic_grupodiagnostico" />
@@ -166,7 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@android:color/background_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/diagnosticos"
                     android:onClick="diagnosticos"
                     app:srcCompat="@drawable/ic_diagnostico" />
@@ -202,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@android:color/background_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/procedimientos"
                     android:onClick="procedimientos"
                     app:srcCompat="@drawable/ic_procedimiento" />
@@ -238,7 +238,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@android:color/background_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/cuidados"
                     android:onClick="cuidados"
                     app:srcCompat="@drawable/ic_cuidado" />
@@ -284,7 +284,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@android:color/background_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/pacientes"
                     android:onClick="pacientes"
                     app:srcCompat="@drawable/ic_paciente" />
@@ -320,7 +320,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@android:color/background_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/sanitarios"
                     android:onClick="sanitarios"
                     app:srcCompat="@drawable/ic_sanitario" />
@@ -356,7 +356,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@android:color/background_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/valoraciones"
                     android:onClick="valoraciones"
                     app:srcCompat="@drawable/ic_valoracion" />

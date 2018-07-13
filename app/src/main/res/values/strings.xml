@@ -89,4 +89,5 @@
     <string name="seleccione_centro">Seleccione un Centro</string>
     <string name="debes_seleccionar_centro">Debes seleccionar un Centro.</string>
     <string name="buscar">Buscar</string>
+    <string name="introduce_palabras_clave">Introduce palabras clave</string>
 </resources>

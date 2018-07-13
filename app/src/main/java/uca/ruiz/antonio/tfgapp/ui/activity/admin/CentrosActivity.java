@@ -2,6 +2,7 @@ package uca.ruiz.antonio.tfgapp.ui.activity.admin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.CentroAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
+import uca.ruiz.antonio.tfgapp.utils.Utils;
 
 public class CentrosActivity extends AppCompatActivity {
 
@@ -104,6 +106,11 @@ public class CentrosActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainAdminActivity.class));
     }
 
     private void cargarCentros() {

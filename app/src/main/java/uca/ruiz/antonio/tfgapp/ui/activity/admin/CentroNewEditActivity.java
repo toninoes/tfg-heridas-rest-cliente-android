@@ -95,7 +95,7 @@ public class CentroNewEditActivity extends AppCompatActivity {
         //tomo el contenido de los campos
         String nombre = et_nombre.getText().toString();
         String direccion = et_direccion.getText().toString();
-        String telefono = et_telefono.getText().toString();
+        String telefono = et_telefono.getText().toString().replaceAll("\\s", "");
 
         boolean cancel = false;
         View focusView = null;

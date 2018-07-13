@@ -25,10 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
-import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
-import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
-import uca.ruiz.antonio.tfgapp.ui.adapter.admin.CentroAdapter;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.SalaAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
@@ -109,6 +106,11 @@ public class SalasActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainAdminActivity.class));
     }
 
     private void cargarSalas() {

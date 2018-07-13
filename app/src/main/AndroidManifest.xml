@@ -14,7 +14,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:label="@string/login">
+            android:configChanges="orientation"
+            android:label="@string/login"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
