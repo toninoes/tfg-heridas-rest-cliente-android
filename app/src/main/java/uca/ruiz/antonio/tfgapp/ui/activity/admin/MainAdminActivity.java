@@ -81,14 +81,16 @@ public class MainAdminActivity extends AppCompatActivity {
         ll_gruposdiagnosticos.setBackgroundResource(R.color.grisFondoLL);
         progressDialog.show();
 
-        // Intent aqui;
+        Intent intent = new Intent(this, GruposdiagnosticosActivity.class);
+        startActivity(intent);
     }
 
     public void diagnosticos(View view) {
         ll_diagnosticos.setBackgroundResource(R.color.grisFondoLL);
         progressDialog.show();
 
-        // Intent aqui;
+        Intent intent = new Intent(this, DiagnosticosActivity.class);
+        startActivity(intent);
     }
 
     public void procedimientos(View view) {

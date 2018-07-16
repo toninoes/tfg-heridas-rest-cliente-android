@@ -90,4 +90,9 @@
     <string name="debes_seleccionar_centro">Debes seleccionar un Centro.</string>
     <string name="buscar">Buscar</string>
     <string name="introduce_palabras_clave">Introduce palabras clave</string>
+    <string name="grupo_diagnostico">Grupo Diagnóstico</string>
+    <string name="codigo">Código</string>
+    <string name="seleccione_grupo_diagnostico">Seleccione Grupo Diagnóstico</string>
+    <string name="debes_seleccionar_grupo_diagnosticos">Debes seleccionar un Grupo Diagnóstico</string>
+    <string name="campo_no_vacio">Este campo no puede estar vacío</string>
 </resources>

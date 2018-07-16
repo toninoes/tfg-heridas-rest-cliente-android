@@ -2,8 +2,8 @@ package uca.ruiz.antonio.tfgapp.ui.activity.admin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,40 +19,36 @@ import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
-import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
+import uca.ruiz.antonio.tfgapp.data.api.model.Grupodiagnostico;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
 
-public class CentroNewEditActivity extends AppCompatActivity {
+public class GrupodiagnosticoNewEditActivity extends AppCompatActivity {
 
-    private static final String TAG = CentroNewEditActivity.class.getSimpleName();
-    private EditText et_nombre, et_direccion, et_telefono;
-    private Centro centro;
+    private static final String TAG = GrupodiagnosticoNewEditActivity.class.getSimpleName();
+    private EditText et_nombre;
+    private Grupodiagnostico grupodiagnostico;
     private Boolean editando = false;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_centro_new_edit);
+        setContentView(R.layout.activity_grupodiagnostico_new_edit);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         et_nombre = (EditText) findViewById(R.id.et_nombre);
-        et_direccion = (EditText) findViewById(R.id.et_direccion);
-        et_telefono = (EditText) findViewById(R.id.et_telefono);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.guardando));
 
         try { // editar
-            centro = (Centro) getIntent().getExtras().getSerializable("centro");
-            et_nombre.setText(centro.getNombre());
-            et_direccion.setText(centro.getDireccion());
-            et_telefono.setText(centro.getTelefono());
+            grupodiagnostico = (Grupodiagnostico) getIntent().getExtras().getSerializable("grupodiagnostico");
+            et_nombre.setText(grupodiagnostico.getNombre());
             editando = true;
         } catch (Exception e) {
             Log.d(TAG, getString(R.string.creando_nuevo_registro));
@@ -72,7 +68,7 @@ public class CentroNewEditActivity extends AppCompatActivity {
 
         switch (id) {
             case android.R.id.home:
-                startActivity(new Intent(this, CentrosActivity.class));
+                startActivity(new Intent(this, GruposdiagnosticosActivity.class));
                 return true;
             case R.id.action_guardar:
                 intentarGuardar();
@@ -89,23 +85,12 @@ public class CentroNewEditActivity extends AppCompatActivity {
     private void intentarGuardar() {
         // Resetear errores
         et_nombre.setError(null);
-        et_direccion.setError(null);
-        et_telefono.setError(null);
 
         //tomo el contenido de los campos
         String nombre = et_nombre.getText().toString();
-        String direccion = et_direccion.getText().toString();
-        String telefono = et_telefono.getText().toString().replaceAll("\\s", "");
 
         boolean cancel = false;
         View focusView = null;
-
-        // Valida campo Dirección
-        if(Validacion.vacio(direccion)) {
-            et_direccion.setError(getString(R.string.campo_no_vacio));
-            focusView = et_direccion;
-            cancel = true;
-        }
 
         // Valida campo Nombre
         if(Validacion.vacio(nombre)) {
@@ -120,31 +105,31 @@ public class CentroNewEditActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             // ha ido bien, luego se procede a crear o editar.
-            Centro c = new Centro(nombre, direccion, telefono);
+            Grupodiagnostico gd = new Grupodiagnostico(nombre);
             if(editando)
-                editar(c);
+                editar(gd);
             else
-                nuevo(c);
+                nuevo(gd);
         }
 
     }
 
-    private void nuevo(Centro c) {
+    private void nuevo(Grupodiagnostico gd) {
         progressDialog.show();
-        Call<Centro> call = MyApiAdapter.getApiService().crearCentro(c, Pref.getToken());
-        call.enqueue(new Callback<Centro>() {
+        Call<Grupodiagnostico> call = MyApiAdapter.getApiService().crearGrupodiagnostico(gd, Pref.getToken());
+        call.enqueue(new Callback<Grupodiagnostico>() {
             @Override
-            public void onResponse(Call<Centro> call, Response<Centro> response) {
+            public void onResponse(Call<Grupodiagnostico> call, Response<Grupodiagnostico> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(CentroNewEditActivity.this, getString(R.string.creado_registro),
+                    Toast.makeText(GrupodiagnosticoNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CentroNewEditActivity.this, CentrosActivity.class));
+                    startActivity(new Intent(GrupodiagnosticoNewEditActivity.this, GruposdiagnosticosActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toast.makeText(CentroNewEditActivity.this, apiError.getMessage(),
+                        Toast.makeText(GrupodiagnosticoNewEditActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -158,29 +143,30 @@ public class CentroNewEditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Centro> call, Throwable t) {
+            public void onFailure(Call<Grupodiagnostico> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(CentroNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
+                Toast.makeText(GrupodiagnosticoNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
             }
         });
 
     }
 
-    private void editar(Centro c) {
+    private void editar(Grupodiagnostico gd) {
         progressDialog.show();
-        Call<Centro> call = MyApiAdapter.getApiService().editarCentro(centro.getId(), c, Pref.getToken());
-        call.enqueue(new Callback<Centro>() {
+        Call<Grupodiagnostico> call = MyApiAdapter.getApiService().editarGrupodiagnostico(grupodiagnostico.getId(),
+                gd, Pref.getToken());
+        call.enqueue(new Callback<Grupodiagnostico>() {
             @Override
-            public void onResponse(Call<Centro> call, Response<Centro> response) {
+            public void onResponse(Call<Grupodiagnostico> call, Response<Grupodiagnostico> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(CentroNewEditActivity.this, getString(R.string.editado_registro), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CentroNewEditActivity.this, CentrosActivity.class));
+                    Toast.makeText(GrupodiagnosticoNewEditActivity.this, getString(R.string.editado_registro), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(GrupodiagnosticoNewEditActivity.this, GruposdiagnosticosActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toast.makeText(CentroNewEditActivity.this, apiError.getMessage(),
+                        Toast.makeText(GrupodiagnosticoNewEditActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -194,9 +180,9 @@ public class CentroNewEditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Centro> call, Throwable t) {
+            public void onFailure(Call<Grupodiagnostico> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(CentroNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
+                Toast.makeText(GrupodiagnosticoNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
             }
         });
     }

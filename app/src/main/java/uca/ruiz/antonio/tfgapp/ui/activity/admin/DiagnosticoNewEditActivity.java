@@ -24,50 +24,55 @@ import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
-import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
-import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
+import uca.ruiz.antonio.tfgapp.data.api.model.Diagnostico;
+import uca.ruiz.antonio.tfgapp.data.api.model.Grupodiagnostico;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
 
-public class SalaNewEditActivity extends AppCompatActivity {
+public class DiagnosticoNewEditActivity extends AppCompatActivity {
 
-    private static final String TAG = SalaNewEditActivity.class.getSimpleName();
-    private EditText et_nombre;
-    private Spinner sp_centros;
-    private  TextView sp_centros_text;
-    private Sala sala;
-    private Centro centro;
+    private static final String TAG = DiagnosticoNewEditActivity.class.getSimpleName();
+    private EditText et_nombre, et_codigo;
+    private Spinner sp_gruposdiagnosticos;
+    private  TextView sp_gruposdiagnosticos_text;
+    private Diagnostico diagnostico;
+    private Grupodiagnostico grupodiagnostico;
     private Boolean editando = false;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sala_new_edit);
+        setContentView(R.layout.activity_diagnostico_new_edit);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         et_nombre = (EditText) findViewById(R.id.et_nombre);
-        sp_centros = (Spinner) findViewById(R.id.sp_centros);
-        sp_centros_text = (TextView) findViewById(R.id.sp_centros_error);
+        et_codigo = (EditText) findViewById(R.id.et_codigo);
+        sp_gruposdiagnosticos = (Spinner) findViewById(R.id.sp_gruposdiagnosticos);
+        sp_gruposdiagnosticos_text = (TextView) findViewById(R.id.sp_gruposdiagnosticos_error);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.guardando));
 
         try { // editar
-            sala = (Sala) getIntent().getExtras().getSerializable("sala");
-            et_nombre.setText(sala.getNombre());
-            cargarCentros(sp_centros, sala);
+            diagnostico = (Diagnostico) getIntent().getExtras().getSerializable("diagnostico");
+            et_codigo.setText(diagnostico.getCodigo());
+            et_nombre.setText(diagnostico.getNombre());
+            cargarGruposdiagnosticos(sp_gruposdiagnosticos, diagnostico);
             editando = true;
-        } catch (Exception e) { // nuevo
+        } catch (Exception e) {
             Log.d(TAG, getString(R.string.creando_nuevo_registro));
-            cargarCentros(sp_centros, sala); // sala tiene id=0.
+            cargarGruposdiagnosticos(sp_gruposdiagnosticos, diagnostico); // diagnostico.id = 0
         }
 
-        sp_centros.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_gruposdiagnosticos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                centro = (Centro) adapterView.getAdapter().getItem(i);
+                grupodiagnostico = (Grupodiagnostico) adapterView.getAdapter().getItem(i);
             }
 
             @Override
@@ -76,8 +81,6 @@ public class SalaNewEditActivity extends AppCompatActivity {
             }
         });
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.guardando));
     }
 
 
@@ -93,7 +96,7 @@ public class SalaNewEditActivity extends AppCompatActivity {
 
         switch (id) {
             case android.R.id.home:
-                startActivity(new Intent(this, SalasActivity.class));
+                startActivity(new Intent(this, DiagnosticosActivity.class));
                 return true;
             case R.id.action_guardar:
                 intentarGuardar();
@@ -110,18 +113,27 @@ public class SalaNewEditActivity extends AppCompatActivity {
     private void intentarGuardar() {
         // Resetear errores
         et_nombre.setError(null);
-        sp_centros_text.setError(null);
+        et_codigo.setError(null);
+        sp_gruposdiagnosticos_text.setError(null);
 
         //tomo el contenido de los campos
         String nombre = et_nombre.getText().toString();
+        String codigo = et_codigo.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Validar listado de Centros
-        if(centro.getId() == 0 || centro == null) {
-            sp_centros_text.setError(getString(R.string.debes_seleccionar_centro));
-            focusView = sp_centros_text;
+        // Validar listado de Grupos Diagnosticos
+        if(grupodiagnostico.getId() == 0 || grupodiagnostico == null) {
+            sp_gruposdiagnosticos_text.setError(getString(R.string.debes_seleccionar_grupo_diagnosticos));
+            focusView = sp_gruposdiagnosticos_text;
+            cancel = true;
+        }
+
+        // Valida código
+        if(Validacion.vacio(codigo)) {
+            et_codigo.setError(getString(R.string.campo_no_vacio));
+            focusView = et_codigo;
             cancel = true;
         }
 
@@ -138,31 +150,31 @@ public class SalaNewEditActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             // ha ido bien, luego se procede a crear o editar.
-            Sala s = new Sala(nombre, centro);
+            Diagnostico d = new Diagnostico(codigo, nombre, grupodiagnostico);
             if(editando)
-                editar(s);
+                editar(d);
             else
-                nuevo(s);
+                nuevo(d);
         }
 
     }
 
-    private void nuevo(Sala s) {
+    private void nuevo(Diagnostico c) {
         progressDialog.show();
-        Call<Sala> call = MyApiAdapter.getApiService().crearSala(s, Pref.getToken());
-        call.enqueue(new Callback<Sala>() {
+        Call<Diagnostico> call = MyApiAdapter.getApiService().crearDiagnostico(c, Pref.getToken());
+        call.enqueue(new Callback<Diagnostico>() {
             @Override
-            public void onResponse(Call<Sala> call, Response<Sala> response) {
+            public void onResponse(Call<Diagnostico> call, Response<Diagnostico> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(SalaNewEditActivity.this, getString(R.string.creado_registro),
+                    Toast.makeText(DiagnosticoNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SalaNewEditActivity.this, SalasActivity.class));
+                    startActivity(new Intent(DiagnosticoNewEditActivity.this, DiagnosticosActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toast.makeText(SalaNewEditActivity.this, apiError.getMessage(),
+                        Toast.makeText(DiagnosticoNewEditActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -176,29 +188,29 @@ public class SalaNewEditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Sala> call, Throwable t) {
+            public void onFailure(Call<Diagnostico> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(SalaNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
+                Toast.makeText(DiagnosticoNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
             }
         });
 
     }
 
-    private void editar(Sala s) {
+    private void editar(Diagnostico c) {
         progressDialog.show();
-        Call<Sala> call = MyApiAdapter.getApiService().editarSala(sala.getId(), s, Pref.getToken());
-        call.enqueue(new Callback<Sala>() {
+        Call<Diagnostico> call = MyApiAdapter.getApiService().editarDiagnostico(diagnostico.getId(), c, Pref.getToken());
+        call.enqueue(new Callback<Diagnostico>() {
             @Override
-            public void onResponse(Call<Sala> call, Response<Sala> response) {
+            public void onResponse(Call<Diagnostico> call, Response<Diagnostico> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(SalaNewEditActivity.this, getString(R.string.editado_registro), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SalaNewEditActivity.this, SalasActivity.class));
+                    Toast.makeText(DiagnosticoNewEditActivity.this, getString(R.string.editado_registro), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(DiagnosticoNewEditActivity.this, DiagnosticosActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toast.makeText(SalaNewEditActivity.this, apiError.getMessage(),
+                        Toast.makeText(DiagnosticoNewEditActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -212,42 +224,41 @@ public class SalaNewEditActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Sala> call, Throwable t) {
+            public void onFailure(Call<Diagnostico> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(SalaNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
+                Toast.makeText(DiagnosticoNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void cargarCentros(final Spinner sp_centros, final Sala sala) {
-        Call<ArrayList<Centro>> call = MyApiAdapter.getApiService().getCentros(Pref.getToken());
-        call.enqueue(new Callback<ArrayList<Centro>>() {
+    private void cargarGruposdiagnosticos(final Spinner sp_gruposdiagnosticos, final Diagnostico diagnostico) {
+        Call<ArrayList<Grupodiagnostico>> call = MyApiAdapter.getApiService().getGruposdiagnosticos(Pref.getToken());
+        call.enqueue(new Callback<ArrayList<Grupodiagnostico>>() {
             @Override
-            public void onResponse(Call<ArrayList<Centro>> call, Response<ArrayList<Centro>> response) {
+            public void onResponse(Call<ArrayList<Grupodiagnostico>> call, Response<ArrayList<Grupodiagnostico>> response) {
                 if(response.isSuccessful()) {
-                    ArrayList<Centro> centros = response.body();
+                    ArrayList<Grupodiagnostico> gruposdiagnosticos = response.body();
 
-                    if(centros != null) {
-                        centros.add(0, new Centro(getString(R.string.seleccione_centro)));
-                        ArrayAdapter<Centro> arrayAdapter = new ArrayAdapter<Centro>(SalaNewEditActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item, centros);
+                    if(gruposdiagnosticos != null) {
+                        gruposdiagnosticos.add(0, new Grupodiagnostico(getString(R.string.seleccione_grupo_diagnostico)));
+                        ArrayAdapter<Grupodiagnostico> arrayAdapter = new ArrayAdapter<Grupodiagnostico>(DiagnosticoNewEditActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item, gruposdiagnosticos);
 
-                        Log.d("CENTROS", "Tamaño ==> " + centros.size());
-                        sp_centros.setAdapter(arrayAdapter);
+                        Log.d("GRUPOS DIAGNOSTICOS", "Tamaño ==> " + gruposdiagnosticos.size());
+                        sp_gruposdiagnosticos.setAdapter(arrayAdapter);
                         if(editando) {
-                            sp_centros.setSelection(centros.indexOf(sala.getCentro()));
+                            sp_gruposdiagnosticos.setSelection(gruposdiagnosticos.indexOf(diagnostico.getGrupodiagnostico()));
                         }
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Centro>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Grupodiagnostico>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(SalaNewEditActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DiagnosticoNewEditActivity.this, "error :(", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 

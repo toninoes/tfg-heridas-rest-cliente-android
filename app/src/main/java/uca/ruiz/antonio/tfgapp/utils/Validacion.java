@@ -15,11 +15,9 @@ public class Validacion {
     private static final int minNombre = 3;
     private static final int maxNombre = 50;
 
-    private static final int minApellidos = 3;
-    private static final int maxApellidos = 100;
-
-    private static final int minDireccion = 10;
-    private static final int maxDireccion = 200;
+    public  static boolean vacio (String s) {
+        return s == null || s.trim().isEmpty();
+    }
 
     public static boolean formatoEmail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
@@ -35,14 +33,6 @@ public class Validacion {
 
     public static boolean tamNombre(String nombre) {
         return nombre.length() >= minNombre && nombre.length() <= maxNombre;
-    }
-
-    public static boolean tamApellidos(String apellidos) {
-        return apellidos.length() >= minApellidos && apellidos.length() <= maxApellidos;
-    }
-
-    public static boolean tamDireccion(String direccion) {
-        return direccion.length() >= minDireccion && direccion.length() <= maxDireccion;
     }
 
 }

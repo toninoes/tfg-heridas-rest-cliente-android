@@ -104,6 +104,36 @@
             android:configChanges="orientation"
             android:label="@string/sala"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.GruposdiagnosticosActivity"
+            android:configChanges="orientation"
+            android:label="@string/grupos_diagnosticos"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.GrupodiagnosticoNewEditActivity"
+            android:configChanges="orientation"
+            android:label="@string/grupo_diagnostico"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.GrupodiagnosticoActivity"
+            android:configChanges="orientation"
+            android:label="@string/grupo_diagnostico"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.DiagnosticosActivity"
+            android:configChanges="orientation"
+            android:label="@string/diagnosticos"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.DiagnosticoNewEditActivity"
+            android:configChanges="orientation"
+            android:label="@string/diagnostico"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.DiagnosticoActivity"
+            android:configChanges="orientation"
+            android:label="@string/diagnostico"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
