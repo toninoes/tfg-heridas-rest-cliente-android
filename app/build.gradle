@@ -26,14 +26,19 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    //retrofit2
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+
+    //retrofit2
     compile 'com.squareup.retrofit2:retrofit:2.4.0'
     compile 'com.squareup.retrofit2:converter-gson:2.4.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+
+    //recyclerview
     compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.jakewharton:butterknife:8.8.1'
     compile 'com.android.support:design:25.3.1'
-    testCompile 'junit:junit:4.12'
+
+    //Toasty
+    compile 'com.github.GrenderG:Toasty:1.3.0'
 }

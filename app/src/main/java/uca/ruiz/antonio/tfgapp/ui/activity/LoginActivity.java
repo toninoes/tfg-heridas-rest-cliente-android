@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -149,14 +153,22 @@ public class LoginActivity extends AppCompatActivity {
                     obtenerUsuario(token);
                 } else {
                     progressDialog.cancel();
-                    Toast.makeText(LoginActivity.this, "Login incorrecto !", Toast.LENGTH_SHORT).show();
+                    Toasty.error(LoginActivity.this, getString(R.string.error_acceso), Toast.LENGTH_SHORT, true).show();
                 }
             }
 
             @Override
             public void onFailure(Call<TokenResponse> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(LoginActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(LoginActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(LoginActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }
@@ -175,15 +187,27 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     UserResponse user = response.body();
                     definirUsuarioAndMain(user);
+                    Toasty.success(LoginActivity.this, getString(R.string.bienvenido) + ", " +
+                            user.getFirstname(), Toast.LENGTH_SHORT, true).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Token incorrecto !", Toast.LENGTH_SHORT).show();
+                    Toasty.error(LoginActivity.this, getString(R.string.error_token_incorrecto),
+                            Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+                progressDialog.cancel();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(LoginActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_SHORT, true).show();
+                } else {
+                    Toasty.error(LoginActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_SHORT, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }

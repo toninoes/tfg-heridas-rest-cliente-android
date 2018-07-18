@@ -196,9 +196,9 @@ public class DiagnosticoNewEditActivity extends AppCompatActivity {
 
     }
 
-    private void editar(Diagnostico c) {
+    private void editar(Diagnostico d) {
         progressDialog.show();
-        Call<Diagnostico> call = MyApiAdapter.getApiService().editarDiagnostico(diagnostico.getId(), c, Pref.getToken());
+        Call<Diagnostico> call = MyApiAdapter.getApiService().editarDiagnostico(diagnostico.getId(), d, Pref.getToken());
         call.enqueue(new Callback<Diagnostico>() {
             @Override
             public void onResponse(Call<Diagnostico> call, Response<Diagnostico> response) {

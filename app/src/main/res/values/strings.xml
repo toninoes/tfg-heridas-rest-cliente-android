@@ -95,4 +95,9 @@
     <string name="seleccione_grupo_diagnostico">Seleccione Grupo Diagnóstico</string>
     <string name="debes_seleccionar_grupo_diagnosticos">Debes seleccionar un Grupo Diagnóstico</string>
     <string name="campo_no_vacio">Este campo no puede estar vacío</string>
+    <string name="error_conversion">Error de conversión. Contacte con su administrador.</string>
+    <string name="error_conexion_red">Hay un problema con su conexión de red. Revíselo e inténtelo de nuevo.</string>
+    <string name="error_acceso">Email o contraseña incorrectos</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="error_token_incorrecto">¡Token de acceso incorrecto!</string>
 </resources>
