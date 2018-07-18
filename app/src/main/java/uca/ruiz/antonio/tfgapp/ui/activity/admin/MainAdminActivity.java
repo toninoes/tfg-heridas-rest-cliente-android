@@ -1,25 +1,22 @@
 package uca.ruiz.antonio.tfgapp.ui.activity.admin;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import uca.ruiz.antonio.tfgapp.R;
+import uca.ruiz.antonio.tfgapp.ui.activity.ProcesosActivity;
 import uca.ruiz.antonio.tfgapp.utils.Utils;
 
 public class MainAdminActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     private LinearLayout ll_centros, ll_salas, ll_gruposdiagnosticos;
-    private LinearLayout ll_diagnosticos, ll_procedimientos, ll_cuidados;
+    private LinearLayout ll_diagnosticos, ll_procedimientos, ll_administradores;
     private LinearLayout ll_pacientes, ll_sanitarios, ll_valoraciones;
 
     @Override
@@ -36,7 +33,7 @@ public class MainAdminActivity extends AppCompatActivity {
         ll_gruposdiagnosticos = (LinearLayout) findViewById(R.id.ll_gruposdiagnosticos);
         ll_diagnosticos = (LinearLayout) findViewById(R.id.ll_diagnosticos);
         ll_procedimientos = (LinearLayout) findViewById(R.id.ll_procedimientos);
-        ll_cuidados = (LinearLayout) findViewById(R.id.ll_cuidados);
+        ll_administradores = (LinearLayout) findViewById(R.id.ll_administradores);
         ll_pacientes = (LinearLayout) findViewById(R.id.ll_pacientes);
         ll_sanitarios = (LinearLayout) findViewById(R.id.ll_sanitarios);
         ll_valoraciones = (LinearLayout) findViewById(R.id.ll_valoraciones);
@@ -97,11 +94,12 @@ public class MainAdminActivity extends AppCompatActivity {
         ll_procedimientos.setBackgroundResource(R.color.grisFondoLL);
         progressDialog.show();
 
-        // Intent aqui;
+        Intent intent = new Intent(this, ProcedimientosActivity.class);
+        startActivity(intent);
     }
 
-    public void cuidados(View view) {
-        ll_cuidados.setBackgroundResource(R.color.grisFondoLL);
+    public void administradores(View view) {
+        ll_administradores.setBackgroundResource(R.color.grisFondoLL);
         progressDialog.show();
 
         // Intent aqui;

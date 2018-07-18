@@ -134,6 +134,21 @@
             android:configChanges="orientation"
             android:label="@string/diagnostico"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.ProcedimientosActivity"
+            android:configChanges="orientation"
+            android:label="@string/procedimientos"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.ProcedimientoNewEditActivity"
+            android:configChanges="orientation"
+            android:label="@string/procedimiento"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.ProcedimientoActivity"
+            android:configChanges="orientation"
+            android:label="@string/procedimiento"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

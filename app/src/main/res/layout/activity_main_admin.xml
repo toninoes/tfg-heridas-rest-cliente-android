@@ -220,7 +220,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_cuidados"
+            android:id="@+id/ll_administradores"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -234,21 +234,21 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/ib_cuidados"
+                    android:id="@+id/ib_administradores"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/cuidados"
-                    android:onClick="cuidados"
-                    app:srcCompat="@drawable/ic_cuidado" />
+                    android:contentDescription="@string/administradores"
+                    android:onClick="administradores"
+                    app:srcCompat="@drawable/ic_admin" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/cuidados"
+                    android:text="@string/administradores"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 
@@ -264,42 +264,6 @@
         android:layout_weight="1"
         android:baselineAligned="false"
         android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/ll_pacientes"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                tools:ignore="UselessParent">
-
-                <ImageButton
-                    android:id="@+id/ib_pacientes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="@string/pacientes"
-                    android:onClick="pacientes"
-                    app:srcCompat="@drawable/ic_paciente" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:clickable="false"
-                    android:text="@string/pacientes"
-                    android:textAlignment="center"
-                    android:textColor="@color/naranja" />
-
-            </LinearLayout>
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_sanitarios"
@@ -331,6 +295,42 @@
                     android:layout_weight="1"
                     android:clickable="false"
                     android:text="@string/sanitarios"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_pacientes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_pacientes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/pacientes"
+                    android:onClick="pacientes"
+                    app:srcCompat="@drawable/ic_paciente" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/pacientes"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 

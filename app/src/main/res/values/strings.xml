@@ -63,7 +63,7 @@
     <string name="grupos_diagnosticos">Grupos Diagnósticos</string>
     <string name="diagnosticos">Diagnósticos</string>
     <string name="procedimientos">Procedimientos</string>
-    <string name="cuidados">Cuidados</string>
+    <string name="administradores">Administradores</string>
     <string name="sanitarios">Sanitarios</string>
     <string name="valoraciones">Valoraciones</string>
     <string name="cargando">Cargando...</string>
@@ -100,4 +100,5 @@
     <string name="error_acceso">Email o contraseña incorrectos</string>
     <string name="bienvenido">Bienvenido</string>
     <string name="error_token_incorrecto">¡Token de acceso incorrecto!</string>
+    <string name="procedimiento">Procedimiento</string>
 </resources>

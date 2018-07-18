@@ -21,6 +21,7 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
 import uca.ruiz.antonio.tfgapp.data.api.model.Diagnostico;
 import uca.ruiz.antonio.tfgapp.data.api.model.Grupodiagnostico;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
+import uca.ruiz.antonio.tfgapp.data.api.model.Procedimiento;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 
@@ -192,6 +193,34 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @PUT("api/diagnosticos/{id}")
     Call<Diagnostico> editarDiagnostico(@Path("id") Long id, @Body Diagnostico d,
+                                        @Header("Authorization") String token);
+
+
+    /* ======================= PROCEDIMIENTOS ======================= */
+    @Headers("Content-Type: application/json")
+    @GET("api/procedimientos")
+    Call<ArrayList<Procedimiento>> getProcedimientos(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/procedimientos/filtro")
+    Call<ArrayList<Procedimiento>> getProcedimientosByFiltro(@Query("filtro") String filtro,
+                                                         @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/procedimientos/{id}")
+    Call<Procedimiento> getProcedimiento(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @DELETE("api/procedimientos/{id}")
+    Call<String> borrarProcedimiento(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/procedimientos")
+    Call<Procedimiento> crearProcedimiento(@Body Procedimiento p, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/procedimientos/{id}")
+    Call<Procedimiento> editarProcedimiento(@Path("id") Long id, @Body Procedimiento p,
                                         @Header("Authorization") String token);
 
 }
