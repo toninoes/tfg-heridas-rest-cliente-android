@@ -2,7 +2,6 @@ package uca.ruiz.antonio.tfgapp.ui.activity.admin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,8 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,10 +28,10 @@ import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.CentroAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
-import uca.ruiz.antonio.tfgapp.utils.Utils;
 
 public class CentrosActivity extends AppCompatActivity {
 
+    private static final String TAG = CentrosActivity.class.getSimpleName();
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
     private CentroAdapter mAdapter;
@@ -132,7 +133,15 @@ public class CentrosActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Centro>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(CentrosActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(CentrosActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(CentrosActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }
@@ -156,7 +165,15 @@ public class CentrosActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Centro>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(CentrosActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(CentrosActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(CentrosActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }

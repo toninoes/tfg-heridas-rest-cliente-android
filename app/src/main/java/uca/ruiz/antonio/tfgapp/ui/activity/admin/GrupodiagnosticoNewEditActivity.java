@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,6 +21,7 @@ import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Grupodiagnostico;
+import uca.ruiz.antonio.tfgapp.ui.activity.LoginActivity;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
@@ -122,15 +124,15 @@ public class GrupodiagnosticoNewEditActivity extends AppCompatActivity {
             public void onResponse(Call<Grupodiagnostico> call, Response<Grupodiagnostico> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(GrupodiagnosticoNewEditActivity.this, getString(R.string.creado_registro),
-                            Toast.LENGTH_SHORT).show();
+                    Toasty.success(GrupodiagnosticoNewEditActivity.this, getString(R.string.creado_registro),
+                            Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(GrupodiagnosticoNewEditActivity.this, GruposdiagnosticosActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toast.makeText(GrupodiagnosticoNewEditActivity.this, apiError.getMessage(),
-                                Toast.LENGTH_LONG).show();
+                        Toasty.error(GrupodiagnosticoNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
                         try {
@@ -144,8 +146,14 @@ public class GrupodiagnosticoNewEditActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Grupodiagnostico> call, Throwable t) {
-                progressDialog.cancel();
-                Toast.makeText(GrupodiagnosticoNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
+                progressDialog.cancel();if (t instanceof IOException) {
+                    Toasty.warning(GrupodiagnosticoNewEditActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(GrupodiagnosticoNewEditActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
 
@@ -160,14 +168,15 @@ public class GrupodiagnosticoNewEditActivity extends AppCompatActivity {
             public void onResponse(Call<Grupodiagnostico> call, Response<Grupodiagnostico> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(GrupodiagnosticoNewEditActivity.this, getString(R.string.editado_registro), Toast.LENGTH_SHORT).show();
+                    Toasty.success(GrupodiagnosticoNewEditActivity.this, getString(R.string.editado_registro),
+                            Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(GrupodiagnosticoNewEditActivity.this, GruposdiagnosticosActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toast.makeText(GrupodiagnosticoNewEditActivity.this, apiError.getMessage(),
-                                Toast.LENGTH_LONG).show();
+                        Toasty.error(GrupodiagnosticoNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
                         try {
@@ -182,7 +191,15 @@ public class GrupodiagnosticoNewEditActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Grupodiagnostico> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(GrupodiagnosticoNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(GrupodiagnosticoNewEditActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(GrupodiagnosticoNewEditActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }

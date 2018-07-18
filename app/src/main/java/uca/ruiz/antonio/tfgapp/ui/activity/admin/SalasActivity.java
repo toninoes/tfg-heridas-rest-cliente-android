@@ -16,10 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +33,7 @@ import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 public class SalasActivity extends AppCompatActivity {
 
+    private static final String TAG = SalasActivity.class.getSimpleName();
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
     private SalaAdapter mAdapter;
@@ -142,7 +145,15 @@ public class SalasActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Sala>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(SalasActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(SalasActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(SalasActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
 
@@ -177,7 +188,15 @@ public class SalasActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Sala>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(SalasActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(SalasActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(SalasActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
 

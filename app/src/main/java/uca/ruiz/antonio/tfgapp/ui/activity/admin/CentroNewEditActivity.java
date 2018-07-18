@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,6 +21,7 @@ import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
+import uca.ruiz.antonio.tfgapp.ui.activity.LoginActivity;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
@@ -137,15 +139,15 @@ public class CentroNewEditActivity extends AppCompatActivity {
             public void onResponse(Call<Centro> call, Response<Centro> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(CentroNewEditActivity.this, getString(R.string.creado_registro),
-                            Toast.LENGTH_SHORT).show();
+                    Toasty.success(CentroNewEditActivity.this, getString(R.string.creado_registro),
+                            Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(CentroNewEditActivity.this, CentrosActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toast.makeText(CentroNewEditActivity.this, apiError.getMessage(),
-                                Toast.LENGTH_LONG).show();
+                        Toasty.error(CentroNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
                         try {
@@ -160,7 +162,15 @@ public class CentroNewEditActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Centro> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(CentroNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(CentroNewEditActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(CentroNewEditActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
 
@@ -174,14 +184,15 @@ public class CentroNewEditActivity extends AppCompatActivity {
             public void onResponse(Call<Centro> call, Response<Centro> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(CentroNewEditActivity.this, getString(R.string.editado_registro), Toast.LENGTH_SHORT).show();
+                    Toasty.success(CentroNewEditActivity.this, getString(R.string.editado_registro),
+                            Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(CentroNewEditActivity.this, CentrosActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toast.makeText(CentroNewEditActivity.this, apiError.getMessage(),
-                                Toast.LENGTH_LONG).show();
+                        Toasty.error(CentroNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
                         try {
@@ -196,7 +207,15 @@ public class CentroNewEditActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Centro> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(CentroNewEditActivity.this, "error :(", Toast.LENGTH_LONG).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(CentroNewEditActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(CentroNewEditActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }

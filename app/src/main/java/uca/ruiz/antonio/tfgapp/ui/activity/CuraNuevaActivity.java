@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -126,8 +127,9 @@ public class CuraNuevaActivity extends AppCompatActivity {
     }
 
     private void mostrarApiError(String error) {
-        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG);
+        /*Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER,0,0);
-        toast.show();
+        toast.show();*/
+        Toasty.error(getApplicationContext(), error, Toast.LENGTH_LONG, true).show();
     }
 }

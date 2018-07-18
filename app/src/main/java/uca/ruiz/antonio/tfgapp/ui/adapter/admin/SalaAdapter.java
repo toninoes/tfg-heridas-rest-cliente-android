@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -175,12 +176,13 @@ public class SalaAdapter extends RecyclerView.Adapter<SalaAdapter.ViewHolder> {
                 if(response.isSuccessful()) {
                     mDataSet.remove(pos);
                     notifyItemRemoved(pos);
-                    Toast.makeText(context, R.string.borrado_registro, Toast.LENGTH_SHORT).show();
+                    Toasty.success(context, context.getString(R.string.borrado_registro),
+                            Toast.LENGTH_SHORT, true).show();
                 } else {
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         if (apiError != null) {
-                            Toast.makeText(context, apiError.getMessage(), Toast.LENGTH_LONG).show();
+                            Toasty.error(context, apiError.getMessage(), Toast.LENGTH_LONG, true).show();
                             Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                         }
 
@@ -196,7 +198,14 @@ public class SalaAdapter extends RecyclerView.Adapter<SalaAdapter.ViewHolder> {
 
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                Toast.makeText(context, "error :(", Toast.LENGTH_LONG).show();
+                if (t instanceof IOException) {
+                    Toasty.warning(context, context.getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(context, context.getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, context.getString(R.string.error_conversion));
+                }
             }
         });
     }

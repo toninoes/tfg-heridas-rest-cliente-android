@@ -153,7 +153,8 @@ public class LoginActivity extends AppCompatActivity {
                     obtenerUsuario(token);
                 } else {
                     progressDialog.cancel();
-                    Toasty.error(LoginActivity.this, getString(R.string.error_acceso), Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(LoginActivity.this, getString(R.string.error_acceso),
+                            Toast.LENGTH_LONG, true).show();
                 }
             }
 
@@ -202,10 +203,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (t instanceof IOException) {
                     Toasty.warning(LoginActivity.this, getString(R.string.error_conexion_red),
-                            Toast.LENGTH_SHORT, true).show();
+                            Toast.LENGTH_LONG, true).show();
                 } else {
                     Toasty.error(LoginActivity.this, getString(R.string.error_conversion),
-                            Toast.LENGTH_SHORT, true).show();
+                            Toast.LENGTH_LONG, true).show();
                     Log.d(TAG, getString(R.string.error_conversion));
                 }
             }

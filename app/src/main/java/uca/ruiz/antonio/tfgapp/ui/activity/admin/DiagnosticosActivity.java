@@ -16,8 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +31,7 @@ import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 public class DiagnosticosActivity extends AppCompatActivity {
 
+    private static final String TAG = DiagnosticosActivity.class.getSimpleName();
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
     private DiagnosticoAdapter mAdapter;
@@ -130,7 +133,15 @@ public class DiagnosticosActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Diagnostico>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(DiagnosticosActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(DiagnosticosActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(DiagnosticosActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }
@@ -154,7 +165,15 @@ public class DiagnosticosActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Diagnostico>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(DiagnosticosActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(DiagnosticosActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(DiagnosticosActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }

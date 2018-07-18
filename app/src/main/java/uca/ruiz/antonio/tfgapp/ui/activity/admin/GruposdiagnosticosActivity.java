@@ -16,19 +16,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.model.Grupodiagnostico;
+import uca.ruiz.antonio.tfgapp.ui.activity.LoginActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.GrupodiagnosticoAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 public class GruposdiagnosticosActivity extends AppCompatActivity {
 
+    private static final String TAG = GruposdiagnosticosActivity.class.getSimpleName();
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
     private GrupodiagnosticoAdapter mAdapter;
@@ -130,7 +134,15 @@ public class GruposdiagnosticosActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Grupodiagnostico>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(GruposdiagnosticosActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(GruposdiagnosticosActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(GruposdiagnosticosActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }
@@ -154,7 +166,15 @@ public class GruposdiagnosticosActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Grupodiagnostico>> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(GruposdiagnosticosActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(GruposdiagnosticosActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(GruposdiagnosticosActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -136,13 +137,14 @@ public class RegistroActivity extends AppCompatActivity {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toast.makeText(RegistroActivity.this, "Creado usuario " + response.body().getEmail(),
-                            Toast.LENGTH_LONG).show();
+                    Toasty.success(RegistroActivity.this, "Creado usuario " + response.body().getEmail(),
+                            Toast.LENGTH_SHORT, true).show();
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toast.makeText(RegistroActivity.this, apiError.getMessage(), Toast.LENGTH_LONG).show();
+                        Toasty.error(RegistroActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
                         try {
@@ -157,7 +159,15 @@ public class RegistroActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 progressDialog.cancel();
-                Toast.makeText(RegistroActivity.this, "error :(", Toast.LENGTH_SHORT).show();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(RegistroActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(RegistroActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }
