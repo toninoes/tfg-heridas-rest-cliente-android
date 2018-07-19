@@ -1,4 +1,4 @@
-package uca.ruiz.antonio.tfgapp.data.api.mapping;
+package uca.ruiz.antonio.tfgapp.data.api.model;
 
 /**
  * Created by toni on 08/06/2018.
@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class User implements Serializable
-{
+import uca.ruiz.antonio.tfgapp.data.api.mapping.Authority;
+
+public class User implements Serializable {
 
     @SerializedName("username")
     @Expose
@@ -93,6 +94,10 @@ public class User implements Serializable
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getLastnameComaAndFirstname() {
+        return this.lastname + ", " + this.firstname;
     }
 
     public String getEmail() {

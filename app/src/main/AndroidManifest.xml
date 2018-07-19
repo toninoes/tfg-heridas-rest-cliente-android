@@ -149,6 +149,21 @@
             android:configChanges="orientation"
             android:label="@string/procedimiento"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.AdministradoresActivity"
+            android:configChanges="orientation"
+            android:label="@string/administradores"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.AdministradorNewEditActivity"
+            android:configChanges="orientation"
+            android:label="@string/administrador"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.AdministradorActivity"
+            android:configChanges="orientation"
+            android:label="@string/administrador"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -14,7 +14,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Login;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
-import uca.ruiz.antonio.tfgapp.data.api.mapping.User;
+import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
+import uca.ruiz.antonio.tfgapp.data.api.model.User;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
@@ -222,5 +223,33 @@ public interface MyApiService {
     @PUT("api/procedimientos/{id}")
     Call<Procedimiento> editarProcedimiento(@Path("id") Long id, @Body Procedimiento p,
                                         @Header("Authorization") String token);
+
+
+    /* ======================= ADMINISTRADORES ======================= */
+    @Headers("Content-Type: application/json")
+    @GET("api/administradores")
+    Call<ArrayList<Administrador>> getAdministradores(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/administradores/filtro")
+    Call<ArrayList<Administrador>> getAdministradoresByFiltro(@Query("filtro") String filtro,
+                                                             @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/administradores/{id}")
+    Call<Administrador> getAdministrador(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @DELETE("api/administradores/{id}")
+    Call<String> borrarAdministrador(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/administradores")
+    Call<Administrador> crearAdministrador(@Body Administrador a, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/administradores/{id}")
+    Call<Administrador> editarAdministrador(@Path("id") Long id, @Body Administrador a,
+                                            @Header("Authorization") String token);
 
 }
