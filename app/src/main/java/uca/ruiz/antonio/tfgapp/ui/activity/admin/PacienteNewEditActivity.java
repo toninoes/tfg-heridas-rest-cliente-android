@@ -16,6 +16,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -26,26 +30,20 @@ import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Authority;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
-import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
+import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.User;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
 
-public class AdministradorNewEditActivity extends AppCompatActivity {
+public class PacienteNewEditActivity extends AppCompatActivity {
 
-    private static final String TAG = AdministradorNewEditActivity.class.getSimpleName();
+    private static final String TAG = PacienteNewEditActivity.class.getSimpleName();
     private EditText et_nombre, et_apellidos, et_dni, et_email, et_fnac;
     DatePickerDialog dpd_fnac;
     private CheckBox chk_activo;
-    private Administrador administrador;
+    private Paciente paciente;
     private Boolean editando = false;
     private ProgressDialog progressDialog;
 
@@ -72,15 +70,15 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.guardando));
 
         try { // editar
-            administrador = (Administrador) getIntent().getExtras().getSerializable("administrador");
-            et_nombre.setText(administrador.getFirstname());
-            et_apellidos.setText(administrador.getLastname());
-            et_dni.setText(administrador.getDni());
-            et_email.setText(administrador.getEmail());
+            paciente = (Paciente) getIntent().getExtras().getSerializable("paciente");
+            et_nombre.setText(paciente.getFirstname());
+            et_apellidos.setText(paciente.getLastname());
+            et_dni.setText(paciente.getDni());
+            et_email.setText(paciente.getEmail());
             et_email.setEnabled(false);
-            et_fnac.setText(FechaHoraUtils.formatoFechaUI(administrador.getNacimiento()));
+            et_fnac.setText(FechaHoraUtils.formatoFechaUI(paciente.getNacimiento()));
 
-            if(administrador.getEnabled())
+            if(paciente.getEnabled())
                 chk_activo.setChecked(true);
             else
                 chk_activo.setChecked(false);
@@ -97,7 +95,7 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
                 Calendar cal;
                 int day, month, year;
                 try {
-                    cal = FechaHoraUtils.DateToCalendar(administrador.getNacimiento());
+                    cal = FechaHoraUtils.DateToCalendar(paciente.getNacimiento());
                 } catch (Exception e) {
                     cal = Calendar.getInstance();
                 }
@@ -107,7 +105,7 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
                 year = cal.get(Calendar.YEAR);
 
                 // date picker dialog
-                dpd_fnac = new DatePickerDialog(AdministradorNewEditActivity.this,
+                dpd_fnac = new DatePickerDialog(PacienteNewEditActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -132,7 +130,7 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
 
         switch (id) {
             case android.R.id.home:
-                startActivity(new Intent(this, AdministradoresActivity.class));
+                startActivity(new Intent(this, PacientesActivity.class));
                 return true;
             case R.id.action_guardar:
                 intentarGuardar();
@@ -212,17 +210,17 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
             List<Authority> roles = new ArrayList<Authority>();
 
             // permisos(0): admin; permisos(1): sanitario; permisos(2): paciente
-            ArrayList<Boolean> permisos = new ArrayList<>(Arrays.asList(true, false, false));
+            ArrayList<Boolean> permisos = new ArrayList<>(Arrays.asList(false, false, true));
 
             if(editando) {
-                Administrador adminEditado = new Administrador(email, nombre, apellidos, email, permisos, dni,
+                Paciente pacienteEditado = new Paciente(email, nombre, apellidos, email, permisos, dni,
                         FechaHoraUtils.getFechaFromString(fnac), chk_activo.isChecked());
-                adminEditado.setId(administrador.getId());
-                editar(adminEditado);
+                pacienteEditado.setId(paciente.getId());
+                editar(pacienteEditado);
             } else {
-                Administrador adminNuevo = new Administrador(email, nombre, apellidos, email, permisos, dni,
+                Paciente pacienteNuevo = new Paciente(email, nombre, apellidos, email, permisos, dni,
                         FechaHoraUtils.getFechaFromString(fnac));
-                nuevo(adminNuevo);
+                nuevo(pacienteNuevo);
             }
         }
 
@@ -236,14 +234,14 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toasty.success(AdministradorNewEditActivity.this, getString(R.string.creado_registro),
+                    Toasty.success(PacienteNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
-                    startActivity(new Intent(AdministradorNewEditActivity.this, AdministradoresActivity.class));
+                    startActivity(new Intent(PacienteNewEditActivity.this, PacientesActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toasty.error(AdministradorNewEditActivity.this, apiError.getMessage(),
+                        Toasty.error(PacienteNewEditActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -261,10 +259,10 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
                 progressDialog.cancel();
 
                 if (t instanceof IOException) {
-                    Toasty.warning(AdministradorNewEditActivity.this, getString(R.string.error_conexion_red),
+                    Toasty.warning(PacienteNewEditActivity.this, getString(R.string.error_conexion_red),
                             Toast.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.error(AdministradorNewEditActivity.this, getString(R.string.error_conversion),
+                    Toasty.error(PacienteNewEditActivity.this, getString(R.string.error_conversion),
                             Toast.LENGTH_LONG, true).show();
                     Log.d(TAG, getString(R.string.error_conversion));
                 }
@@ -274,20 +272,20 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
 
     private void editar(User a) {
         progressDialog.show();
-        Call<User> call = MyApiAdapter.getApiService().editarRegistro(administrador.getId(), a, Pref.getToken());
+        Call<User> call = MyApiAdapter.getApiService().editarRegistro(paciente.getId(), a, Pref.getToken());
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    Toasty.success(AdministradorNewEditActivity.this, getString(R.string.editado_registro),
+                    Toasty.success(PacienteNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
-                    startActivity(new Intent(AdministradorNewEditActivity.this, AdministradoresActivity.class));
+                    startActivity(new Intent(PacienteNewEditActivity.this, PacientesActivity.class));
                 } else {
                     progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toasty.error(AdministradorNewEditActivity.this, apiError.getMessage(),
+                        Toasty.error(PacienteNewEditActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -307,10 +305,10 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
                 Log.d(TAG, t.getMessage());
 
                 if (t instanceof IOException) {
-                    Toasty.warning(AdministradorNewEditActivity.this, getString(R.string.error_conexion_red),
+                    Toasty.warning(PacienteNewEditActivity.this, getString(R.string.error_conexion_red),
                             Toast.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.error(AdministradorNewEditActivity.this, getString(R.string.error_conversion),
+                    Toasty.error(PacienteNewEditActivity.this, getString(R.string.error_conversion),
                             Toast.LENGTH_LONG, true).show();
                     Log.d(TAG, getString(R.string.error_conversion));
                 }

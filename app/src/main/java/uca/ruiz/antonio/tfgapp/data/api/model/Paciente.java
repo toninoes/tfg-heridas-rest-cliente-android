@@ -1,56 +1,22 @@
 package uca.ruiz.antonio.tfgapp.data.api.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Paciente implements Serializable {
-    private long id;
-    private String dni;
-    private String nombre;
-    private String apellidos;
-    private Date nacimiento;
+public class Paciente extends User implements Serializable {
 
-    public long getId() {
-        return id;
+    public Paciente() {
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Paciente(String username, String firstname, String lastname, String email,
+                     ArrayList<Boolean> permisos, String dni, Date nacimiento) {
+        super(username, firstname, lastname, email, permisos, dni, nacimiento);
     }
 
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public Date getNacimiento() {
-        return nacimiento;
-    }
-
-    public void setNacimiento(Date nacimiento) {
-        this.nacimiento = nacimiento;
-    }
-
-    public String getFullName () {
-        return this.nombre + " " + this.apellidos;
+    public Paciente(String username, String firstname, String lastname, String email,
+                     ArrayList<Boolean> permisos, String dni, Date nacimiento,
+                     Boolean enabled) {
+        super(username, firstname, lastname, email, permisos, dni, nacimiento, enabled);
     }
 }

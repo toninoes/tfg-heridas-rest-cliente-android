@@ -50,16 +50,6 @@ public interface MyApiService {
     Call<UserResponse> getUser(@Header("Authorization") String token);
 
 
-    /* ======================= PACIENTES ======================= */
-    @Headers("Content-Type: application/json")
-    @GET("api/pacientes")
-    Call<ArrayList<Paciente>> getPacientes(@Header("Authorization") String token);
-
-    @Headers("Content-Type: application/json")
-    @GET("api/pacientes/{id}")
-    Call<Paciente> getPaciente(@Path("id") Long id, @Header("Authorization") String token);
-
-
     /* ======================= PROCESOS ======================= */
     @Headers("Content-Type: application/json")
     @GET("api/procesos")
@@ -144,6 +134,7 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @PUT("api/salas/{id}")
     Call<Sala> editarSala(@Path("id") Long id, @Body Sala s, @Header("Authorization") String token);
+
 
     /* ======================= GRUPOS DIAGNOSTICOS ======================= */
     @Headers("Content-Type: application/json")
@@ -267,5 +258,24 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @DELETE("api/sanitarios/{id}")
     Call<String> borrarSanitario(@Path("id") Long id, @Header("Authorization") String token);
+
+
+    /* ======================= PACIENTES ======================= */
+    @Headers("Content-Type: application/json")
+    @GET("api/pacientes")
+    Call<ArrayList<Paciente>> getPacientes(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/pacientes/filtro")
+    Call<ArrayList<Paciente>> getPacientesByFiltro(@Query("filtro") String filtro,
+                                                     @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/pacientes/{id}")
+    Call<Paciente> getPaciente(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @DELETE("api/pacientes/{id}")
+    Call<String> borrarPaciente(@Path("id") Long id, @Header("Authorization") String token);
 
 }
