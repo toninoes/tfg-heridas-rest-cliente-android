@@ -105,4 +105,5 @@
     <string name="dni">Dni</string>
     <string name="fnac">Fecha de nacimiento</string>
     <string name="error_tam_dni">El dni tiene que contener 9 dígitos</string>
+    <string name="colegiado">Número de Colegiado</string>
 </resources>

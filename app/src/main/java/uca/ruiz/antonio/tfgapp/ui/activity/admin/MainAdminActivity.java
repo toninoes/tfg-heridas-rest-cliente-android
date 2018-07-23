@@ -117,7 +117,8 @@ public class MainAdminActivity extends AppCompatActivity {
         ll_sanitarios.setBackgroundResource(R.color.grisFondoLL);
         progressDialog.show();
 
-        // Intent aqui;
+        Intent intent = new Intent(this, SanitariosActivity.class);
+        startActivity(intent);
     }
 
     public void valoraciones(View view) {

@@ -15,6 +15,7 @@ import retrofit2.http.Query;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Login;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
+import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
 import uca.ruiz.antonio.tfgapp.data.api.model.User;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
@@ -248,9 +249,23 @@ public interface MyApiService {
     @DELETE("api/administradores/{id}")
     Call<String> borrarAdministrador(@Path("id") Long id, @Header("Authorization") String token);
 
+
+    /* ======================= SANITARIOS ======================= */
     @Headers("Content-Type: application/json")
-    @PUT("api/administradores/{id}")
-    Call<Administrador> editarAdministrador(@Path("id") Long id, @Body Administrador a,
-                                            @Header("Authorization") String token);
+    @GET("api/sanitarios")
+    Call<ArrayList<Sanitario>> getSanitarios(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/sanitarios/filtro")
+    Call<ArrayList<Sanitario>> getSanitariosByFiltro(@Query("filtro") String filtro,
+                                                     @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/sanitarios/{id}")
+    Call<Sanitario> getSanitario(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @DELETE("api/sanitarios/{id}")
+    Call<String> borrarSanitario(@Path("id") Long id, @Header("Authorization") String token);
 
 }

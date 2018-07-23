@@ -159,6 +159,21 @@
             android:configChanges="orientation"
             android:label="@string/administrador"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.SanitariosActivity"
+            android:configChanges="orientation"
+            android:label="@string/sanitarios"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.SanitarioNewEditActivity"
+            android:configChanges="orientation"
+            android:label="@string/sanitario"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.SanitarioActivity"
+            android:configChanges="orientation"
+            android:label="@string/sanitario"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

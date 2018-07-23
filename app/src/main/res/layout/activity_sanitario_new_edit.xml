@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.admin.AdministradorNewEditActivity">
+    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.admin.SanitarioNewEditActivity">
 
     <LinearLayout
         android:id="@+id/admin_formulario"
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
                 android:maxLines="1"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -82,6 +82,19 @@
                 android:hint="@string/fnac"
                 android:ems="10"
                 android:inputType="date" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/et_colegiado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/colegiado"
+                android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox

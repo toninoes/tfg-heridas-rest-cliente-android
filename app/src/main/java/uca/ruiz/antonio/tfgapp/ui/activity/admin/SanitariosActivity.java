@@ -25,16 +25,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
-import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
-import uca.ruiz.antonio.tfgapp.ui.adapter.admin.AdministradorAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
+import uca.ruiz.antonio.tfgapp.ui.adapter.admin.SanitarioAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
-public class AdministradoresActivity extends AppCompatActivity {
+public class SanitariosActivity extends AppCompatActivity {
 
-    private static final String TAG = AdministradoresActivity.class.getSimpleName();
+    private static final String TAG = SanitariosActivity.class.getSimpleName();
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
-    private AdministradorAdapter mAdapter;
+    private SanitarioAdapter mAdapter;
     private SwipeRefreshLayout srl_listado;
     private ProgressDialog progressDialog;
     private EditText et_buscar;
@@ -63,13 +63,13 @@ public class AdministradoresActivity extends AppCompatActivity {
         rv_listado.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         // Asociamos un adapter. Define cómo se renderizará la información que tenemos
-        mAdapter = new AdministradorAdapter(this);
+        mAdapter = new SanitarioAdapter(this);
         rv_listado.setAdapter(mAdapter);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.cargando));
 
-        cargarAdministradores();
+        cargarSanitarios();
 
         srl_listado = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
         srl_listado.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -82,7 +82,7 @@ public class AdministradoresActivity extends AppCompatActivity {
         bt_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cargarAdministradores(et_buscar.getText().toString());
+                cargarSanitarios(et_buscar.getText().toString());
             }
         });
     }
@@ -102,7 +102,7 @@ public class AdministradoresActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MainAdminActivity.class));
                 return true;
             case R.id.add_item:
-                startActivity(new Intent(this, AdministradorNewEditActivity.class));
+                startActivity(new Intent(this, SanitarioNewEditActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -114,31 +114,31 @@ public class AdministradoresActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainAdminActivity.class));
     }
 
-    private void cargarAdministradores() {
+    private void cargarSanitarios() {
         progressDialog.show();
-        Call<ArrayList<Administrador>> call = MyApiAdapter.getApiService().getAdministradores(Pref.getToken());
-        call.enqueue(new Callback<ArrayList<Administrador>>() {
+        Call<ArrayList<Sanitario>> call = MyApiAdapter.getApiService().getSanitarios(Pref.getToken());
+        call.enqueue(new Callback<ArrayList<Sanitario>>() {
             @Override
-            public void onResponse(Call<ArrayList<Administrador>> call, Response<ArrayList<Administrador>> response) {
+            public void onResponse(Call<ArrayList<Sanitario>> call, Response<ArrayList<Sanitario>> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    ArrayList<Administrador> administradores = response.body();
-                    if(administradores != null) {
-                        Log.d("ADMINISTRADORES", "Tamaño ==> " + administradores.size());
+                    ArrayList<Sanitario> sanitarios = response.body();
+                    if(sanitarios != null) {
+                        Log.d("SANITARIOS", "Tamaño ==> " + sanitarios.size());
                     }
-                    mAdapter.setDataSet(administradores);
+                    mAdapter.setDataSet(sanitarios);
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Administrador>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Sanitario>> call, Throwable t) {
                 progressDialog.cancel();
 
                 if (t instanceof IOException) {
-                    Toasty.warning(AdministradoresActivity.this, getString(R.string.error_conexion_red),
+                    Toasty.warning(SanitariosActivity.this, getString(R.string.error_conexion_red),
                             Toast.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.error(AdministradoresActivity.this, getString(R.string.error_conversion),
+                    Toasty.error(SanitariosActivity.this, getString(R.string.error_conversion),
                             Toast.LENGTH_LONG, true).show();
                     Log.d(TAG, getString(R.string.error_conversion));
                 }
@@ -146,31 +146,31 @@ public class AdministradoresActivity extends AppCompatActivity {
         });
     }
 
-    private void cargarAdministradores(String s) {
+    private void cargarSanitarios(String s) {
         progressDialog.show();
-        Call<ArrayList<Administrador>> call = MyApiAdapter.getApiService().getAdministradoresByFiltro(s, Pref.getToken());
-        call.enqueue(new Callback<ArrayList<Administrador>>() {
+        Call<ArrayList<Sanitario>> call = MyApiAdapter.getApiService().getSanitariosByFiltro(s, Pref.getToken());
+        call.enqueue(new Callback<ArrayList<Sanitario>>() {
             @Override
-            public void onResponse(Call<ArrayList<Administrador>> call, Response<ArrayList<Administrador>> response) {
+            public void onResponse(Call<ArrayList<Sanitario>> call, Response<ArrayList<Sanitario>> response) {
                 if(response.isSuccessful()) {
                     progressDialog.cancel();
-                    ArrayList<Administrador> administradores = response.body();
-                    if(administradores != null) {
-                        Log.d("ADMINISTRADORES", "Tamaño ==> " + administradores.size());
+                    ArrayList<Sanitario> sanitarios = response.body();
+                    if(sanitarios != null) {
+                        Log.d("SANITARIOS", "Tamaño ==> " + sanitarios.size());
                     }
-                    mAdapter.setDataSet(administradores);
+                    mAdapter.setDataSet(sanitarios);
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Administrador>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Sanitario>> call, Throwable t) {
                 progressDialog.cancel();
 
                 if (t instanceof IOException) {
-                    Toasty.warning(AdministradoresActivity.this, getString(R.string.error_conexion_red),
+                    Toasty.warning(SanitariosActivity.this, getString(R.string.error_conexion_red),
                             Toast.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.error(AdministradoresActivity.this, getString(R.string.error_conversion),
+                    Toasty.error(SanitariosActivity.this, getString(R.string.error_conversion),
                             Toast.LENGTH_LONG, true).show();
                     Log.d(TAG, getString(R.string.error_conversion));
                 }

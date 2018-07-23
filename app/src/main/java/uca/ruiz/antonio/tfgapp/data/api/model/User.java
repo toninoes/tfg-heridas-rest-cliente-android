@@ -51,11 +51,17 @@ public class User implements Serializable {
     @SerializedName("nacimiento")
     @Expose
     protected Date nacimiento;
+    @SerializedName("historia")
+    @Expose
+    protected Long historia;
+    @SerializedName("colegiado")
+    @Expose
+    protected String colegiado;
 
     public User() {
     }
 
-    public User(String username, String firstname, String lastname, String email,
+    public User(String username, String firstname, String lastname, String email, //adminNuevo
                 ArrayList<Boolean> permisos, String dni, Date nacimiento) {
         this.username = username;
         this.password = username;
@@ -68,7 +74,7 @@ public class User implements Serializable {
         this.nacimiento = nacimiento;
     }
 
-    public User(String username, String firstname, String lastname, String email,
+    public User(String username, String firstname, String lastname, String email, //AdminEditado
                 ArrayList<Boolean> permisos, String dni, Date nacimiento, Boolean enabled) {
         this.username = username;
         this.password = username;
@@ -81,20 +87,35 @@ public class User implements Serializable {
         this.enabled = enabled;
     }
 
-    public User(String username, String firstname, String lastname, String email, List<Authority> authorities,
-                ArrayList<Boolean> permisos, String dni, Date nacimiento) {
+    public User(String username, String firstname, String lastname, String email, //sanitarioNuevo
+                ArrayList<Boolean> permisos, String dni, Date nacimiento, String colegiado) {
         this.username = username;
         this.password = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.authorities = authorities;
         this.enabled = false;
-        this.lastPasswordResetDate = new Date();
         this.permisos = permisos;
         this.dni = dni;
         this.nacimiento = nacimiento;
+        this.colegiado = colegiado;
     }
+
+    public User(String username, String firstname, String lastname, String email, //sanitarioEditado
+                ArrayList<Boolean> permisos, String dni, Date nacimiento, String colegiado,
+                Boolean enabled) {
+        this.username = username;
+        this.password = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.permisos = permisos;
+        this.dni = dni;
+        this.nacimiento = nacimiento;
+        this.colegiado = colegiado;
+        this.enabled = enabled;
+    }
+
 
     public long getId() {
         return id;
@@ -182,5 +203,21 @@ public class User implements Serializable {
 
     public void setNacimiento(Date nacimiento) {
         this.nacimiento = nacimiento;
+    }
+
+    public Long getHistoria() {
+        return historia;
+    }
+
+    public void setHistoria(Long historia) {
+        this.historia = historia;
+    }
+
+    public String getColegiado() {
+        return colegiado;
+    }
+
+    public void setColegiado(String colegiado) {
+        this.colegiado = colegiado;
     }
 }
