@@ -53,6 +53,7 @@ public class AdministradorAdapter extends RecyclerView.Adapter<AdministradorAdap
             tv_titulo = (TextView) v.findViewById(R.id.tv_titulo);
             tv_subtitulo = (TextView) v.findViewById(R.id.tv_subtitulo);
             ib_delete = (ImageButton) v.findViewById(R.id.ib_delete);
+            ib_delete.setVisibility(View.GONE); // no borrar usuarios (desactivarlos)
             ib_edit = (ImageButton) v.findViewById(R.id.ib_edit);
         }
     }

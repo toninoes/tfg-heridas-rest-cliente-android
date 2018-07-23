@@ -34,11 +34,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.RegistroActivity"
-            android:configChanges="orientation"
-            android:label="@string/registro"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.activity.CurasActivity"
             android:configChanges="orientation"
             android:label="@string/proceso"

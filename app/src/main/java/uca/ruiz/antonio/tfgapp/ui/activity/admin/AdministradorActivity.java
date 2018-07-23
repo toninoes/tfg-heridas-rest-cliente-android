@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
+import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
 public class AdministradorActivity extends AppCompatActivity {
 
@@ -18,7 +19,7 @@ public class AdministradorActivity extends AppCompatActivity {
     private TextView tv_1_1, tv_1_2, tv_2_1, tv_2_2, tv_3_1, tv_3_2, tv_4_1, tv_4_2, tv_5_1, tv_5_2;
     private TextView tv_6_1, tv_6_2, tv_7_1, tv_7_2, tv_8_1, tv_8_2, tv_9_1, tv_9_2, tv_10_1, tv_10_2;
 
-    private final int CAMPOS = 3;
+    private final int CAMPOS = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +34,26 @@ public class AdministradorActivity extends AppCompatActivity {
 
         administrador = (Administrador) getIntent().getExtras().getSerializable("administrador");
 
-        tv_1_1.setText(getString(R.string.nombre));
+        tv_1_1.setText(R.string.nombre);
         tv_1_2.setText(administrador.getFirstname());
 
-        tv_2_1.setText(getString(R.string.apellidos));
+        tv_2_1.setText(R.string.apellidos);
         tv_2_2.setText(administrador.getLastname());
 
-        tv_3_1.setText(getString(R.string.email));
-        tv_3_2.setText(administrador.getEmail());
+        tv_3_1.setText(R.string.dni);
+        tv_3_2.setText(administrador.getDni());
+
+        tv_4_1.setText(R.string.email);
+        tv_4_2.setText(administrador.getEmail());
+
+        tv_5_1.setText(R.string.activo);
+        if(administrador.getEnabled())
+            tv_5_2.setText(R.string.si);
+        else
+            tv_5_2.setText(R.string.no);
+
+        tv_6_1.setText(R.string.fnac);
+        tv_6_2.setText(FechaHoraUtils.getNacimientoAndEdad(administrador.getNacimiento()));
     }
 
     @Override

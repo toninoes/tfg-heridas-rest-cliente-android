@@ -8,10 +8,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.admin.CentroNewEditActivity">
+    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.admin.AdministradorNewEditActivity">
 
     <LinearLayout
-        android:id="@+id/centro_formulario"
+        android:id="@+id/admin_formulario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -37,7 +37,7 @@
                 android:id="@+id/et_apellidos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/direccion"
+                android:hint="@string/apellidos"
                 android:maxLines="1" />
 
         </android.support.design.widget.TextInputLayout>
@@ -47,13 +47,54 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/et_email"
+                android:id="@+id/et_dni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/telefono"
+                android:hint="@string/dni"
                 android:maxLines="1" />
 
         </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/et_fnac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/fnac"
+                android:ems="10"
+                android:inputType="date" />
+        </android.support.design.widget.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/chk_activo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/activo" />
+
+        <!--<DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"/>-->
 
 
     </LinearLayout>

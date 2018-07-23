@@ -61,7 +61,7 @@ public class CuraAdapter extends RecyclerView.Adapter<CuraAdapter.ViewHolder> {
         // reemplazamos el contenido de los views según tales datos
 
         Cura cura = mDataSet.get(position);
-        String cad = FechaHoraUtils.formatoFechaUI(cura.getCreacion()) + " " + cura.getTratamiento();
+        String cad = FechaHoraUtils.formatoFechaHoraUI(cura.getCreacion()) + " " + cura.getTratamiento();
         holder.textView.setText(cad);
 
         // click sobre cada elemento de las curas

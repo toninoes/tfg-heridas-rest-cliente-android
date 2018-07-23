@@ -101,4 +101,8 @@
     <string name="bienvenido">Bienvenido</string>
     <string name="error_token_incorrecto">¡Token de acceso incorrecto!</string>
     <string name="procedimiento">Procedimiento</string>
+    <string name="activo">Activo</string>
+    <string name="dni">Dni</string>
+    <string name="fnac">Fecha de nacimiento</string>
+    <string name="error_tam_dni">El dni tiene que contener 9 dígitos</string>
 </resources>

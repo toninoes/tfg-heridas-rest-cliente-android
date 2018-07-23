@@ -82,7 +82,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         if (proceso != null) {
             tv_diagnostico_tit.setText(getText(R.string.diagnostico));
             tv_diagnostico.setText(proceso.getDiagnostico());
-            tv_fecha.setText(FechaHoraUtils.formatoFechaUI(proceso.getCreacion()));
+            tv_fecha.setText(FechaHoraUtils.formatoFechaHoraUI(proceso.getCreacion()));
             tv_anamnesis_tit.setText(getText(R.string.anamnesis));
             tv_anamnesis.setText(proceso.getAnamnesis());
             tv_observaciones_tit.setText(getText(R.string.observaciones));

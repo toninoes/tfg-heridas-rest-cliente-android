@@ -28,6 +28,7 @@ public class MyApiAdapter {
         if (API_SERVICE == null) {  // Patrón Singleton
 
             Gson gson = new GsonBuilder()
+                    .setLenient()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                     .create();
 

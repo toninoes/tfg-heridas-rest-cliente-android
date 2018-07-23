@@ -16,51 +16,73 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.Authority;
 
 public class User implements Serializable {
 
+    private final static long serialVersionUID = -7074548215409497555L;
+    protected long id;
     @SerializedName("username")
     @Expose
-    private String username;
+    protected String username;
     @SerializedName("password")
     @Expose
-    private String password;
+    protected String password;
     @SerializedName("firstname")
     @Expose
-    private String firstname;
+    protected String firstname;
     @SerializedName("lastname")
     @Expose
-    private String lastname;
+    protected String lastname;
     @SerializedName("email")
     @Expose
-    private String email;
+    protected String email;
     @SerializedName("authorities")
     @Expose
-    private List<Authority> authorities = null;
+    protected List<Authority> authorities = null;
     @SerializedName("enabled")
     @Expose
-    private Boolean enabled;
+    protected Boolean enabled;
     @SerializedName("lastPasswordResetDate")
     @Expose
-    private Date lastPasswordResetDate;
-    private final static long serialVersionUID = -7074548215409497555L;
+    protected Date lastPasswordResetDate;
     @SerializedName("permisos")
     @Expose
-    private ArrayList<Boolean> permisos = new ArrayList <>(3);
+    protected ArrayList<Boolean> permisos = new ArrayList <>(3);
+    @SerializedName("dni")
+    @Expose
+    protected String dni;
+    @SerializedName("nacimiento")
+    @Expose
+    protected Date nacimiento;
 
     public User() {
     }
 
-    public User(String username, String firstname, String lastname, String email, List<Authority> authorities) {
+    public User(String username, String firstname, String lastname, String email,
+                ArrayList<Boolean> permisos, String dni, Date nacimiento) {
         this.username = username;
         this.password = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.authorities = authorities;
         this.enabled = false;
-        this.lastPasswordResetDate = new Date();
+        this.permisos = permisos;
+        this.dni = dni;
+        this.nacimiento = nacimiento;
+    }
+
+    public User(String username, String firstname, String lastname, String email,
+                ArrayList<Boolean> permisos, String dni, Date nacimiento, Boolean enabled) {
+        this.username = username;
+        this.password = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.permisos = permisos;
+        this.dni = dni;
+        this.nacimiento = nacimiento;
+        this.enabled = enabled;
     }
 
     public User(String username, String firstname, String lastname, String email, List<Authority> authorities,
-                ArrayList<Boolean> permisos) {
+                ArrayList<Boolean> permisos, String dni, Date nacimiento) {
         this.username = username;
         this.password = username;
         this.firstname = firstname;
@@ -70,6 +92,16 @@ public class User implements Serializable {
         this.enabled = false;
         this.lastPasswordResetDate = new Date();
         this.permisos = permisos;
+        this.dni = dni;
+        this.nacimiento = nacimiento;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -134,5 +166,21 @@ public class User implements Serializable {
 
     public void setPermisos(ArrayList<Boolean> permisos) {
         this.permisos = permisos;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public Date getNacimiento() {
+        return nacimiento;
+    }
+
+    public void setNacimiento(Date nacimiento) {
+        this.nacimiento = nacimiento;
     }
 }
