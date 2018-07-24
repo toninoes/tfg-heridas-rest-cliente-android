@@ -175,19 +175,29 @@
             android:label="@string/sanitario"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.admin.PacientesActivity"
+            android:name=".ui.activity.PacientesActivity"
             android:configChanges="orientation"
             android:label="@string/pacientes"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.admin.PacienteNewEditActivity"
+            android:name=".ui.activity.PacienteNewEditActivity"
             android:configChanges="orientation"
             android:label="@string/paciente"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.admin.PacienteActivity"
+            android:name=".ui.activity.PacienteActivity"
             android:configChanges="orientation"
             android:label="@string/paciente"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.ValoracionesResultsActivity"
+            android:configChanges="orientation"
+            android:label="@string/ranking_valoraciones"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.ValoracionesActivity"
+            android:configChanges="orientation"
+            android:label="@string/todas_valoraciones"
             android:screenOrientation="portrait"/>
     </application>
 

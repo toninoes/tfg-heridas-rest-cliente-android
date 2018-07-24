@@ -1,4 +1,4 @@
-package uca.ruiz.antonio.tfgapp.ui.activity.admin;
+package uca.ruiz.antonio.tfgapp.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,7 +26,8 @@ import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
-import uca.ruiz.antonio.tfgapp.ui.adapter.admin.PacienteAdapter;
+import uca.ruiz.antonio.tfgapp.ui.activity.admin.MainAdminActivity;
+import uca.ruiz.antonio.tfgapp.ui.adapter.PacienteAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 

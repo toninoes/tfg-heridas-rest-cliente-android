@@ -107,4 +107,8 @@
     <string name="error_tam_dni">El dni tiene que contener 9 dígitos</string>
     <string name="colegiado">Número de Colegiado</string>
     <string name="numero_historia">Número de Historia</string>
+    <string name="ranking_valoraciones">Ranking Valoraciones</string>
+    <string name="todas_valoraciones">Todas Valoraciones</string>
+    <string name="total_valoraciones">Total Valoraciones</string>
+    <string name="valoracion_media">Valoración Media</string>
 </resources>

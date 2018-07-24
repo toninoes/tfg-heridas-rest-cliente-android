@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import uca.ruiz.antonio.tfgapp.R;
-import uca.ruiz.antonio.tfgapp.ui.activity.ProcesosActivity;
+import uca.ruiz.antonio.tfgapp.ui.activity.PacientesActivity;
 import uca.ruiz.antonio.tfgapp.utils.Utils;
 
 public class MainAdminActivity extends AppCompatActivity {
@@ -126,7 +126,8 @@ public class MainAdminActivity extends AppCompatActivity {
         ll_valoraciones.setBackgroundResource(R.color.grisFondoLL);
         progressDialog.show();
 
-        // Intent aqui;
+        Intent intent = new Intent(this, ValoracionesResultsActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -1,4 +1,4 @@
-package uca.ruiz.antonio.tfgapp.ui.activity.admin;
+package uca.ruiz.antonio.tfgapp.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;

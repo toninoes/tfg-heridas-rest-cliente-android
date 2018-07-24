@@ -26,6 +26,8 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Procedimiento;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
+import uca.ruiz.antonio.tfgapp.data.api.model.Valoracion;
+import uca.ruiz.antonio.tfgapp.data.api.model.ValoracionesResults;
 
 
 public interface MyApiService {
@@ -65,13 +67,15 @@ public interface MyApiService {
 
     @Headers("Content-Type: application/json")
     @PUT("api/procesos/{id}")
-    Call<Proceso> editarProceso(@Path("id") Long id, @Body Proceso p, @Header("Authorization") String token);
+    Call<Proceso> editarProceso(@Path("id") Long id, @Body Proceso p,
+                                @Header("Authorization") String token);
 
 
     /* ======================= CURAS ======================= */
     @Headers("Content-Type: application/json")
     @GET("api/procesos/{id}/curas")
-    Call<ArrayList<Cura>> getCurasByProcesoId(@Path("id") Long id, @Header("Authorization") String token);
+    Call<ArrayList<Cura>> getCurasByProcesoId(@Path("id") Long id,
+                                              @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @POST("api/curas")
@@ -106,7 +110,8 @@ public interface MyApiService {
 
     @Headers("Content-Type: application/json")
     @PUT("api/centros/{id}")
-    Call<Centro> editarCentro(@Path("id") Long id, @Body Centro c, @Header("Authorization") String token);
+    Call<Centro> editarCentro(@Path("id") Long id, @Body Centro c,
+                              @Header("Authorization") String token);
 
 
     /* ======================= SALAS ======================= */
@@ -214,7 +219,8 @@ public interface MyApiService {
 
     @Headers("Content-Type: application/json")
     @POST("api/procedimientos")
-    Call<Procedimiento> crearProcedimiento(@Body Procedimiento p, @Header("Authorization") String token);
+    Call<Procedimiento> crearProcedimiento(@Body Procedimiento p,
+                                           @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @PUT("api/procedimientos/{id}")
@@ -277,5 +283,39 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @DELETE("api/pacientes/{id}")
     Call<String> borrarPaciente(@Path("id") Long id, @Header("Authorization") String token);
+
+
+    /* ======================= VALORACIONES ======================= */
+    @Headers("Content-Type: application/json")
+    @GET("api/valoraciones")
+    Call<ArrayList<Valoracion>> getValoraciones(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/valoraciones/filtro")
+    Call<ArrayList<Valoracion>> getValoracionesByFiltro(@Query("filtro") String filtro,
+                                                        @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/valoraciones/{id}")
+    Call<Valoracion> getValoracion(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/valoraciones/sanitario/{id}")
+    Call<ArrayList<Valoracion>> getValoracionesBySanitarioId(@Path("id") Long id,
+                                                             @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/valoraciones/media")
+    Call<ArrayList<ValoracionesResults>> getAVGValoraciones(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/valoraciones/media/filtro")
+    Call<ArrayList<ValoracionesResults>> getValoracionesResultsByFiltro(@Query("filtro") String filtro,
+                                                   @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/valoraciones")
+    Call<Valoracion> crearValoracion(@Body Valoracion v, @Header("Authorization") String token);
+
 
 }
