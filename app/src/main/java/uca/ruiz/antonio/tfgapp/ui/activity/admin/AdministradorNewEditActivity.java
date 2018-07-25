@@ -10,9 +10,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -27,6 +31,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Authority;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
+import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.User;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
@@ -38,6 +43,9 @@ import java.util.List;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
+import static android.R.attr.id;
+import static uca.ruiz.antonio.tfgapp.R.string.centros;
+
 
 public class AdministradorNewEditActivity extends AppCompatActivity {
 
@@ -46,8 +54,11 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
     DatePickerDialog dpd_fnac;
     private CheckBox chk_activo;
     private Administrador administrador;
+    private Centro centro;
     private Boolean editando = false;
     private ProgressDialog progressDialog;
+    private Spinner sp_centros;
+    private TextView sp_centros_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +79,15 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
 
         chk_activo = (CheckBox) findViewById(R.id.chk_activo);
 
+        sp_centros = (Spinner) findViewById(R.id.sp_centros);
+        sp_centros_text = (TextView) findViewById(R.id.sp_centros_error);
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.guardando));
 
         try { // editar
             administrador = (Administrador) getIntent().getExtras().getSerializable("administrador");
+            centro = administrador.getCentroActual();
             et_nombre.setText(administrador.getFirstname());
             et_apellidos.setText(administrador.getLastname());
             et_dni.setText(administrador.getDni());
@@ -85,11 +100,25 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
             else
                 chk_activo.setChecked(false);
 
+            cargarCentros(sp_centros, centro);
             editando = true;
         } catch (Exception e) {
             chk_activo.setVisibility(View.GONE);
             Log.d(TAG, getString(R.string.creando_nuevo_registro));
+            cargarCentros(sp_centros, centro);
         }
+
+        sp_centros.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                centro = (Centro) adapterView.getAdapter().getItem(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         et_fnac.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +182,7 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
         et_dni.setError(null);
         et_email.setError(null);
         et_fnac.setError(null);
+        sp_centros_text.setError(null);
 
         //tomo el contenido de los campos
         String nombre = et_nombre.getText().toString().trim().toUpperCase();
@@ -163,6 +193,13 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
 
         boolean cancel = false;
         View focusView = null;
+
+        // Validar listado de Centros
+        if(centro.getId() == 0 || centro == null) {
+            sp_centros_text.setError(getString(R.string.debes_seleccionar_centro));
+            focusView = sp_centros_text;
+            cancel = true;
+        }
 
         // Valida campo Fnac
         if(Validacion.vacio(fnac)) {
@@ -228,9 +265,9 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
 
     }
 
-    private void nuevo(User a) {
+    private void nuevo(User admin) {
         progressDialog.show();
-        Call<UserResponse> call = MyApiAdapter.getApiService().registro(a, Pref.getToken());
+        Call<UserResponse> call = MyApiAdapter.getApiService().registro(centro.getId(), admin, Pref.getToken());
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
@@ -274,7 +311,8 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
 
     private void editar(User a) {
         progressDialog.show();
-        Call<User> call = MyApiAdapter.getApiService().editarRegistro(administrador.getId(), a, Pref.getToken());
+        Call<User> call = MyApiAdapter.getApiService().editarRegistro(administrador.getId(),
+                centro.getId(), a, Pref.getToken());
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -316,8 +354,47 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
+    private void cargarCentros(final Spinner sp_centros, final Centro cActual) {
+        Call<ArrayList<Centro>> call = MyApiAdapter.getApiService().getCentros(Pref.getToken());
+        call.enqueue(new Callback<ArrayList<Centro>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Centro>> call, Response<ArrayList<Centro>> response) {
+                if(response.isSuccessful()) {
+                    ArrayList<Centro> centros = response.body();
+
+                    if(centros != null) {
+                        centros.add(0, new Centro(getString(R.string.seleccione_centro)));
+                        ArrayAdapter<Centro> arrayAdapter = new ArrayAdapter<Centro>(AdministradorNewEditActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item, centros);
+
+                        Log.d("CENTROS", "Tamaño ==> " + centros.size());
+                        sp_centros.setAdapter(arrayAdapter);
+                        if(editando) {
+                            try {
+                                sp_centros.setSelection(centros.indexOf(cActual));
+                            } catch (Exception e) {
+                                Log.d("CENTROS_ACTUAL: ", "Ninguno!!");
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Centro>> call, Throwable t) {
+                progressDialog.cancel();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(AdministradorNewEditActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(AdministradorNewEditActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
+            }
+        });
+    }
 }

@@ -58,6 +58,9 @@ public class User implements Serializable {
     @Expose
     protected String colegiado;
 
+    protected Centro centroActual;
+
+
     public User() {
     }
 
@@ -219,5 +222,9 @@ public class User implements Serializable {
 
     public void setColegiado(String colegiado) {
         this.colegiado = colegiado;
+    }
+
+    public Centro getCentroActual() {
+        return centroActual;
     }
 }

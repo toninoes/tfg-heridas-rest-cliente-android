@@ -43,9 +43,19 @@ public interface MyApiService {
     Call<UserResponse> registro(@Body User user, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
+    @POST("registro/{centroId}")
+    Call<UserResponse> registro(@Path("centroId") Long centroId, @Body User user,
+                                @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
     @PUT("registro/{id}")
     Call<User> editarRegistro(@Path("id") Long id, @Body User user,
                                           @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @PUT("registro/{id}/{centroId}")
+    Call<User> editarRegistro(@Path("id") Long id, @Path("centroId") Long centroId,
+                              @Body User user, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @GET("user")
@@ -99,6 +109,10 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/centros/{id}")
     Call<Centro> getCentro(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/usercentros/user/{id}")
+    Call<Centro> getCentroByUserId(@Path("id") Long id, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @DELETE("api/centros/{id}")
