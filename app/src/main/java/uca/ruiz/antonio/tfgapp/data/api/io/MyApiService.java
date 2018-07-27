@@ -102,6 +102,10 @@ public interface MyApiService {
     Call<ArrayList<Centro>> getCentros(@Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
+    @GET("api/centros/recientes")
+    Call<ArrayList<Centro>> getCentrosRecientes(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
     @GET("api/centros/filtro")
     Call<ArrayList<Centro>> getCentrosByFiltro(@Query("filtro") String filtro,
                                            @Header("Authorization") String token);
@@ -132,6 +136,10 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/salas")
     Call<ArrayList<Sala>> getSalas(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/salas/recientes")
+    Call<ArrayList<Sala>> getSalasRecientes(@Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @GET("api/salas/filtro")
@@ -248,6 +256,10 @@ public interface MyApiService {
     Call<ArrayList<Administrador>> getAdministradores(@Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
+    @GET("api/administradores/recientes")
+    Call<ArrayList<Administrador>> getAdministradoresRecientes(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
     @GET("api/administradores/filtro")
     Call<ArrayList<Administrador>> getAdministradoresByFiltro(@Query("filtro") String filtro,
                                                              @Header("Authorization") String token);
@@ -265,6 +277,10 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/sanitarios")
     Call<ArrayList<Sanitario>> getSanitarios(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/sanitarios/recientes")
+    Call<ArrayList<Sanitario>> getSanitariosRecientes(@Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @GET("api/sanitarios/filtro")
@@ -286,6 +302,10 @@ public interface MyApiService {
     Call<ArrayList<Paciente>> getPacientes(@Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
+    @GET("api/pacientes/recientes")
+    Call<ArrayList<Paciente>> getPacientesRecientes(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
     @GET("api/pacientes/filtro")
     Call<ArrayList<Paciente>> getPacientesByFiltro(@Query("filtro") String filtro,
                                                      @Header("Authorization") String token);
@@ -303,6 +323,10 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/valoraciones")
     Call<ArrayList<Valoracion>> getValoraciones(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/valoraciones/recientes")
+    Call<ArrayList<Valoracion>> getValoracionesRecientes(@Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @GET("api/valoraciones/filtro")

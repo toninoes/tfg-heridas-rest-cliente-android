@@ -116,7 +116,7 @@ public class AdministradoresActivity extends AppCompatActivity {
 
     private void cargarAdministradores() {
         progressDialog.show();
-        Call<ArrayList<Administrador>> call = MyApiAdapter.getApiService().getAdministradores(Pref.getToken());
+        Call<ArrayList<Administrador>> call = MyApiAdapter.getApiService().getAdministradoresRecientes(Pref.getToken());
         call.enqueue(new Callback<ArrayList<Administrador>>() {
             @Override
             public void onResponse(Call<ArrayList<Administrador>> call, Response<ArrayList<Administrador>> response) {

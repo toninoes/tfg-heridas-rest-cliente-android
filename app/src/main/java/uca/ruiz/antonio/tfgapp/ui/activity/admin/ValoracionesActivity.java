@@ -116,7 +116,7 @@ public class ValoracionesActivity extends AppCompatActivity {
     private void cargarValoraciones() {
         progressDialog.show();
         Call<ArrayList<Valoracion>> call = MyApiAdapter.getApiService().
-                getValoraciones(Pref.getToken());
+                getValoracionesRecientes(Pref.getToken());
         call.enqueue(new Callback<ArrayList<Valoracion>>() {
             @Override
             public void onResponse(Call<ArrayList<Valoracion>> call,

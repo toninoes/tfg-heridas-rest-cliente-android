@@ -4,6 +4,6 @@
     <item
         android:id="@+id/todas_valoraciones"
         android:orderInCategory="1"
-        android:title="@string/todas_valoraciones"
+        android:title="@string/valoraciones_recientes"
         android:icon="@drawable/ic_add_item" />
 </menu>

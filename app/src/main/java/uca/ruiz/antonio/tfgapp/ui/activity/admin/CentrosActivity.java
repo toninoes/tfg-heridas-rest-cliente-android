@@ -116,7 +116,7 @@ public class CentrosActivity extends AppCompatActivity {
 
     private void cargarCentros() {
         progressDialog.show();
-        Call<ArrayList<Centro>> call = MyApiAdapter.getApiService().getCentros(Pref.getToken());
+        Call<ArrayList<Centro>> call = MyApiAdapter.getApiService().getCentrosRecientes(Pref.getToken());
         call.enqueue(new Callback<ArrayList<Centro>>() {
             @Override
             public void onResponse(Call<ArrayList<Centro>> call, Response<ArrayList<Centro>> response) {

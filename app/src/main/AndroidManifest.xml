@@ -197,7 +197,7 @@
         <activity
             android:name=".ui.activity.admin.ValoracionesActivity"
             android:configChanges="orientation"
-            android:label="@string/todas_valoraciones"
+            android:label="@string/valoraciones_recientes"
             android:screenOrientation="portrait"/>
     </application>
 

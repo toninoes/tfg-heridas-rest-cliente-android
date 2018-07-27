@@ -118,7 +118,7 @@ public class SalasActivity extends AppCompatActivity {
 
     private void cargarSalas() {
         progressDialog.show();
-        Call<ArrayList<Sala>> call = MyApiAdapter.getApiService().getSalas(Pref.getToken());
+        Call<ArrayList<Sala>> call = MyApiAdapter.getApiService().getSalasRecientes(Pref.getToken());
         call.enqueue(new Callback<ArrayList<Sala>>() {
             @Override
             public void onResponse(Call<ArrayList<Sala>> call, Response<ArrayList<Sala>> response) {
@@ -127,16 +127,6 @@ public class SalasActivity extends AppCompatActivity {
                     ArrayList<Sala> salas = response.body();
                     if(salas != null) {
                         Log.d("SALAS", "Tamaño ==> " + salas.size());
-
-                        // Ordenar las Salas según el nombre del Centro al que pertenecen
-                        // Prefiero hacerlo en cliente para descargar al servidor
-                        Collections.sort(salas, new Comparator<Sala>() {
-                            @Override
-                            public int compare(Sala s1, Sala s2) {
-                                return s1.getCentro().getNombre().compareTo(s2.getCentro().getNombre());
-                            }
-                        });
-
                     }
                     mAdapter.setDataSet(salas);
                 }

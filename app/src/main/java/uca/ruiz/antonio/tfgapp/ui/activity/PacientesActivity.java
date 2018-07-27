@@ -118,7 +118,7 @@ public class PacientesActivity extends AppCompatActivity {
 
     private void cargarPacientes() {
         progressDialog.show();
-        Call<ArrayList<Paciente>> call = MyApiAdapter.getApiService().getPacientes(Pref.getToken());
+        Call<ArrayList<Paciente>> call = MyApiAdapter.getApiService().getPacientesRecientes(Pref.getToken());
         call.enqueue(new Callback<ArrayList<Paciente>>() {
             @Override
             public void onResponse(Call<ArrayList<Paciente>> call, Response<ArrayList<Paciente>> response) {

@@ -116,7 +116,7 @@ public class SanitariosActivity extends AppCompatActivity {
 
     private void cargarSanitarios() {
         progressDialog.show();
-        Call<ArrayList<Sanitario>> call = MyApiAdapter.getApiService().getSanitarios(Pref.getToken());
+        Call<ArrayList<Sanitario>> call = MyApiAdapter.getApiService().getSanitariosRecientes(Pref.getToken());
         call.enqueue(new Callback<ArrayList<Sanitario>>() {
             @Override
             public void onResponse(Call<ArrayList<Sanitario>> call, Response<ArrayList<Sanitario>> response) {
