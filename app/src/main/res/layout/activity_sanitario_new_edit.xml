@@ -104,13 +104,27 @@
             android:layout_marginTop="10dp"
             android:text="@string/activo" />
 
-        <!--<DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/sp_centros"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/sp_centros_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="10"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingTop="0dp" />
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -19,7 +19,7 @@ public class AdministradorActivity extends AppCompatActivity {
     private TextView tv_1_1, tv_1_2, tv_2_1, tv_2_2, tv_3_1, tv_3_2, tv_4_1, tv_4_2, tv_5_1, tv_5_2;
     private TextView tv_6_1, tv_6_2, tv_7_1, tv_7_2, tv_8_1, tv_8_2, tv_9_1, tv_9_2, tv_10_1, tv_10_2;
 
-    private final int CAMPOS = 6;
+    private final int CAMPOS = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,9 @@ public class AdministradorActivity extends AppCompatActivity {
 
         tv_6_1.setText(R.string.fnac);
         tv_6_2.setText(FechaHoraUtils.getNacimientoAndEdad(administrador.getNacimiento()));
+
+        tv_7_1.setText(R.string.centro);
+        tv_7_2.setText(administrador.getCentroActual().getNombre());
     }
 
     @Override

@@ -43,9 +43,6 @@ import java.util.List;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
-import static android.R.attr.id;
-import static uca.ruiz.antonio.tfgapp.R.string.centros;
-
 
 public class AdministradorNewEditActivity extends AppCompatActivity {
 
@@ -309,10 +306,10 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
         });
     }
 
-    private void editar(User a) {
+    private void editar(User admin) {
         progressDialog.show();
         Call<User> call = MyApiAdapter.getApiService().editarRegistro(administrador.getId(),
-                centro.getId(), a, Pref.getToken());
+                centro.getId(), admin, Pref.getToken());
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
