@@ -30,13 +30,12 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
-
 public class SalaNewEditActivity extends AppCompatActivity {
 
     private static final String TAG = SalaNewEditActivity.class.getSimpleName();
     private EditText et_nombre;
     private Spinner sp_centros;
-    private  TextView sp_centros_text;
+    private TextView sp_centros_text;
     private Sala sala;
     private Centro centro;
     private Boolean editando = false;

@@ -23,11 +23,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
+import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.ui.activity.PacienteActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.PacienteNewEditActivity;
+import uca.ruiz.antonio.tfgapp.ui.activity.ProcesosActivity;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 import static android.content.ContentValues.TAG;
@@ -46,6 +48,7 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.ViewHo
         private TextView tv_subtitulo;
         private ImageButton ib_delete;
         private ImageButton ib_edit;
+        private ImageButton ib_asistir;
 
         public ViewHolder(View v) {
             super(v);
@@ -55,6 +58,9 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.ViewHo
             ib_delete = (ImageButton) v.findViewById(R.id.ib_delete);
             ib_delete.setVisibility(View.GONE); // no borrar usuarios (desactivarlos)
             ib_edit = (ImageButton) v.findViewById(R.id.ib_edit);
+            ib_asistir = (ImageButton) v.findViewById(R.id.ib_asistir);
+            if(Preferencias.get(v.getContext()).getBoolean("ROLE_SANITARIO", false))
+                ib_asistir.setVisibility(View.VISIBLE);
         }
     }
 
@@ -152,6 +158,18 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.ViewHo
                 int pos = holder.getAdapterPosition();
                 Paciente paciente = mDataSet.get(pos);
                 Intent intent = new Intent(context, PacienteNewEditActivity.class);
+                intent.putExtra("paciente", paciente);
+                context.startActivity(intent);
+            }
+        });
+
+        // ver/añadir/editar procesos de un paciente dado
+        holder.ib_asistir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = holder.getAdapterPosition();
+                Paciente paciente = mDataSet.get(pos);
+                Intent intent = new Intent(context, ProcesosActivity.class);
                 intent.putExtra("paciente", paciente);
                 context.startActivity(intent);
             }

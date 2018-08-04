@@ -218,6 +218,7 @@ public class LoginActivity extends AppCompatActivity {
         Preferencias.getEditor(this).putString("nombre", user.getFirstname()).commit();
         Preferencias.getEditor(this).putString("apellidos", user.getLastname()).commit();
         Preferencias.getEditor(this).putBoolean("activo", user.getEnabled()).commit();
+        Preferencias.getEditor(this).putLong("id", user.getId()).commit();
 
         // Reiniciamos los roles a falso todos
         Preferencias.getEditor(this).putBoolean("ROLE_ADMIN", false).commit();

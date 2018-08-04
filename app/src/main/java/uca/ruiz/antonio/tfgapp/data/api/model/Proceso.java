@@ -8,20 +8,22 @@ import java.util.List;
 public class Proceso implements Serializable {
     private long id;
     private String anamnesis;
-    private String diagnostico;
-    private String tipo;
+    private Diagnostico diagnostico;
+    private Procedimiento procedimiento;
+    private Paciente paciente;
     private List<Cura> curas;
     private String observaciones;
     private Date creacion;
-    private Paciente paciente;
+
 
     public Proceso() {
     }
 
-    public Proceso(String anamnesis, String diagnostico, String tipo, String observaciones, Paciente paciente) {
+    public Proceso(String anamnesis, Diagnostico diagnostico, Procedimiento procedimiento,
+                   String observaciones, Paciente paciente) {
         this.anamnesis = anamnesis;
         this.diagnostico = diagnostico;
-        this.tipo = tipo;
+        this.procedimiento = procedimiento;
         this.observaciones = observaciones;
         this.paciente = paciente;
     }
@@ -42,20 +44,12 @@ public class Proceso implements Serializable {
         this.anamnesis = anamnesis;
     }
 
-    public String getDiagnostico() {
+    public Diagnostico getDiagnostico() {
         return diagnostico;
     }
 
-    public void setDiagnostico(String diagnostico) {
+    public void setDiagnostico(Diagnostico diagnostico) {
         this.diagnostico = diagnostico;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public List<Cura> getCuras() {
@@ -88,5 +82,57 @@ public class Proceso implements Serializable {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public Procedimiento getProcedimiento() {
+        return procedimiento;
+    }
+
+    public void setProcedimiento(Procedimiento procedimiento) {
+        this.procedimiento = procedimiento;
+    }
+
+    @Override
+    public String toString() {
+        return "Proceso{" +
+                "paciente=" + paciente +
+                ", creacion=" + creacion +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Proceso proceso = (Proceso) o;
+
+        if (id != proceso.id) return false;
+        if (anamnesis != null ? !anamnesis.equals(proceso.anamnesis) : proceso.anamnesis != null)
+            return false;
+        if (diagnostico != null ? !diagnostico.equals(proceso.diagnostico) : proceso.diagnostico != null)
+            return false;
+        if (procedimiento != null ? !procedimiento.equals(proceso.procedimiento) : proceso.procedimiento != null)
+            return false;
+        if (paciente != null ? !paciente.equals(proceso.paciente) : proceso.paciente != null)
+            return false;
+        if (curas != null ? !curas.equals(proceso.curas) : proceso.curas != null) return false;
+        if (observaciones != null ? !observaciones.equals(proceso.observaciones) : proceso.observaciones != null)
+            return false;
+        return creacion != null ? creacion.equals(proceso.creacion) : proceso.creacion == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (anamnesis != null ? anamnesis.hashCode() : 0);
+        result = 31 * result + (diagnostico != null ? diagnostico.hashCode() : 0);
+        result = 31 * result + (procedimiento != null ? procedimiento.hashCode() : 0);
+        result = 31 * result + (paciente != null ? paciente.hashCode() : 0);
+        result = 31 * result + (curas != null ? curas.hashCode() : 0);
+        result = 31 * result + (observaciones != null ? observaciones.hashCode() : 0);
+        result = 31 * result + (creacion != null ? creacion.hashCode() : 0);
+        return result;
     }
 }

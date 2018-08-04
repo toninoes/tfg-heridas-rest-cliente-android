@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
+import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
 
 /**
  * Created by toni on 21/06/2018.
@@ -43,5 +44,9 @@ public class Pref {
 
     public static Boolean esPaciente() {
         return Preferencias.get(ctx).getBoolean("ROLE_PACIENTE", false);
+    }
+
+    public static Long getUserId() {
+        return Preferencias.get(ctx).getLong("id", 0);
     }
 }

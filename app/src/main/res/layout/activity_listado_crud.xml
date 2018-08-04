@@ -16,13 +16,13 @@
 
         <LinearLayout
             android:id="@+id/ll_busqueda"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_weight="1"
-            android:background="@drawable/border"
+            android:background="@drawable/border_naranja"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="horizontal">
 
             <android.support.design.widget.TextInputLayout
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:background="@drawable/bg_button"
+                android:background="@drawable/bg_button_naranja"
                 android:text="@string/buscar"
                 android:textColor="@android:color/background_light" />
 

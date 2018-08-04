@@ -50,6 +50,16 @@
     </LinearLayout>
 
     <ImageButton
+        android:id="@+id/ib_asistir"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/background_light"
+        android:contentDescription="@string/nueva_asistencia"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_action_tirita" />
+
+    <ImageButton
         android:id="@+id/ib_edit"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

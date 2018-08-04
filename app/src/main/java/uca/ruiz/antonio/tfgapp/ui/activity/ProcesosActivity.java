@@ -22,8 +22,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.ProcesoAdapter;
+import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 public class ProcesosActivity extends AppCompatActivity implements Callback<ArrayList<Proceso>> {
@@ -35,6 +37,9 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
     private ProcesoAdapter mAdapter;
     private SwipeRefreshLayout srl_listado;
 
+    private Paciente paciente;
+    private TextView tv_nombre_completo, tv_dni, tv_historia, tv_edad;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,20 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        paciente = (Paciente) getIntent().getExtras().getSerializable("paciente");
+        tv_nombre_completo = (TextView) findViewById(R.id.tv_nombre_completo);
+        tv_dni = (TextView) findViewById(R.id.tv_dni);
+        tv_historia = (TextView) findViewById(R.id.tv_historia);
+        tv_edad = (TextView) findViewById(R.id.tv_edad);
+
+        tv_nombre_completo.setText(paciente.getFullName());
+        tv_dni.setText(getString(R.string.dni).toUpperCase() + ": " + paciente.getDni());
+        tv_historia.setText(getString(R.string.nhc) + ": " +
+                paciente.getHistoria().toString());
+        tv_edad.setText(getString(R.string.edad).toUpperCase() + ": " +
+                FechaHoraUtils.getEdad(paciente.getNacimiento()).toString());
+
 
         fab_add_elemento = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
         fab_add_elemento.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +85,8 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
         mAdapter = new ProcesoAdapter(this);
         rv_listado.setAdapter(mAdapter);
 
-        Call<ArrayList<Proceso>> call = MyApiAdapter.getApiService().getProcesos(Pref.getToken());
+        Call<ArrayList<Proceso>> call = MyApiAdapter.getApiService().getProcesosByPacienteId(paciente.getId(),
+                Pref.getToken());
         call.enqueue(this);
 
         srl_listado = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
@@ -80,7 +100,7 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_proceso, menu);
+        //getMenuInflater().inflate(R.menu.menu_proceso, menu);
         return true;
     }
 
@@ -89,19 +109,17 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
         int id = item.getItemId();
 
         switch (id) {
-            /*case android.R.id.home:
-                Intent intentBack = new Intent(this, MainAdminActivity.class); //VOLVER A PACIENTES
-                startActivity(intentBack);
-                return true;*/
-            /*case R.id.action_editar_proceso: //EDITAR PACIENTE
-                Intent intentEditar = new Intent(this, ProcesoNuevoActivity.class);
-                Proceso proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
-                intentEditar.putExtra("proceso", proceso);
-                startActivity(intentEditar);
-                return true;*/
+            case android.R.id.home:
+                startActivity(new Intent(this, PacientesActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, PacientesActivity.class));
     }
 
     @Override
@@ -130,7 +148,8 @@ public class ProcesosActivity extends AppCompatActivity implements Callback<Arra
 
 
     private void irProcesoNuevoActivity() {
-        Intent intent = new Intent(this, ProcesoNuevoActivity.class);
+        Intent intent = new Intent(this, ProcesoNewEditActivity.class);
+        intent.putExtra("paciente", paciente);
         startActivity(intent);
     }
 

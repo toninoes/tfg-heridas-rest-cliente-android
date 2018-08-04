@@ -61,7 +61,7 @@ public class ProcesoAdapter extends RecyclerView.Adapter<ProcesoAdapter.ViewHold
         // obtenemos un elemento del dataset según su posición
         // reemplazamos el contenido de los views según tales datos
         Proceso proceso = mDataSet.get(position);
-        String cad = FechaHoraUtils.formatoFechaHoraUI(proceso.getCreacion()) + " " + proceso.getDiagnostico();
+        String cad = FechaHoraUtils.formatoFechaUI(proceso.getCreacion()) + " " + proceso.getDiagnostico();
         holder.textView.setText(cad);
 
         // click sobre cada elemento de los procesos

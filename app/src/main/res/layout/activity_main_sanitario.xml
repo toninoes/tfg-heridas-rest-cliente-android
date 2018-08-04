@@ -1,0 +1,378 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.MainPacienteActivity">
+
+    <TextView
+        android:id="@+id/tituloSanitario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/portal_del_sanitario"
+        android:textAlignment="center"
+        android:textColor="@color/naranja"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/linea1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_asistencias"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_asistencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/nueva_asistencia"
+                    android:onClick="asistencias"
+                    app:srcCompat="@drawable/ic_asistencia" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/nueva_asistencia"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_cuidados"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_cuidados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/gestion_cuidados"
+                    android:onClick="cuidados"
+                    app:srcCompat="@drawable/ic_cuidado" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/gestion_cuidados"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_valoraciones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_valoraciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/valoraciones"
+                    android:onClick="valoraciones"
+                    app:srcCompat="@drawable/ic_valoracion" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/valoraciones"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linea2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+<!--
+        <LinearLayout
+            android:id="@+id/ll_asistencias"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_asistencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/nueva_asistencia"
+                    android:onClick="asistencias"
+                    app:srcCompat="@drawable/ic_asistencia" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/nueva_asistencia"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_cuidados"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_cuidados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/gestion_cuidados"
+                    android:onClick="cuidados"
+                    app:srcCompat="@drawable/ic_cuidado" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/gestion_cuidados"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_valoraciones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_valoraciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/valoraciones"
+                    android:onClick="valoraciones"
+                    app:srcCompat="@drawable/ic_valoracion" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/valoraciones"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linea3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+<!--
+        <LinearLayout
+            android:id="@+id/ll_asistencias"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_asistencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/nueva_asistencia"
+                    android:onClick="asistencias"
+                    app:srcCompat="@drawable/ic_asistencia" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/nueva_asistencia"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_cuidados"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_cuidados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/gestion_cuidados"
+                    android:onClick="cuidados"
+                    app:srcCompat="@drawable/ic_cuidado" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/gestion_cuidados"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_valoraciones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <ImageButton
+                    android:id="@+id/ib_valoraciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/valoraciones"
+                    android:onClick="valoraciones"
+                    app:srcCompat="@drawable/ic_valoracion" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:text="@string/valoraciones"
+                    android:textAlignment="center"
+                    android:textColor="@color/naranja" />
+
+            </LinearLayout>
+        </LinearLayout>
+-->
+    </LinearLayout>
+
+</LinearLayout>

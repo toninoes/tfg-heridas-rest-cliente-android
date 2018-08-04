@@ -74,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/bg_button"
+        android:background="@drawable/bg_button_naranja"
         android:text="@string/action_sign_in"
         android:textColor="@android:color/background_light"
         android:textStyle="bold" />

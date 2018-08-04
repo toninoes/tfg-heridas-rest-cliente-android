@@ -1,28 +1,80 @@
 package uca.ruiz.antonio.tfgapp.ui.activity;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import uca.ruiz.antonio.tfgapp.R;
-import uca.ruiz.antonio.tfgapp.utils.Pref;
+import uca.ruiz.antonio.tfgapp.ui.activity.admin.ValoracionesResultsActivity;
+import uca.ruiz.antonio.tfgapp.utils.Utils;
 
 public class MainSanitarioActivity extends AppCompatActivity  {
 
-    private TextView tv;
+    private ProgressDialog progressDialog;
+    private LinearLayout ll_asistencias, ll_cuidados, ll_valoraciones;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_sanitario);
 
-        tv = (TextView) findViewById(R.id.tv);
-        tv.setText("Hola sanitario");
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        ll_asistencias = (LinearLayout) findViewById(R.id.ll_asistencias);
+        ll_cuidados = (LinearLayout) findViewById(R.id.ll_cuidados);
+        ll_valoraciones = (LinearLayout) findViewById(R.id.ll_valoraciones);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.cargando));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                Utils.preguntarQuiereSalir(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Utils.preguntarQuiereSalir(this);
+    }
+
+    public  void asistencias(View view) {
+        ll_asistencias.setBackgroundResource(R.color.grisFondoLL);
+        progressDialog.show();
+
+        Intent intent = new Intent(this, PacientesActivity.class);
+        startActivity(intent);
+    }
+
+    public  void cuidados(View view) {
+        ll_cuidados.setBackgroundResource(R.color.grisFondoLL);
+        progressDialog.show();
+
+        //intent aqui
+    }
 
 
+    public void valoraciones(View view) {
+        ll_valoraciones.setBackgroundResource(R.color.grisFondoLL);
+        progressDialog.show();
+
+        Intent intent = new Intent(this, ValoracionesResultsActivity.class);
+        startActivity(intent);
     }
 
 

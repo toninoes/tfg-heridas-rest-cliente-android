@@ -156,6 +156,10 @@ public class User implements Serializable {
         return this.lastname + ", " + this.firstname;
     }
 
+    public String getFullName() {
+        return this.firstname + " " + this.lastname;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -18,6 +18,10 @@ public class Procedimiento implements Serializable {
         this.nombre = nombre;
     }
 
+    public Procedimiento(String nombre) {
+        this.nombre = nombre;
+    }
+
     public long getId() {
         return id;
     }

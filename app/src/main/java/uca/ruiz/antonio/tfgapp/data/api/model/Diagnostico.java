@@ -25,6 +25,10 @@ public class Diagnostico implements Serializable {
         this.grupodiagnostico = grupodiagnostico;
     }
 
+    public Diagnostico(String nombre) {
+        this.nombre = nombre;
+    }
+
     public long getId() {
         return id;
     }

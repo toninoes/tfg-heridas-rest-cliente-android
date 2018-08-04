@@ -13,6 +13,9 @@ import java.util.List;
 public class UserResponse implements Serializable
 {
 
+    @SerializedName("id")
+    @Expose
+    private Long id;
     @SerializedName("username")
     @Expose
     private String username;
@@ -39,6 +42,14 @@ public class UserResponse implements Serializable
         this.lastname = lastname;
         this.email = email;
         this.authorities = authorities;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {

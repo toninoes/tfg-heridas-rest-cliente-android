@@ -112,4 +112,13 @@
     <string name="total_valoraciones">Total Valoraciones</string>
     <string name="valoracion_media">Valoración Media</string>
     <string name="valoraciones_recientes">Valoraciones Recientes</string>
+    <string name="portal_del_sanitario">Portal del Sanitario</string>
+    <string name="nueva_asistencia">Nueva Asistencia</string>
+    <string name="gestion_cuidados">Gestionar Cuidados</string>
+    <string name="selecciones_diagnostico">Seleccione Diagnóstico</string>
+    <string name="debes_seleccionar_diagnostico">Debes seleccionar un Diagnóstico.</string>
+    <string name="selecciones_procedimiento">Seleccione Procedimiento</string>
+    <string name="debes_seleccionar_procedimiento">Debes seleccionar un Procedimiento.</string>
+    <string name="edad">Edad</string>
+    <string name="nhc">NHC</string>
 </resources>

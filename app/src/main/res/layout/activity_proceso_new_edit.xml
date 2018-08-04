@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.ProcesoNuevoActivity">
+    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.ProcesoNewEditActivity">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -25,32 +25,6 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/et_diagnostico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/diagnostico"
-            android:maxLength="255" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/et_tipo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/tipo"
-            android:maxLength="255" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
             android:id="@+id/et_observaciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,5 +32,49 @@
             android:maxLength="255" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/sp_diagnosticos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/sp_diagnosticos_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_weight="10"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingTop="0dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/sp_procedimientos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/sp_procedimientos_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_weight="10"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingTop="0dp" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -81,7 +81,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
         proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
         if (proceso != null) {
             tv_diagnostico_tit.setText(getText(R.string.diagnostico));
-            tv_diagnostico.setText(proceso.getDiagnostico());
+            //tv_diagnostico.setText(proceso.getDiagnostico());
             tv_fecha.setText(FechaHoraUtils.formatoFechaHoraUI(proceso.getCreacion()));
             tv_anamnesis_tit.setText(getText(R.string.anamnesis));
             tv_anamnesis.setText(proceso.getAnamnesis());
@@ -127,7 +127,7 @@ public class CurasActivity extends AppCompatActivity implements Callback<ArrayLi
                 this.finish();
                 return true;
             case R.id.action_editar_proceso:
-                Intent intentEditar = new Intent(this, ProcesoEditarActivity.class);
+                Intent intentEditar = new Intent(this, ProcesoNewEditActivity.class);
                 proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
                 intentEditar.putExtra("proceso", proceso);
                 startActivity(intentEditar);

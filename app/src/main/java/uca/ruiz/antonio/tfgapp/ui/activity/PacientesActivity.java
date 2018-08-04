@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
+import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.ui.activity.admin.MainAdminActivity;
@@ -101,7 +102,7 @@ public class PacientesActivity extends AppCompatActivity {
 
         switch (id) {
             case android.R.id.home:
-                startActivity(new Intent(this, MainAdminActivity.class));
+                volverAtras();
                 return true;
             case R.id.add_item:
                 startActivity(new Intent(this, PacienteNewEditActivity.class));
@@ -111,9 +112,16 @@ public class PacientesActivity extends AppCompatActivity {
         }
     }
 
+    private void volverAtras() {
+        if(Preferencias.get(this).getBoolean("ROLE_ADMIN", false))
+            startActivity(new Intent(this, MainAdminActivity.class));
+        else if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false))
+            startActivity(new Intent(this, MainSanitarioActivity.class));
+    }
+
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainAdminActivity.class));
+        volverAtras();
     }
 
     private void cargarPacientes() {

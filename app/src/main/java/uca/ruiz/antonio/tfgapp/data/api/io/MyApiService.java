@@ -72,8 +72,12 @@ public interface MyApiService {
     Call<Proceso> getProceso(@Path("id") Long id, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
-    @POST("api/procesos")
-    Call<Proceso> crearProceso(@Body Proceso p, @Header("Authorization") String token);
+    @GET("api/procesos/paciente/{id}")
+    Call<ArrayList<Proceso>> getProcesosByPacienteId(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/procesos/{sanitarioId}")
+    Call<Proceso> crearProceso(@Path("sanitarioId") Long id, @Body Proceso p, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @PUT("api/procesos/{id}")
@@ -290,6 +294,10 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/sanitarios/{id}")
     Call<Sanitario> getSanitario(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/sanitarios/email/{email}")
+    Call<Sanitario> getSanitarioByEmail(@Path("email") String email, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @DELETE("api/sanitarios/{id}")
