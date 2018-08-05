@@ -58,7 +58,11 @@
             android:configChanges="orientation"
             android:label="@string/editcura"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.ImagenesActivity" />
+        <activity
+            android:name=".ui.activity.ImagenesActivity"
+            android:configChanges="orientation"
+            android:label="@string/cura"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.admin.MainAdminActivity"
             android:configChanges="orientation"

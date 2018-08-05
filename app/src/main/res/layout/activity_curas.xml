@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/naranja"
     tools:context="uca.ruiz.antonio.tfgapp.ui.activity.CurasActivity">
 
     <LinearLayout
@@ -30,64 +29,63 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="ScrollViewSize">
 
                     <TextView
                         android:id="@+id/tv_fecha"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="6"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/azul"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_anamnesis_tit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/azul"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_anamnesis"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/azul"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_diagnostico_tit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/azul"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_diagnostico"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/azul"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_observaciones_tit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/azul"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_observaciones"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/azul"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
             </ScrollView>

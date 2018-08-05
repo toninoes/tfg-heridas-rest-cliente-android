@@ -115,10 +115,12 @@
     <string name="portal_del_sanitario">Portal del Sanitario</string>
     <string name="nueva_asistencia">Nueva Asistencia</string>
     <string name="gestion_cuidados">Gestionar Cuidados</string>
-    <string name="selecciones_diagnostico">Seleccione Diagnóstico</string>
+    <string name="seleccione_Gdiagnostico">Seleccione un Grupo de Diagnósticos</string>
+    <string name="seleccione_diagnostico">Seleccione Diagnóstico</string>
     <string name="debes_seleccionar_diagnostico">Debes seleccionar un Diagnóstico.</string>
-    <string name="selecciones_procedimiento">Seleccione Procedimiento</string>
+    <string name="seleccione_procedimiento">Seleccione Procedimiento</string>
     <string name="debes_seleccionar_procedimiento">Debes seleccionar un Procedimiento.</string>
     <string name="edad">Edad</string>
     <string name="nhc">NHC</string>
+    <string name="filtrando_diagnosticos">Filtrando diagnósticos</string>
 </resources>

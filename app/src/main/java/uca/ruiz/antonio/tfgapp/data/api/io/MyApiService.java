@@ -208,6 +208,11 @@ public interface MyApiService {
                                                          @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
+    @GET("api/diagnosticos/g/{gId}")
+    Call<ArrayList<Diagnostico>> getDiagnosticosByGId(@Path("gId") Long gId,
+                                                      @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
     @GET("api/diagnosticos/{id}")
     Call<Diagnostico> getDiagnostico(@Path("id") Long id, @Header("Authorization") String token);
 
