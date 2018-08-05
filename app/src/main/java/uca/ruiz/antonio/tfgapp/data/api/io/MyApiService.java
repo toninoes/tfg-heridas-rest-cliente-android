@@ -92,8 +92,8 @@ public interface MyApiService {
                                               @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
-    @POST("api/curas")
-    Call<Cura> crearCura(@Body Cura c, @Header("Authorization") String token);
+    @POST("api/curas/{sanitarioId}")
+    Call<Cura> crearCura(@Path("sanitarioId") Long id, @Body Cura c, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @PUT("api/curas/{id}")

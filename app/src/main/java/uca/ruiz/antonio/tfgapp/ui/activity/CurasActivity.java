@@ -44,8 +44,8 @@ public class CurasActivity extends AppCompatActivity {
     private LinearLayoutManager mLayoutManager;
     private CuraAdapter mAdapter;
 
-    private TextView tv_diagnostico, tv_diagnostico_tit;
     private TextView tv_fecha;
+    private TextView tv_diagnostico, tv_diagnostico_tit;
     private TextView tv_anamnesis, tv_anamnesis_tit;
     private TextView tv_observaciones, tv_observaciones_tit;
 
@@ -63,10 +63,10 @@ public class CurasActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        tv_fecha = (TextView) findViewById(R.id.tv_fecha);
         tv_listado_titulo = (TextView) findViewById(R.id.tv_listado_titulo);
         tv_diagnostico_tit = (TextView) findViewById(R.id.tv_diagnostico_tit);
         tv_diagnostico = (TextView) findViewById(R.id.tv_diagnostico);
-        tv_fecha = (TextView) findViewById(R.id.tv_fecha);
         tv_anamnesis = (TextView) findViewById(R.id.tv_anamnesis);
         tv_anamnesis_tit = (TextView) findViewById(R.id.tv_anamnesis_tit);
         tv_observaciones_tit = (TextView) findViewById(R.id.tv_observaciones_tit);
@@ -119,7 +119,7 @@ public class CurasActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_proceso, menu);
+        getMenuInflater().inflate(R.menu.menu_editar_item, menu);
         return true;
     }
 
@@ -131,7 +131,7 @@ public class CurasActivity extends AppCompatActivity {
             case android.R.id.home:
                 volverAtras();
                 return true;
-            case R.id.action_editar_proceso:
+            case R.id.action_editar:
                 Intent intentEditar = new Intent(this, ProcesoNewEditActivity.class);
                 intentEditar.putExtra("proceso", proceso);
                 startActivity(intentEditar);
@@ -199,7 +199,7 @@ public class CurasActivity extends AppCompatActivity {
     }
 
     private void irCuraNuevaActivity() {
-        Intent intent = new Intent(this, CuraNuevaActivity.class);
+        Intent intent = new Intent(this, CuraNewEditActivity.class);
         intent.putExtra("proceso", proceso);
         startActivity(intent);
     }

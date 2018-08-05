@@ -41,7 +41,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/tv_anamnesis_tit"
+                        android:id="@+id/tv_evolucion_tit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -50,14 +50,14 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_anamnesis"
+                        android:id="@+id/tv_evolucion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/azul"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/tv_diagnostico_tit"
+                        android:id="@+id/tv_tratamiento_tit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -66,14 +66,14 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_diagnostico"
+                        android:id="@+id/tv_tratamiento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/azul"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/tv_observaciones_tit"
+                        android:id="@+id/tv_recomendaciones_tit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -82,7 +82,23 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_observaciones"
+                        android:id="@+id/tv_recomendaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/azul"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_sanitario_tit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/azul"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_sanitario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/azul"

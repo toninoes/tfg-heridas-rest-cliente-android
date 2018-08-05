@@ -107,7 +107,7 @@ public class ProcesosActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.menu_proceso, menu);
+        //getMenuInflater().inflate(R.menu.menu_editar_item, menu);
         return true;
     }
 

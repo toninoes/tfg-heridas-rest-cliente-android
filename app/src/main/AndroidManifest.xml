@@ -49,14 +49,9 @@
             android:label="@string/proceso"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.CuraNuevaActivity"
+            android:name=".ui.activity.CuraNewEditActivity"
             android:configChanges="orientation"
-            android:label="@string/addcura"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.CuraEditarActivity"
-            android:configChanges="orientation"
-            android:label="@string/editcura"
+            android:label="@string/cura"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ImagenesActivity"
