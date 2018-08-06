@@ -267,13 +267,12 @@ public class PacienteNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(PacienteNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(PacienteNewEditActivity.this, PacientesActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(PacienteNewEditActivity.this, apiError.getMessage(),
@@ -312,13 +311,12 @@ public class PacienteNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(PacienteNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(PacienteNewEditActivity.this, PacientesActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(PacienteNewEditActivity.this, apiError.getMessage(),
@@ -337,8 +335,6 @@ public class PacienteNewEditActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 progressDialog.cancel();
-
-                Log.d(TAG, t.getMessage());
 
                 if (t instanceof IOException) {
                     Toasty.warning(PacienteNewEditActivity.this, getString(R.string.error_conexion_red),

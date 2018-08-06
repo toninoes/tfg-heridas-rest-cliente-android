@@ -137,13 +137,12 @@ public class CentroNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Centro>() {
             @Override
             public void onResponse(Call<Centro> call, Response<Centro> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(CentroNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(CentroNewEditActivity.this, CentrosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(CentroNewEditActivity.this, apiError.getMessage(),
@@ -182,13 +181,12 @@ public class CentroNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Centro>() {
             @Override
             public void onResponse(Call<Centro> call, Response<Centro> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(CentroNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(CentroNewEditActivity.this, CentrosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(CentroNewEditActivity.this, apiError.getMessage(),

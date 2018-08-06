@@ -25,7 +25,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Grupodiagnostico;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.LoginActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.GrupodiagnosticoAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
@@ -121,13 +123,26 @@ public class GruposdiagnosticosActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Grupodiagnostico>>() {
             @Override
             public void onResponse(Call<ArrayList<Grupodiagnostico>> call, Response<ArrayList<Grupodiagnostico>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Grupodiagnostico> gruposdiagnosticos = response.body();
                     if(gruposdiagnosticos != null) {
                         Log.d("GRUPOS DIAGNOSTICOS", "Tamaño ==> " + gruposdiagnosticos.size());
                     }
                     mAdapter.setDataSet(gruposdiagnosticos);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(GruposdiagnosticosActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -153,13 +168,26 @@ public class GruposdiagnosticosActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Grupodiagnostico>>() {
             @Override
             public void onResponse(Call<ArrayList<Grupodiagnostico>> call, Response<ArrayList<Grupodiagnostico>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Grupodiagnostico> gruposdiagnosticos = response.body();
                     if(gruposdiagnosticos != null) {
                         Log.d("GRUPOS DIAGNOSTICOS", "Tamaño ==> " + gruposdiagnosticos.size());
                     }
                     mAdapter.setDataSet(gruposdiagnosticos);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(GruposdiagnosticosActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

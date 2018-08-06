@@ -133,13 +133,12 @@ public class ProcedimientoNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Procedimiento>() {
             @Override
             public void onResponse(Call<Procedimiento> call, Response<Procedimiento> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(ProcedimientoNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(ProcedimientoNewEditActivity.this, ProcedimientosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(ProcedimientoNewEditActivity.this, apiError.getMessage(),
@@ -178,13 +177,12 @@ public class ProcedimientoNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Procedimiento>() {
             @Override
             public void onResponse(Call<Procedimiento> call, Response<Procedimiento> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(ProcedimientoNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(ProcedimientoNewEditActivity.this, ProcedimientosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(ProcedimientoNewEditActivity.this, apiError.getMessage(),

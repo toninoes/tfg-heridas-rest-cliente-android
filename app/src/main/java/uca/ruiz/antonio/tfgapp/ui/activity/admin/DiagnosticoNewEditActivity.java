@@ -27,6 +27,7 @@ import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Diagnostico;
 import uca.ruiz.antonio.tfgapp.data.api.model.Grupodiagnostico;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.LoginActivity;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
@@ -167,13 +168,12 @@ public class DiagnosticoNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Diagnostico>() {
             @Override
             public void onResponse(Call<Diagnostico> call, Response<Diagnostico> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(DiagnosticoNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(DiagnosticoNewEditActivity.this, DiagnosticosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(DiagnosticoNewEditActivity.this, apiError.getMessage(),
@@ -212,13 +212,12 @@ public class DiagnosticoNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Diagnostico>() {
             @Override
             public void onResponse(Call<Diagnostico> call, Response<Diagnostico> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(DiagnosticoNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(DiagnosticoNewEditActivity.this, DiagnosticosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(DiagnosticoNewEditActivity.this, apiError.getMessage(),
@@ -267,6 +266,19 @@ public class DiagnosticoNewEditActivity extends AppCompatActivity {
                         sp_gruposdiagnosticos.setAdapter(arrayAdapter);
                         if(editando) {
                             sp_gruposdiagnosticos.setSelection(gruposdiagnosticos.indexOf(diagnostico.getGrupodiagnostico()));
+                        }
+                    }
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(DiagnosticoNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }

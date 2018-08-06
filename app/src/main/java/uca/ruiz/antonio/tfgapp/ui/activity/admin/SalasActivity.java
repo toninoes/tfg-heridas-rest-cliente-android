@@ -27,7 +27,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.SalaAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
@@ -122,13 +124,26 @@ public class SalasActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Sala>>() {
             @Override
             public void onResponse(Call<ArrayList<Sala>> call, Response<ArrayList<Sala>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Sala> salas = response.body();
                     if(salas != null) {
                         Log.d("SALAS", "Tamaño ==> " + salas.size());
                     }
                     mAdapter.setDataSet(salas);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(SalasActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -155,8 +170,8 @@ public class SalasActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Sala>>() {
             @Override
             public void onResponse(Call<ArrayList<Sala>> call, Response<ArrayList<Sala>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Sala> salas = response.body();
                     if(salas != null) {
                         Log.d("SALAS", "Tamaño ==> " + salas.size());
@@ -172,6 +187,19 @@ public class SalasActivity extends AppCompatActivity {
 
                     }
                     mAdapter.setDataSet(salas);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(SalasActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

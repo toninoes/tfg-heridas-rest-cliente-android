@@ -25,7 +25,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.CentroAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
@@ -120,13 +122,26 @@ public class CentrosActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Centro>>() {
             @Override
             public void onResponse(Call<ArrayList<Centro>> call, Response<ArrayList<Centro>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Centro> centros = response.body();
                     if(centros != null) {
                         Log.d("CENTROS", "Tamaño ==> " + centros.size());
                     }
                     mAdapter.setDataSet(centros);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(CentrosActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -152,13 +167,26 @@ public class CentrosActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Centro>>() {
             @Override
             public void onResponse(Call<ArrayList<Centro>> call, Response<ArrayList<Centro>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Centro> centros = response.body();
                     if(centros != null) {
                         Log.d("CENTROS", "Tamaño ==> " + centros.size());
                     }
                     mAdapter.setDataSet(centros);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(CentrosActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

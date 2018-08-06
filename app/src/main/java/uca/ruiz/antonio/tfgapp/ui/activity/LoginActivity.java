@@ -146,13 +146,12 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<TokenResponse>() {
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     token = "Bearer " + response.body().getToken();
                     definirPreferencias(token);
                     obtenerUsuario(token);
                 } else {
-                    progressDialog.cancel();
                     Toasty.error(LoginActivity.this, getString(R.string.error_acceso),
                             Toast.LENGTH_LONG, true).show();
                 }

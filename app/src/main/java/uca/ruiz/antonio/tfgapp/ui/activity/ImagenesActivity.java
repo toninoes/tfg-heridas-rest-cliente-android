@@ -8,27 +8,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
+import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.io.MyApiService;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
-import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
+import uca.ruiz.antonio.tfgapp.data.api.model.Imagen;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
-import uca.ruiz.antonio.tfgapp.ui.adapter.CuraAdapter;
 import uca.ruiz.antonio.tfgapp.ui.adapter.ImagenAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
+import uca.ruiz.antonio.tfgapp.utils.Pref;
 
-import static uca.ruiz.antonio.tfgapp.R.id.tv_anamnesis;
-import static uca.ruiz.antonio.tfgapp.R.id.tv_anamnesis_tit;
-import static uca.ruiz.antonio.tfgapp.R.id.tv_diagnostico;
-import static uca.ruiz.antonio.tfgapp.R.id.tv_diagnostico_tit;
-import static uca.ruiz.antonio.tfgapp.R.id.tv_observaciones;
-import static uca.ruiz.antonio.tfgapp.R.id.tv_observaciones_tit;
-import static uca.ruiz.antonio.tfgapp.R.string.paciente;
-import static uca.ruiz.antonio.tfgapp.R.string.proceso;
+import static uca.ruiz.antonio.tfgapp.R.string.pacientes;
 
 public class ImagenesActivity extends AppCompatActivity {
 
@@ -155,10 +160,54 @@ public class ImagenesActivity extends AppCompatActivity {
     }
 
     private void cargarImagenes() {
-        //TODO
+        progressDialog.show();
+        Call<ArrayList<Imagen>> call = MyApiAdapter.getApiService().getImagenesByCuraId(cura.getId(),
+                Pref.getToken());
+        call.enqueue(new Callback<ArrayList<Imagen>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Imagen>> call, Response<ArrayList<Imagen>> response) {
+                progressDialog.cancel();
+                if(response.isSuccessful()) {
+                    ArrayList<Imagen> imagenes = response.body();
+                    if(imagenes != null) {
+                        Log.d("IMAGENES", "Tamaño ==> " + imagenes.size());
+                    }
+                    mAdapter.setDataSet(imagenes);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ImagenesActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Imagen>> call, Throwable t) {
+                progressDialog.cancel();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(ImagenesActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(ImagenesActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
+            }
+        });
     }
 
     private void irImagenNuevaActivity() {
-        //TODO
+        Intent i = new Intent(this, ImagenNewActivity.class);
+        i.putExtra("cura", cura);
+        startActivity(i);
     }
 }

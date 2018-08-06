@@ -25,7 +25,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Procedimiento;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
+import uca.ruiz.antonio.tfgapp.ui.activity.ProcesosActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.ProcedimientoAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
@@ -121,13 +124,26 @@ public class ProcedimientosActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Procedimiento>>() {
             @Override
             public void onResponse(Call<ArrayList<Procedimiento>> call, Response<ArrayList<Procedimiento>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Procedimiento> procedimientos = response.body();
                     if(procedimientos != null) {
                         Log.d("PROCEDIMIENTOS", "Tamaño ==> " + procedimientos.size());
                     }
                     mAdapter.setDataSet(procedimientos);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ProcedimientosActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -153,13 +169,26 @@ public class ProcedimientosActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Procedimiento>>() {
             @Override
             public void onResponse(Call<ArrayList<Procedimiento>> call, Response<ArrayList<Procedimiento>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Procedimiento> procedimientos = response.body();
                     if(procedimientos != null) {
                         Log.d("DIAGNÓSTICOS", "Tamaño ==> " + procedimientos.size());
                     }
                     mAdapter.setDataSet(procedimientos);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ProcedimientosActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

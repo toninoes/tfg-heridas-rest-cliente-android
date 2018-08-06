@@ -25,7 +25,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.AdministradorAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
@@ -120,13 +122,26 @@ public class AdministradoresActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Administrador>>() {
             @Override
             public void onResponse(Call<ArrayList<Administrador>> call, Response<ArrayList<Administrador>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Administrador> administradores = response.body();
                     if(administradores != null) {
                         Log.d("ADMINISTRADORES", "Tamaño ==> " + administradores.size());
                     }
                     mAdapter.setDataSet(administradores);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(AdministradoresActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -152,13 +167,26 @@ public class AdministradoresActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Administrador>>() {
             @Override
             public void onResponse(Call<ArrayList<Administrador>> call, Response<ArrayList<Administrador>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Administrador> administradores = response.body();
                     if(administradores != null) {
                         Log.d("ADMINISTRADORES", "Tamaño ==> " + administradores.size());
                     }
                     mAdapter.setDataSet(administradores);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(AdministradoresActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

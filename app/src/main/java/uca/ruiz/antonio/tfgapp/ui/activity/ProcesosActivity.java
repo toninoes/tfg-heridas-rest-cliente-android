@@ -26,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.ProcesoAdapter;
@@ -141,8 +142,8 @@ public class ProcesosActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Proceso>>() {
             @Override
             public void onResponse(Call<ArrayList<Proceso>> call, Response<ArrayList<Proceso>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Proceso> procesos = response.body();
                     if(procesos != null) {
                         Log.d("PROCESOS", "Tamaño ==> " + procesos.size());
@@ -157,6 +158,19 @@ public class ProcesosActivity extends AppCompatActivity {
                         });
                     }
                     mAdapter.setDataSet(procesos);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ProcesosActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

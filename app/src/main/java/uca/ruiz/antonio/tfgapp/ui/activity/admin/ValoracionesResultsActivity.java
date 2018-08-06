@@ -26,7 +26,9 @@ import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.ValoracionesResults;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.MainSanitarioActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.ValoracionesResultsAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
@@ -132,13 +134,26 @@ public class ValoracionesResultsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<ValoracionesResults>> call,
                                    Response<ArrayList<ValoracionesResults>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<ValoracionesResults> vr = response.body();
                     if(vr != null) {
                         Log.d("VALORACIONES MEDIA", "Tamaño ==> " + vr.size());
                     }
                     mAdapter.setDataSet(vr);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ValoracionesResultsActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -166,13 +181,26 @@ public class ValoracionesResultsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<ValoracionesResults>> call,
                                    Response<ArrayList<ValoracionesResults>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<ValoracionesResults> vr = response.body();
                     if(vr != null) {
                         Log.d("VALORACIONES MEDIA", "Tamaño ==> " + vr.size());
                     }
                     mAdapter.setDataSet(vr);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ValoracionesResultsActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

@@ -124,4 +124,18 @@
     <string name="nhc">NHC</string>
     <string name="filtrando_diagnosticos">Filtrando diagnósticos</string>
     <string name="fotos">Fotos</string>
+    <string name="imagen">Imagen</string>
+    <string name="subiendo_imagen">Subiendo Imagen...</string>
+    <string name="error">ERROR</string>
+    <string name="ok_imagen">Imagen subida al servidor correctamente.</string>
+    <string name="no_seleccion_imagen">No has seleccionado ninguna imagen</string>
+    <string name="error_desconocido">Error desconocido</string>
+    <string name="error_crear_directorio">Error al crear el directorio</string>
+    <string name="ok_foto">Fotografía subida al servidor correctamente.</string>
+    <string name="ok_foto_borrada_de_aqui">Fotografía subida al servidor correctamente.\nEliminada de este dispositivo.</string>
+    <string name="foto_borrada"> Se ha eliminado de este dispositivo</string>
+    <string name="preferencias">Preferencias</string>
+    <string name="ip">IP del servidor</string>
+    <string name="msg_save">Configuración guardada correctamente.</string>
+    <string name="introduce_descripcion">Introduzca descripción...</string>
 </resources>

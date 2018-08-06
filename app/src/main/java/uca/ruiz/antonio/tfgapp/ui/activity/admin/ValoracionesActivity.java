@@ -24,7 +24,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Valoracion;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.ValoracionAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
@@ -121,13 +123,26 @@ public class ValoracionesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Valoracion>> call,
                                    Response<ArrayList<Valoracion>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Valoracion> vr = response.body();
                     if(vr != null) {
                         Log.d("VALORACIONES", "Tamaño ==> " + vr.size());
                     }
                     mAdapter.setDataSet(vr);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ValoracionesActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -155,13 +170,26 @@ public class ValoracionesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Valoracion>> call,
                                    Response<ArrayList<Valoracion>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Valoracion> vr = response.body();
                     if(vr != null) {
                         Log.d("VALORACIONES", "Tamaño ==> " + vr.size());
                     }
                     mAdapter.setDataSet(vr);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ValoracionesActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

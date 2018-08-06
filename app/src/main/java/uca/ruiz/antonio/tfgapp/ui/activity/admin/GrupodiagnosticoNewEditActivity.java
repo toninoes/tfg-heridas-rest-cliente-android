@@ -122,13 +122,13 @@ public class GrupodiagnosticoNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Grupodiagnostico>() {
             @Override
             public void onResponse(Call<Grupodiagnostico> call, Response<Grupodiagnostico> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
+
                     Toasty.success(GrupodiagnosticoNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(GrupodiagnosticoNewEditActivity.this, GruposdiagnosticosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(GrupodiagnosticoNewEditActivity.this, apiError.getMessage(),
@@ -146,7 +146,9 @@ public class GrupodiagnosticoNewEditActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Grupodiagnostico> call, Throwable t) {
-                progressDialog.cancel();if (t instanceof IOException) {
+                progressDialog.cancel();
+
+                if (t instanceof IOException) {
                     Toasty.warning(GrupodiagnosticoNewEditActivity.this, getString(R.string.error_conexion_red),
                             Toast.LENGTH_LONG, true).show();
                 } else {
@@ -166,13 +168,12 @@ public class GrupodiagnosticoNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Grupodiagnostico>() {
             @Override
             public void onResponse(Call<Grupodiagnostico> call, Response<Grupodiagnostico> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(GrupodiagnosticoNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(GrupodiagnosticoNewEditActivity.this, GruposdiagnosticosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(GrupodiagnosticoNewEditActivity.this, apiError.getMessage(),

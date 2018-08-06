@@ -26,6 +26,7 @@ import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.ui.activity.admin.MainAdminActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.PacienteAdapter;
@@ -130,13 +131,26 @@ public class PacientesActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Paciente>>() {
             @Override
             public void onResponse(Call<ArrayList<Paciente>> call, Response<ArrayList<Paciente>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Paciente> pacientes = response.body();
                     if(pacientes != null) {
                         Log.d("PACIENTES", "Tamaño ==> " + pacientes.size());
                     }
                     mAdapter.setDataSet(pacientes);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(PacientesActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -162,13 +176,26 @@ public class PacientesActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Paciente>>() {
             @Override
             public void onResponse(Call<ArrayList<Paciente>> call, Response<ArrayList<Paciente>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Paciente> pacientes = response.body();
                     if(pacientes != null) {
                         Log.d("PACIENTES", "Tamaño ==> " + pacientes.size());
                     }
                     mAdapter.setDataSet(pacientes);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(PacientesActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

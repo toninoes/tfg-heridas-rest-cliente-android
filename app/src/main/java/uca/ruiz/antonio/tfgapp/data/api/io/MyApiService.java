@@ -2,19 +2,26 @@ package uca.ruiz.antonio.tfgapp.data.api.io;
 
 import java.util.ArrayList;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Login;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ImgResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
+import uca.ruiz.antonio.tfgapp.data.api.model.Imagen;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
 import uca.ruiz.antonio.tfgapp.data.api.model.User;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
@@ -28,6 +35,8 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 import uca.ruiz.antonio.tfgapp.data.api.model.Valoracion;
 import uca.ruiz.antonio.tfgapp.data.api.model.ValoracionesResults;
+
+import static android.R.attr.id;
 
 
 public interface MyApiService {
@@ -367,6 +376,37 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @POST("api/valoraciones")
     Call<Valoracion> crearValoracion(@Body Valoracion v, @Header("Authorization") String token);
+
+    /* ======================= IMAGENES ======================= */
+    // Sin token de autenticación.
+    @Multipart
+    @POST("api/imagenes/{curaId}")
+    Call<ImgResponse> subirImagen(@Path("curaId") Long id,
+                                  @Part MultipartBody.Part fichero,
+                                  @Part("imagen") RequestBody nombre);
+
+    /**
+     * Este @Headers es diferente a los anteriores al llevar además un @Multipart. Tras algunos
+     * importantes quebraderos de cabeza, solución:
+     * https://github.com/square/retrofit/issues/2633
+     **/
+    @Headers({"Accept: application/json"})
+    @Multipart
+    @POST("api/imagenes/{curaId}")
+    Call<ImgResponse> subirImagenToken(@Path("curaId") Long id,
+                                       @Part MultipartBody.Part fichero,
+                                       @Part("imagen") RequestBody nombre,
+                                       @Part("descripcion") String descripcion,
+                                       @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/imagenes/cura/{curaId}")
+    Call<ArrayList<Imagen>> getImagenesByCuraId(@Path("curaId") Long id,
+                                                @Header("Authorization") String token);
+
+    @GET("api/imagenes/{id}")
+    Call<ResponseBody> descargarImagenId(@Path("id") Long id,
+                                       @Header("Authorization") String token);
 
 
 }

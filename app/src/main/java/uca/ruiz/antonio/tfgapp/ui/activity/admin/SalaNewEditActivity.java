@@ -27,6 +27,7 @@ import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
@@ -153,13 +154,12 @@ public class SalaNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Sala>() {
             @Override
             public void onResponse(Call<Sala> call, Response<Sala> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(SalaNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(SalaNewEditActivity.this, SalasActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(SalaNewEditActivity.this, apiError.getMessage(),
@@ -198,13 +198,12 @@ public class SalaNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Sala>() {
             @Override
             public void onResponse(Call<Sala> call, Response<Sala> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(SalaNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(SalaNewEditActivity.this, SalasActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(SalaNewEditActivity.this, apiError.getMessage(),
@@ -253,6 +252,19 @@ public class SalaNewEditActivity extends AppCompatActivity {
                         sp_centros.setAdapter(arrayAdapter);
                         if(editando) {
                             sp_centros.setSelection(centros.indexOf(sala.getCentro()));
+                        }
+                    }
+                }  else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(SalaNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }

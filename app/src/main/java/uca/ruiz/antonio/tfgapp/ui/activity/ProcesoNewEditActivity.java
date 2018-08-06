@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -30,7 +32,12 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Grupodiagnostico;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Procedimiento;
 import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
+import uca.ruiz.antonio.tfgapp.data.api.model.User;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
+
+import static android.R.attr.id;
+import static android.R.attr.x;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 
 public class ProcesoNewEditActivity extends AppCompatActivity  {
@@ -75,29 +82,16 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
             proceso = (Proceso) getIntent().getExtras().getSerializable("proceso");
             et_anamnesis.setText(proceso.getAnamnesis());
             et_observaciones.setText(proceso.getObservaciones());
-            cargarGDiagnosticos(sp_Gdiagnosticos);
-            cargarProcedimientos(sp_procedimientos, proceso);
             cargarDiagnosticos(sp_diagnosticos, proceso);
+            cargarProcedimientos(sp_procedimientos, proceso);
+            cargarGDiagnosticos(sp_Gdiagnosticos);
             editando = true;
         } catch (Exception e) { // nuevo
             Log.d(TAG, getString(R.string.creando_nuevo_registro));
-            cargarGDiagnosticos(sp_Gdiagnosticos);
-            cargarProcedimientos(sp_procedimientos, proceso);
             cargarDiagnosticos(sp_diagnosticos, proceso); // proceso tiene id=0.
+            cargarProcedimientos(sp_procedimientos, proceso);
+            cargarGDiagnosticos(sp_Gdiagnosticos);
         }
-
-        sp_Gdiagnosticos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                gDiagnostico = (Grupodiagnostico) adapterView.getAdapter().getItem(i);
-                cargarDiagnosticosByGDiagnostico(sp_diagnosticos, proceso);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         sp_diagnosticos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -115,6 +109,23 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 procedimiento = (Procedimiento) adapterView.getAdapter().getItem(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        sp_Gdiagnosticos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                gDiagnostico = (Grupodiagnostico) adapterView.getAdapter().getItem(i);
+                if(gDiagnostico.getId() != 0)
+                    cargarDiagnosticosByGDiagnostico(sp_diagnosticos, proceso);
+                else
+                    cargarDiagnosticos(sp_diagnosticos, proceso);
+
             }
 
             @Override
@@ -214,8 +225,8 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
         call.enqueue(new Callback<Proceso>() {
             @Override
             public void onResponse(Call<Proceso> call, Response<Proceso> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     proceso = response.body();
                     Toasty.success(ProcesoNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
@@ -223,7 +234,6 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
                     intent.putExtra("proceso", proceso);
                     startActivity(intent);
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(ProcesoNewEditActivity.this, apiError.getMessage(),
@@ -261,15 +271,14 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
         call.enqueue(new Callback<Proceso>() {
             @Override
             public void onResponse(Call<Proceso> call, Response<Proceso> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(ProcesoNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     Intent intent = new Intent(ProcesoNewEditActivity.this, ProcesosActivity.class);
                     intent.putExtra("paciente", paciente);
                     startActivity(intent);
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(ProcesoNewEditActivity.this, apiError.getMessage(),
@@ -306,8 +315,8 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
         call.enqueue(new Callback<ArrayList<Grupodiagnostico>>() {
             @Override
             public void onResponse(Call<ArrayList<Grupodiagnostico>> call, Response<ArrayList<Grupodiagnostico>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Grupodiagnostico> gDiagnosticos = response.body();
                     if(gDiagnosticos != null) {
                         gDiagnosticos.add(0, new Grupodiagnostico(getString(R.string.seleccione_Gdiagnostico)));
@@ -316,6 +325,19 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
 
                         Log.d("GRUPOS DIAGNOSTICOS", "Tamaño ==> " + gDiagnosticos.size());
                         sp_Gdiagnosticos.setAdapter(arrayAdapter);
+                    }
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ProcesoNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -342,8 +364,8 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
         call.enqueue(new Callback<ArrayList<Diagnostico>>() {
             @Override
             public void onResponse(Call<ArrayList<Diagnostico>> call, Response<ArrayList<Diagnostico>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Diagnostico> diagnosticos = response.body();
 
                     if(diagnosticos != null) {
@@ -355,6 +377,19 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
                         sp_diagnosticos.setAdapter(arrayAdapter);
                         if(editando) {
                             sp_diagnosticos.setSelection(diagnosticos.indexOf(proceso.getDiagnostico()));
+                        }
+                    }
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ProcesoNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
@@ -382,8 +417,8 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
         call.enqueue(new Callback<ArrayList<Diagnostico>>() {
             @Override
             public void onResponse(Call<ArrayList<Diagnostico>> call, Response<ArrayList<Diagnostico>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Diagnostico> diagnosticos = response.body();
 
                     if(diagnosticos != null) {
@@ -395,6 +430,19 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
                         sp_diagnosticos.setAdapter(arrayAdapter);
                         if(editando) {
                             sp_diagnosticos.setSelection(diagnosticos.indexOf(proceso.getDiagnostico()));
+                        }
+                    }
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ProcesoNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
@@ -421,8 +469,8 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
         call.enqueue(new Callback<ArrayList<Procedimiento>>() {
             @Override
             public void onResponse(Call<ArrayList<Procedimiento>> call, Response<ArrayList<Procedimiento>> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     ArrayList<Procedimiento> procedimientos = response.body();
 
                     if(procedimientos != null) {
@@ -434,6 +482,19 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
                         sp_procedimientos.setAdapter(arrayAdapter);
                         if(editando) {
                             sp_procedimientos.setSelection(procedimientos.indexOf(proceso.getProcedimiento()));
+                        }
+                    }
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ProcesoNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
@@ -454,6 +515,4 @@ public class ProcesoNewEditActivity extends AppCompatActivity  {
             }
         });
     }
-
-
 }

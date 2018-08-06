@@ -37,6 +37,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
 import uca.ruiz.antonio.tfgapp.data.api.model.User;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
@@ -278,13 +279,12 @@ public class SanitarioNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(SanitarioNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(SanitarioNewEditActivity.this, SanitariosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(SanitarioNewEditActivity.this, apiError.getMessage(),
@@ -323,13 +323,12 @@ public class SanitarioNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(SanitarioNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(SanitarioNewEditActivity.this, SanitariosActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(SanitarioNewEditActivity.this, apiError.getMessage(),
@@ -385,6 +384,19 @@ public class SanitarioNewEditActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 Log.d("CENTROS_ACTUAL: ", "Ninguno!!");
                             }
+                        }
+                    }
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(SanitarioNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }

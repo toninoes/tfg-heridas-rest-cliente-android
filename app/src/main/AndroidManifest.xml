@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +19,7 @@
             android:name=".ui.activity.LoginActivity"
             android:configChanges="orientation"
             android:label="@string/login"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +60,7 @@
             android:name=".ui.activity.ImagenesActivity"
             android:configChanges="orientation"
             android:label="@string/cura"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.MainAdminActivity"
             android:configChanges="orientation"
@@ -77,12 +80,12 @@
             android:name=".ui.activity.admin.CentroActivity"
             android:configChanges="orientation"
             android:label="@string/centro"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.SalasActivity"
             android:configChanges="orientation"
             android:label="@string/salas"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.SalaNewEditActivity"
             android:configChanges="orientation"
@@ -92,12 +95,12 @@
             android:name=".ui.activity.admin.SalaActivity"
             android:configChanges="orientation"
             android:label="@string/sala"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.GruposdiagnosticosActivity"
             android:configChanges="orientation"
             android:label="@string/grupos_diagnosticos"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.GrupodiagnosticoNewEditActivity"
             android:configChanges="orientation"
@@ -107,12 +110,12 @@
             android:name=".ui.activity.admin.GrupodiagnosticoActivity"
             android:configChanges="orientation"
             android:label="@string/grupo_diagnostico"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.DiagnosticosActivity"
             android:configChanges="orientation"
             android:label="@string/diagnosticos"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.DiagnosticoNewEditActivity"
             android:configChanges="orientation"
@@ -122,12 +125,12 @@
             android:name=".ui.activity.admin.DiagnosticoActivity"
             android:configChanges="orientation"
             android:label="@string/diagnostico"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.ProcedimientosActivity"
             android:configChanges="orientation"
             android:label="@string/procedimientos"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.ProcedimientoNewEditActivity"
             android:configChanges="orientation"
@@ -137,7 +140,7 @@
             android:name=".ui.activity.admin.ProcedimientoActivity"
             android:configChanges="orientation"
             android:label="@string/procedimiento"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.AdministradoresActivity"
             android:configChanges="orientation"
@@ -152,7 +155,7 @@
             android:name=".ui.activity.admin.AdministradorActivity"
             android:configChanges="orientation"
             android:label="@string/administrador"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.SanitariosActivity"
             android:configChanges="orientation"
@@ -167,7 +170,7 @@
             android:name=".ui.activity.admin.SanitarioActivity"
             android:configChanges="orientation"
             android:label="@string/sanitario"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PacientesActivity"
             android:configChanges="orientation"
@@ -182,16 +185,26 @@
             android:name=".ui.activity.PacienteActivity"
             android:configChanges="orientation"
             android:label="@string/paciente"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.ValoracionesResultsActivity"
             android:configChanges="orientation"
             android:label="@string/ranking_valoraciones"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.admin.ValoracionesActivity"
             android:configChanges="orientation"
             android:label="@string/valoraciones_recientes"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ImagenNewActivity"
+            android:configChanges="orientation"
+            android:label="@string/imagen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ImagenActivity"
+            android:configChanges="orientation"
+            android:label="@string/imagen"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -33,6 +33,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.User;
+import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
 import java.util.ArrayList;
@@ -268,13 +269,12 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(AdministradorNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(AdministradorNewEditActivity.this, AdministradoresActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(AdministradorNewEditActivity.this, apiError.getMessage(),
@@ -313,13 +313,12 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(AdministradorNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(AdministradorNewEditActivity.this, AdministradoresActivity.class));
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(AdministradorNewEditActivity.this, apiError.getMessage(),
@@ -338,8 +337,6 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 progressDialog.cancel();
-
-                Log.d(TAG, t.getMessage());
 
                 if (t instanceof IOException) {
                     Toasty.warning(AdministradorNewEditActivity.this, getString(R.string.error_conexion_red),
@@ -360,7 +357,6 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Centro>> call, Response<ArrayList<Centro>> response) {
                 if(response.isSuccessful()) {
                     ArrayList<Centro> centros = response.body();
-
                     if(centros != null) {
                         centros.add(0, new Centro(getString(R.string.seleccione_centro)));
                         ArrayAdapter<Centro> arrayAdapter = new ArrayAdapter<Centro>(AdministradorNewEditActivity.this,
@@ -374,6 +370,19 @@ public class AdministradorNewEditActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 Log.d("CENTROS_ACTUAL: ", "Ninguno!!");
                             }
+                        }
+                    }
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(AdministradorNewEditActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }

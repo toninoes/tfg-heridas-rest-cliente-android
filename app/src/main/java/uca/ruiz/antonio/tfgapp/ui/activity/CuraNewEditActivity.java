@@ -151,15 +151,14 @@ public class CuraNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Cura>() {
             @Override
             public void onResponse(Call<Cura> call, Response<Cura> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     Toasty.success(CuraNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
                     Intent intent = new Intent(CuraNewEditActivity.this, CurasActivity.class);
                     intent.putExtra("proceso", proceso);
                     startActivity(intent);
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(CuraNewEditActivity.this, apiError.getMessage(),
@@ -198,8 +197,8 @@ public class CuraNewEditActivity extends AppCompatActivity {
         call.enqueue(new Callback<Cura>() {
             @Override
             public void onResponse(Call<Cura> call, Response<Cura> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    progressDialog.cancel();
                     cura = response.body();
                     Toasty.success(CuraNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
@@ -207,7 +206,6 @@ public class CuraNewEditActivity extends AppCompatActivity {
                     intent.putExtra("cura", cura);
                     startActivity(intent);
                 } else {
-                    progressDialog.cancel();
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
                         Toasty.error(CuraNewEditActivity.this, apiError.getMessage(),
@@ -238,48 +236,4 @@ public class CuraNewEditActivity extends AppCompatActivity {
             }
         });
     }
-
-
-/*
-    private void crearCura() {
-        Cura cura = new Cura(et_evolucion.getText().toString(), et_tratamiento.getText().toString(),
-                et_recomendaciones.getText().toString(), proceso);
-
-        MyApiAdapter.getApiService().crearCura(cura, Pref.getToken()).enqueue(
-                new Callback<Cura>() {
-                    @Override
-                    public void onResponse(Call<Cura> call, Response<Cura> response) {
-                        if (response.isSuccessful()) {
-                            Cura cura = response.body();
-                            Log.d(TAG, cura.getTratamiento());
-                            volverCurasActivity(proceso);
-                        } else {
-                            ArrayList<Error> errores = null;
-
-                            if (response.errorBody().contentType().subtype().equals("json")) {
-                                Errores apiError = Errores.fromResponseBody(response.errorBody());
-                                errores = apiError.getErrors();
-                                Log.d(TAG, apiError.getPath());
-                            } else {
-                                try {
-                                    Log.d(TAG, response.errorBody().string());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            mostrarApiErrores(errores);
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Cura> call, Throwable t) {
-                        mostrarApiError(t.getMessage());
-                    }
-                }
-        );
-    }
-*/
-
 }
