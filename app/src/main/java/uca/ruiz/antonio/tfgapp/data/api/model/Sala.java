@@ -12,6 +12,7 @@ public class Sala implements Serializable {
     private String nombre;
     private Centro centro;
     private Set<Cita> citas;
+    private SalaConfig salaConfig;
 
     public Sala(String nombre, Centro centro) {
         this.nombre = nombre;
@@ -52,5 +53,13 @@ public class Sala implements Serializable {
 
     public void setCitas(Set<Cita> citas) {
         this.citas = citas;
+    }
+
+    public SalaConfig getSalaConfig() {
+        return salaConfig;
+    }
+
+    public void setSalaConfig(SalaConfig salaConfig) {
+        this.salaConfig = salaConfig;
     }
 }

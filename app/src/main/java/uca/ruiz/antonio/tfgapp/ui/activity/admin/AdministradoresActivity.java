@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -27,6 +29,7 @@ import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
+import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.AdministradorAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
@@ -127,6 +130,14 @@ public class AdministradoresActivity extends AppCompatActivity {
                     ArrayList<Administrador> administradores = response.body();
                     if(administradores != null) {
                         Log.d("ADMINISTRADORES", "Tamaño ==> " + administradores.size());
+
+                        // mas recientes primero
+                        Collections.sort(administradores, new Comparator<Administrador>() {
+                            @Override
+                            public int compare(Administrador a1, Administrador a2) {
+                                return a2.getId().compareTo(a1.getId());
+                            }
+                        });
                     }
                     mAdapter.setDataSet(administradores);
                 } else {
@@ -172,6 +183,14 @@ public class AdministradoresActivity extends AppCompatActivity {
                     ArrayList<Administrador> administradores = response.body();
                     if(administradores != null) {
                         Log.d("ADMINISTRADORES", "Tamaño ==> " + administradores.size());
+
+                        // mas recientes primero
+                        Collections.sort(administradores, new Comparator<Administrador>() {
+                            @Override
+                            public int compare(Administrador a1, Administrador a2) {
+                                return a2.getId().compareTo(a1.getId());
+                            }
+                        });
                     }
                     mAdapter.setDataSet(administradores);
                 } else {

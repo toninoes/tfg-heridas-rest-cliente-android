@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -28,6 +30,7 @@ import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
+import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.activity.admin.MainAdminActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.PacienteAdapter;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
@@ -136,6 +139,14 @@ public class PacientesActivity extends AppCompatActivity {
                     ArrayList<Paciente> pacientes = response.body();
                     if(pacientes != null) {
                         Log.d("PACIENTES", "Tamaño ==> " + pacientes.size());
+
+                        // mas recientes primero
+                        Collections.sort(pacientes, new Comparator<Paciente>() {
+                            @Override
+                            public int compare(Paciente p1, Paciente p2) {
+                                return p2.getId().compareTo(p1.getId());
+                            }
+                        });
                     }
                     mAdapter.setDataSet(pacientes);
                 } else {
@@ -181,6 +192,14 @@ public class PacientesActivity extends AppCompatActivity {
                     ArrayList<Paciente> pacientes = response.body();
                     if(pacientes != null) {
                         Log.d("PACIENTES", "Tamaño ==> " + pacientes.size());
+
+                        // mas recientes primero
+                        Collections.sort(pacientes, new Comparator<Paciente>() {
+                            @Override
+                            public int compare(Paciente p1, Paciente p2) {
+                                return p2.getId().compareTo(p1.getId());
+                            }
+                        });
                     }
                     mAdapter.setDataSet(pacientes);
                 } else {

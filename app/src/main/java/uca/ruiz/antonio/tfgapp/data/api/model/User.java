@@ -17,7 +17,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.Authority;
 public class User implements Serializable {
 
     private final static long serialVersionUID = -7074548215409497555L;
-    protected long id;
+    protected Long id;
     @SerializedName("username")
     @Expose
     protected String username;
@@ -120,11 +120,11 @@ public class User implements Serializable {
     }
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

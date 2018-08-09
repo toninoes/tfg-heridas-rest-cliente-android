@@ -138,4 +138,20 @@
     <string name="ip">IP del servidor</string>
     <string name="msg_save">Configuración guardada correctamente.</string>
     <string name="introduce_descripcion">Introduzca descripción...</string>
+    <string name="configuracion">Configuración</string>
+    <string name="horario_inicio">Horario Inicio</string>
+    <string name="horario_fin">Horario Fin</string>
+    <string name="cupo">Cupo/Día</string>
+
+    <string name="lunes">Lunes</string>
+    <string name="martes">Martes</string>
+    <string name="miercoles">Miércoles</string>
+    <string name="jueves">Jueves</string>
+    <string name="viernes">Viernes</string>
+    <string name="sabado">Sábado</string>
+    <string name="domingo">Domingo</string>
+    <string name="valor_0_23">Éste debe ser un valor entre 0 y 23</string>
+    <string name="valor_0_59">Éste debe ser un valor entre 0 y 59</string>
+    <string name="hora_fin_mayor_inicio">Hora fin debe ser posterior a la de inicio</string>
+    <string name="valor_mayor_cero">Éste debe ser un valor mayor que cero.</string>
 </resources>

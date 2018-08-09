@@ -11,30 +11,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Imagen;
-import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
-import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
-
-import static uca.ruiz.antonio.tfgapp.R.string.cura;
-import static uca.ruiz.antonio.tfgapp.R.string.paciente;
 
 public class ImagenActivity extends AppCompatActivity {
 
+    private static final String TAG = ImagenActivity.class.getSimpleName();
     private Imagen imagen;
     private TextView tv_descripcion;
     private ImageView iv_imagen;
@@ -59,8 +54,7 @@ public class ImagenActivity extends AppCompatActivity {
 
         if (imagen != null) {
             tv_descripcion.setText(imagen.getDescripcion());
-            //Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(iv_imagen);
-            //Picasso.with(this).load("http://localhost:8080/api/imagenes/1").into(iv_imagen);
+            //Picasso.with(this).load("http://localhost:8080/api/imagenes/nombre/126.jpg").into(iv_imagen);
             cargarImagen(iv_imagen);
         }
 
@@ -91,6 +85,23 @@ public class ImagenActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    private Bitmap resizeBitmap(InputStream is, int targetW, int targetH) {
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(is, null, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        int scaleFactor = 1;
+        if ((targetW > 0) || (targetH > 0)) {
+            scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        }
+
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+
+        return BitmapFactory.decodeStream(is, null, bmOptions);
+    }
 
     @Override
     public void onBackPressed() {
@@ -103,72 +114,83 @@ public class ImagenActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
+                if(response.isSuccessful()) {
+                    try {
+                        /*InputStream is = response.body().byteStream();
+                        BitmapFactory.Options options = new BitmapFactory.Options();
 
-                    Log.d("onResponse", "Response came from server");
+                        options.inSampleSize = 16;
+                        options.inJustDecodeBounds = false;
+                        Bitmap smallBitmap  = BitmapFactory.decodeStream(is, null, options);
 
-                    boolean FileDownloaded = DownloadImage(response.body());
+                        is.close();
+                        iv_imagen.setPadding(0, 0, 0, 0);
+                        iv_imagen.setImageBitmap(smallBitmap);*/
+                        InputStream is = response.body().byteStream();
+                        Bitmap bm = BitmapFactory.decodeStream(is);
+                        Bitmap resized = Bitmap.createScaledBitmap(bm, 500, 500, true);
+                        is.close();
+                        iv_imagen.setPadding(0, 0, 0, 0);
+                        iv_imagen.setImageBitmap(resized);
 
-                    Log.d("onResponse", "Image is downloaded and saved ? " + FileDownloaded);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-                } catch (Exception e) {
-                    Log.d("onResponse", "There is an error");
-                    e.printStackTrace();
+                    progressDialog.cancel();
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(ImagenActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressDialog.cancel();
 
+                if (t instanceof IOException) {
+                    Toasty.warning(ImagenActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(ImagenActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
             }
         });
     }
 
-    private boolean DownloadImage(ResponseBody body) {
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
 
-        try {
-            Log.d("DownloadImage", "Reading and writing file");
-            InputStream in = null;
-            FileOutputStream out = null;
+        if (height > reqHeight || width > reqWidth) {
 
-            try {
-                in = body.byteStream();
-                out = new FileOutputStream(getExternalFilesDir(null) + File.separator + "img.jpg");
-                int c;
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
 
-                while ((c = in.read()) != -1) {
-                    out.write(c);
-                }
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
             }
-            catch (IOException e) {
-                Log.d("DownloadImage",e.toString());
-                return false;
-            }
-            finally {
-                if (in != null) {
-                    in.close();
-                }
-                if (out != null) {
-                    out.close();
-                }
-            }
-
-            //int width, height;
-            //ImageView image = (ImageView) findViewById(R.id.iv_imagen);
-            Bitmap bMap = BitmapFactory.decodeFile(getExternalFilesDir(null) + File.separator + "img.jpg");
-            //width = 2*bMap.getWidth();
-            //height = 6*bMap.getHeight();
-            //Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
-            //image.setImageBitmap(bMap2);
-            iv_imagen.setPadding(0, 0, 0, 0);
-            iv_imagen.setImageBitmap(bMap);
-            progressDialog.cancel();
-
-            return true;
-
-        } catch (IOException e) {
-            Log.d("DownloadImage",e.toString());
-            return false;
         }
+
+        return inSampleSize;
     }
+
 }

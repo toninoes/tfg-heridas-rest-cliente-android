@@ -129,6 +129,15 @@ public class SalasActivity extends AppCompatActivity {
                     ArrayList<Sala> salas = response.body();
                     if(salas != null) {
                         Log.d("SALAS", "Tamaño ==> " + salas.size());
+
+                        // Ordenar las Salas según el nombre del Centro al que pertenecen
+                        // Prefiero hacerlo en cliente para descargar al servidor
+                        Collections.sort(salas, new Comparator<Sala>() {
+                            @Override
+                            public int compare(Sala s1, Sala s2) {
+                                return s1.getCentro().getNombre().compareTo(s2.getCentro().getNombre());
+                            }
+                        });
                     }
                     mAdapter.setDataSet(salas);
                 } else {

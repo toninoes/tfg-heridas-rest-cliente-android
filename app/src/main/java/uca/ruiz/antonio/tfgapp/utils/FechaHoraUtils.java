@@ -16,6 +16,7 @@ public class FechaHoraUtils {
     private static final String UI_HORA = "h:mma";
     private static final String API_HORA = "HH:mm:ss";
     private static final String API_FECHA_HORA = "yyyy-MM-dd HH:mm:ss";
+    private static final String FILE_FECHA_HORA = "yyyy-MM-dd_HHmmssSSS";
 
     private FechaHoraUtils() {
     }
@@ -47,6 +48,11 @@ public class FechaHoraUtils {
 
     public static String formatoFechaHoraUI(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(UI_FECHA_HORA, Locale.getDefault());
+        return simpleDateFormat.format(date);
+    }
+
+    public static String formatoFileFechaHoraUI(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(FILE_FECHA_HORA, Locale.getDefault());
         return simpleDateFormat.format(date);
     }
 

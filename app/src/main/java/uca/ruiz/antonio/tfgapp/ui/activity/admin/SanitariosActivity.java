@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -26,6 +28,7 @@ import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
+import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
 import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.SanitarioAdapter;
@@ -127,6 +130,14 @@ public class SanitariosActivity extends AppCompatActivity {
                     ArrayList<Sanitario> sanitarios = response.body();
                     if(sanitarios != null) {
                         Log.d("SANITARIOS", "Tamaño ==> " + sanitarios.size());
+
+                        // mas recientes primero
+                        Collections.sort(sanitarios, new Comparator<Sanitario>() {
+                            @Override
+                            public int compare(Sanitario s1, Sanitario s2) {
+                                return s2.getId().compareTo(s1.getId());
+                            }
+                        });
                     }
                     mAdapter.setDataSet(sanitarios);
                 } else {
@@ -172,6 +183,14 @@ public class SanitariosActivity extends AppCompatActivity {
                     ArrayList<Sanitario> sanitarios = response.body();
                     if(sanitarios != null) {
                         Log.d("SANITARIOS", "Tamaño ==> " + sanitarios.size());
+
+                        // mas recientes primero
+                        Collections.sort(sanitarios, new Comparator<Sanitario>() {
+                            @Override
+                            public int compare(Sanitario s1, Sanitario s2) {
+                                return s2.getId().compareTo(s1.getId());
+                            }
+                        });
                     }
                     mAdapter.setDataSet(sanitarios);
                 }

@@ -22,6 +22,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.ImgResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
 import uca.ruiz.antonio.tfgapp.data.api.model.Imagen;
+import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
 import uca.ruiz.antonio.tfgapp.data.api.model.User;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;

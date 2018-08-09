@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
@@ -45,6 +46,7 @@ import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ImgErrorResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ImgResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
+import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 
@@ -201,7 +203,9 @@ public class ImagenNewActivity extends AppCompatActivity {
                 mediaPath = cursor.getString(columnIndex);
                 // Coloca la imagen en ImageView para previsualizar.
                 iv_imagen.setPadding(0,0,0,0);
-                iv_imagen.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                Bitmap bm = BitmapFactory.decodeFile(mediaPath);
+                Bitmap resized = Bitmap.createScaledBitmap(bm, 500, 500, true);
+                iv_imagen.setImageBitmap(resized);
                 cursor.close();
             } else {
                 msgWarning(getString(R.string.no_seleccion_imagen));
@@ -215,13 +219,13 @@ public class ImagenNewActivity extends AppCompatActivity {
         progressDialog.show();
 
         final File fichero = new File(mediaPath);
+        String name = FechaHoraUtils.formatoFileFechaHoraUI(new Date()) + ".jpg";
 
         RequestBody requestBody = RequestBody.create(MediaType.parse(obtenerTipoMime(fichero.getPath())), fichero);
-        MultipartBody.Part ficheroParaSubir = MultipartBody.Part.createFormData("imagen", fichero.getName(), requestBody);
-        RequestBody nombreFichero = RequestBody.create(MediaType.parse("text/plain"), fichero.getName());
+        final MultipartBody.Part ficheroParaSubir = MultipartBody.Part.createFormData("imagen", name, requestBody);
+        RequestBody nombreFichero = RequestBody.create(MediaType.parse("text/plain"), name);
         String descripcion = et_descripcion.getText().toString();
 
-        //Call<ImgResponse> call = MyApiAdapter.getApiService().subirImagen(cura.getId(), ficheroParaSubir, nombreFichero);
         Call<ImgResponse> call = MyApiAdapter.getApiService().subirImagenToken(cura.getId(),
                 ficheroParaSubir, nombreFichero, descripcion, Pref.getToken());
         call.enqueue(new Callback<ImgResponse>() {
@@ -229,7 +233,7 @@ public class ImagenNewActivity extends AppCompatActivity {
             public void onResponse(Call<ImgResponse> call, Response<ImgResponse> response) {
                 progressDialog.cancel();
                 if(response.isSuccessful()) {
-                    ImgResponse serverResponse = response.body();
+                    //ImgResponse serverResponse = response.body();
                     if (seHaceFoto) {
                         if(fichero.delete()) //eliminamos las fotografias hechas desde la App
                             msgExito(getString(R.string.ok_foto_borrada_de_aqui));
