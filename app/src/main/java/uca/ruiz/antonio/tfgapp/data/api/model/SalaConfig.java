@@ -9,8 +9,6 @@ public class SalaConfig implements Serializable
     private Integer cupo;
     private Integer horaini;
     private Integer minini;
-    private Integer horafin;
-    private Integer minfin;
     private Boolean lunes;
     private Boolean martes;
     private Boolean miercoles;
@@ -23,14 +21,12 @@ public class SalaConfig implements Serializable
     public SalaConfig() {
     }
 
-    public SalaConfig(Integer cupo, Integer horaini, Integer minini, Integer horafin, Integer minfin,
-                      Boolean lunes, Boolean martes, Boolean miercoles, Boolean jueves,
-                      Boolean viernes, Boolean sabado, Boolean domingo) {
+    public SalaConfig(Integer cupo, Integer horaini, Integer minini, Boolean lunes, Boolean martes,
+                      Boolean miercoles, Boolean jueves, Boolean viernes, Boolean sabado,
+                      Boolean domingo) {
         this.cupo = cupo;
         this.horaini = horaini;
         this.minini = minini;
-        this.horafin = horafin;
-        this.minfin = minfin;
         this.lunes = lunes;
         this.martes = martes;
         this.miercoles = miercoles;
@@ -40,14 +36,12 @@ public class SalaConfig implements Serializable
         this.domingo = domingo;
     }
 
-    public SalaConfig(Integer cupo, Integer horaini, Integer minini, Integer horafin, Integer minfin,
-                      Boolean lunes, Boolean martes, Boolean miercoles, Boolean jueves,
-                      Boolean viernes, Boolean sabado, Boolean domingo, Sala sala) {
+    public SalaConfig(Integer cupo, Integer horaini, Integer minini, Boolean lunes, Boolean martes,
+                      Boolean miercoles, Boolean jueves, Boolean viernes, Boolean sabado,
+                      Boolean domingo, Sala sala) {
         this.cupo = cupo;
         this.horaini = horaini;
         this.minini = minini;
-        this.horafin = horafin;
-        this.minfin = minfin;
         this.lunes = lunes;
         this.martes = martes;
         this.miercoles = miercoles;
@@ -88,22 +82,6 @@ public class SalaConfig implements Serializable
 
     public void setMinini(Integer minini) {
         this.minini = minini;
-    }
-
-    public Integer getHorafin() {
-        return horafin;
-    }
-
-    public void setHorafin(Integer horafin) {
-        this.horafin = horafin;
-    }
-
-    public Integer getMinfin() {
-        return minfin;
-    }
-
-    public void setMinfin(Integer minfin) {
-        this.minfin = minfin;
     }
 
     public Boolean getLunes() {

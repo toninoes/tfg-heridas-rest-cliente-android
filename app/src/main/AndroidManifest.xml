@@ -205,7 +205,12 @@
             android:name=".ui.activity.ImagenActivity"
             android:configChanges="orientation"
             android:label="@string/imagen"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.admin.SalaConfigActivity"
+            android:configChanges="orientation"
+            android:label="@string/sala"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

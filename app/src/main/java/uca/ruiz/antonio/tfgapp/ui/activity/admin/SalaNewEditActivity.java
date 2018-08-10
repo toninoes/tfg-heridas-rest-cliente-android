@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,7 +27,6 @@ import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
-import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
@@ -43,10 +41,6 @@ public class SalaNewEditActivity extends AppCompatActivity {
     private Boolean editando = false;
     private ProgressDialog progressDialog;
 
-    private EditText et_horaini, et_horafin, et_minini, et_minfin, et_cupo;
-    private CheckBox chk_lunes, chk_martes, chk_miercoles, chk_jueves;
-    private CheckBox chk_viernes, chk_sabado, chk_domingo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,20 +53,6 @@ public class SalaNewEditActivity extends AppCompatActivity {
         et_nombre = (EditText) findViewById(R.id.et_nombre);
         sp_centros = (Spinner) findViewById(R.id.sp_centros);
         sp_centros_text = (TextView) findViewById(R.id.sp_centros_error);
-
-        et_horaini = (EditText) findViewById(R.id.et_horaini);
-        et_horafin = (EditText) findViewById(R.id.et_horafin);
-        et_minini = (EditText) findViewById(R.id.et_minini);
-        et_minfin = (EditText) findViewById(R.id.et_minfin);
-        et_cupo = (EditText) findViewById(R.id.et_cupo);
-
-        chk_lunes = (CheckBox) findViewById(R.id.chk_lunes);
-        chk_martes = (CheckBox) findViewById(R.id.chk_martes);
-        chk_miercoles = (CheckBox) findViewById(R.id.chk_miercoles);
-        chk_jueves = (CheckBox) findViewById(R.id.chk_jueves);
-        chk_viernes = (CheckBox) findViewById(R.id.chk_viernes);
-        chk_sabado = (CheckBox) findViewById(R.id.chk_sabado);
-        chk_domingo = (CheckBox) findViewById(R.id.chk_domingo);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.guardando));
@@ -134,71 +114,11 @@ public class SalaNewEditActivity extends AppCompatActivity {
         et_nombre.setError(null);
         sp_centros_text.setError(null);
 
-        et_horaini.setError(null);
-        et_horafin.setError(null);
-        et_minini.setError(null);
-        et_minfin.setError(null);
-        et_cupo.setError(null);
-
         //tomo el contenido de los campos
         String nombre = et_nombre.getText().toString();
 
-        if(et_horaini.getText().toString().isEmpty())
-            et_horaini.setText("-1");
-        if(et_horafin.getText().toString().isEmpty())
-            et_horafin.setText("-1");
-        if(et_minini.getText().toString().isEmpty())
-            et_minini.setText("-1");
-        if(et_minfin.getText().toString().isEmpty())
-            et_minfin.setText("-1");
-        if(et_cupo.getText().toString().isEmpty())
-            et_cupo.setText("-1");
-
-        Integer horaini = Integer.valueOf(et_horaini.getText().toString());
-        Integer horafin = Integer.valueOf(et_horafin.getText().toString());
-        Integer minini = Integer.valueOf(et_minini.getText().toString());
-        Integer minfin = Integer.valueOf(et_minfin.getText().toString());
-        Integer cupo = Integer.valueOf(et_cupo.getText().toString());
-
-
         boolean cancel = false;
         View focusView = null;
-
-        if((horafin < horaini) || (horafin == horaini && minfin <= minini)) {
-            et_horafin.setError(getString(R.string.hora_fin_mayor_inicio));
-            focusView = et_horafin;
-            cancel = true;
-        }
-
-        if(cupo < 0) {
-            et_cupo.setError(getString(R.string.valor_mayor_cero));
-            focusView = et_cupo;
-            cancel = true;
-        }
-
-        if(minfin < 0 || minfin > 59) {
-            et_minfin.setError(getString(R.string.valor_0_59));
-            focusView = et_minfin;
-            cancel = true;
-        }
-
-        if(horafin < 0 || horafin > 23) {
-            et_horafin.setError(getString(R.string.valor_0_23));
-            focusView = et_horafin;
-            cancel = true;
-        }
-
-        if(minini < 0 || minini > 59) {
-            et_minini.setError(getString(R.string.valor_0_59));
-            focusView = et_minini;
-            cancel = true;
-        }
-
-        if(horaini < 0 || horaini > 23) {
-            et_horaini.setError(getString(R.string.valor_0_23));
-            focusView = et_horaini;
-            cancel = true;
-        }
 
         // Validar listado de Centros
         if(centro.getId() == 0 || centro == null) {
@@ -221,12 +141,7 @@ public class SalaNewEditActivity extends AppCompatActivity {
         } else {
             // ha ido bien, luego se procede a crear o editar.
             Sala s = new Sala(nombre, centro);
-            SalaConfig sC = new SalaConfig(cupo, horaini, minini, horafin, minfin,
-                    chk_lunes.isChecked(), chk_martes.isChecked(), chk_miercoles.isChecked(),
-                    chk_jueves.isChecked(), chk_viernes.isChecked(), chk_sabado.isChecked(),
-                    chk_domingo.isChecked(), sala);
 
-            //SalaConfig sC = new SalaConfig(15, 10, 0, 13, 30, true, false, true, false, false, true, false);
             if(editando)
                 editar(s);
             else
@@ -246,7 +161,12 @@ public class SalaNewEditActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     Toasty.success(SalaNewEditActivity.this, getString(R.string.creado_registro),
                             Toast.LENGTH_SHORT, true).show();
-                    startActivity(new Intent(SalaNewEditActivity.this, SalasActivity.class));
+
+                    Sala sala = response.body();
+                    Intent intent = new Intent(SalaNewEditActivity.this, SalaConfigActivity.class);
+                    intent.putExtra("sala", sala);
+                    startActivity(intent);
+                    //startActivity(new Intent(SalaNewEditActivity.this, SalaConfigActivity.class));
                 } else {
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());

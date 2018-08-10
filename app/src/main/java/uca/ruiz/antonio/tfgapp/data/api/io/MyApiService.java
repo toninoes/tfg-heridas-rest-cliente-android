@@ -173,6 +173,11 @@ public interface MyApiService {
     Call<Sala> crearSala(@Body Sala s, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
+    @POST("api/salasconfigs/{salaId}")
+    Call<SalaConfig> crearSalaConfig(@Path("salaId") Long salaId, @Body SalaConfig s,
+                                     @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
     @PUT("api/salas/{id}")
     Call<Sala> editarSala(@Path("id") Long id, @Body Sala s, @Header("Authorization") String token);
 
