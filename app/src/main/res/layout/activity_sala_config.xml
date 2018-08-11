@@ -90,7 +90,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
-                android:text="@string/horario_inicio"
+                android:text="@string/hora_inicio"
                 android:textStyle="bold" />
 
             <EditText
@@ -133,7 +133,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
-                android:text="@string/cupo"
+                android:text="@string/cupo_dia"
                 android:textStyle="bold" />
 
             <EditText

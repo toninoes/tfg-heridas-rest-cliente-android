@@ -9,19 +9,18 @@ import android.view.View;
 import android.widget.TextView;
 
 import uca.ruiz.antonio.tfgapp.R;
-import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
-
-import static uca.ruiz.antonio.tfgapp.R.string.centro;
+import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
 
 public class SalaActivity extends AppCompatActivity {
 
     private Sala sala;
+    private SalaConfig salaConfig;
 
     private TextView tv_1_1, tv_1_2, tv_2_1, tv_2_2, tv_3_1, tv_3_2, tv_4_1, tv_4_2, tv_5_1, tv_5_2;
     private TextView tv_6_1, tv_6_2, tv_7_1, tv_7_2, tv_8_1, tv_8_2, tv_9_1, tv_9_2, tv_10_1, tv_10_2;
 
-    private final int CAMPOS = 2;
+    private final int CAMPOS = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,45 @@ public class SalaActivity extends AppCompatActivity {
 
         tv_2_1.setText(getString(R.string.centro));
         tv_2_2.setText(sala.getCentro().getNombre());
+
+        tv_3_1.setText(getString(R.string.hora_inicio));
+        tv_4_1.setText(getString(R.string.cupo_dia));
+        tv_5_1.setText(getString(R.string.dias_disponibles));
+
+
+        try {
+            salaConfig = sala.getSalaConfig();
+            if(salaConfig != null) {
+                String hh = salaConfig.getHoraini().toString();
+                if(hh.length() == 1) hh = "0" + hh;
+                String mm = salaConfig.getMinini().toString();
+                if(mm.length() == 1) mm = "0" + mm;
+                tv_3_2.setText(hh + ":" + mm);
+                tv_4_2.setText(salaConfig.getCupo().toString());
+                String dias = "";
+                if(salaConfig.getLunes())
+                    dias += getString(R.string.lunes) + "\n";
+                if(salaConfig.getMartes())
+                    dias += getString(R.string.martes) + "\n";
+                if(salaConfig.getMiercoles())
+                    dias += getString(R.string.miercoles) + "\n";
+                if(salaConfig.getJueves())
+                    dias += getString(R.string.jueves) + "\n";
+                if(salaConfig.getViernes())
+                    dias += getString(R.string.viernes) + "\n";
+                if(salaConfig.getSabado())
+                    dias += getString(R.string.sabado) + "\n";
+                if(salaConfig.getDomingo())
+                    dias += getString(R.string.domingo) + "\n";
+                tv_5_2.setText(dias);
+            } else {
+                tv_3_2.setText(getString(R.string.no_definido));
+                tv_4_2.setText(getString(R.string.no_definido));
+                tv_5_2.setText(getString(R.string.no_definido));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

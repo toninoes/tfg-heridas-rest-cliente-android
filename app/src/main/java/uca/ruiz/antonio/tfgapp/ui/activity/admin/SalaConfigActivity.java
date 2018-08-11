@@ -26,14 +26,11 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
-import static uca.ruiz.antonio.tfgapp.R.id.et_nombre;
-import static uca.ruiz.antonio.tfgapp.R.string.centro;
-import static uca.ruiz.antonio.tfgapp.R.string.nombre;
-
 public class SalaConfigActivity extends AppCompatActivity {
 
     private static final String TAG = SalaConfigActivity.class.getSimpleName();
     private Sala sala;
+    private SalaConfig salaConfig;
     private Boolean editando = false;
     private ProgressDialog progressDialog;
 
@@ -70,6 +67,29 @@ public class SalaConfigActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.guardando));
 
         sala = (Sala) getIntent().getExtras().getSerializable("sala");
+
+        try {
+            salaConfig = sala.getSalaConfig();
+
+            if(salaConfig != null)
+                editando = true;
+
+            et_horaini.setText(salaConfig.getHoraini().toString());
+            et_minini.setText(salaConfig.getMinini().toString());
+            et_cupo.setText(salaConfig.getCupo().toString());
+
+            chk_lunes.setChecked(salaConfig.getLunes());
+            chk_martes.setChecked(salaConfig.getMartes());
+            chk_miercoles.setChecked(salaConfig.getMiercoles());
+            chk_jueves.setChecked(salaConfig.getJueves());
+            chk_viernes.setChecked(salaConfig.getViernes());
+            chk_sabado.setChecked(salaConfig.getSabado());
+            chk_domingo.setChecked(salaConfig.getDomingo());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         tv_sala.setText(sala.getNombre());
         tv_centro.setText(sala.getCentro().getNombre());
 
@@ -153,9 +173,9 @@ public class SalaConfigActivity extends AppCompatActivity {
                     chk_viernes.isChecked(), chk_sabado.isChecked(), chk_domingo.isChecked(),
                     sala);
 
-            /*if(editando)
-                editar(s);
-            else*/
+            if(editando)
+                editar(sC);
+            else
                 nuevo(sC);
         }
     }
@@ -163,6 +183,50 @@ public class SalaConfigActivity extends AppCompatActivity {
     private void nuevo(SalaConfig sC) {
         progressDialog.show();
         Call<SalaConfig> call = MyApiAdapter.getApiService().crearSalaConfig(sala.getId(), sC, Pref.getToken());
+        call.enqueue(new Callback<SalaConfig>() {
+            @Override
+            public void onResponse(Call<SalaConfig> call, Response<SalaConfig> response) {
+                progressDialog.cancel();
+                if(response.isSuccessful()) {
+                    Toasty.success(SalaConfigActivity.this, getString(R.string.creado_registro),
+                            Toast.LENGTH_SHORT, true).show();
+
+                    startActivity(new Intent(SalaConfigActivity.this, SalasActivity.class));
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(SalaConfigActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SalaConfig> call, Throwable t) {
+                progressDialog.cancel();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(SalaConfigActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(SalaConfigActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
+            }
+        });
+    }
+
+    private void editar(SalaConfig sC) {
+        progressDialog.show();
+        Call<SalaConfig> call = MyApiAdapter.getApiService().editarSalaConfig(salaConfig.getId(), sC, Pref.getToken());
         call.enqueue(new Callback<SalaConfig>() {
             @Override
             public void onResponse(Call<SalaConfig> call, Response<SalaConfig> response) {

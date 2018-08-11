@@ -82,7 +82,6 @@ public class SalaNewEditActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_guardar_item, menu);
@@ -150,7 +149,6 @@ public class SalaNewEditActivity extends AppCompatActivity {
 
     }
 
-
     private void nuevo(Sala s) {
         progressDialog.show();
         Call<Sala> call = MyApiAdapter.getApiService().crearSala(s, Pref.getToken());
@@ -210,7 +208,10 @@ public class SalaNewEditActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     Toasty.success(SalaNewEditActivity.this, getString(R.string.editado_registro),
                             Toast.LENGTH_SHORT, true).show();
-                    startActivity(new Intent(SalaNewEditActivity.this, SalasActivity.class));
+                    Intent intent = new Intent(SalaNewEditActivity.this, SalaConfigActivity.class);
+                    intent.putExtra("sala", sala);
+                    startActivity(intent);
+                    //startActivity(new Intent(SalaNewEditActivity.this, SalasActivity.class));
                 } else {
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());

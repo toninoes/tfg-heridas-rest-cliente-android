@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class SalaConfig implements Serializable
 {
 
-    private Integer id;
+    private Long id;
     private Integer cupo;
     private Integer horaini;
     private Integer minini;
@@ -52,11 +52,11 @@ public class SalaConfig implements Serializable
         this.sala = sala;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

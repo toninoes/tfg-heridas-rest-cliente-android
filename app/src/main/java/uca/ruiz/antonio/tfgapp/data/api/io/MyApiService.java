@@ -181,6 +181,11 @@ public interface MyApiService {
     @PUT("api/salas/{id}")
     Call<Sala> editarSala(@Path("id") Long id, @Body Sala s, @Header("Authorization") String token);
 
+    @Headers("Content-Type: application/json")
+    @PUT("api/salasconfigs/{id}")
+    Call<SalaConfig> editarSalaConfig(@Path("id") Long id, @Body SalaConfig sC,
+                                      @Header("Authorization") String token);
+
 
     /* ======================= GRUPOS DIAGNOSTICOS ======================= */
     @Headers("Content-Type: application/json")
