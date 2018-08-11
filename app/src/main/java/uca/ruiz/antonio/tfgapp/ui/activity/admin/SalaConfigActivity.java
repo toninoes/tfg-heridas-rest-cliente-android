@@ -138,7 +138,7 @@ public class SalaConfigActivity extends AppCompatActivity {
 
         Integer horaini = Integer.valueOf(et_horaini.getText().toString());
         Integer minini = Integer.valueOf(et_minini.getText().toString());
-        Integer cupo = Integer.valueOf(et_cupo.getText().toString());
+        Long cupo = Long.valueOf(et_cupo.getText().toString());
 
 
         boolean cancel = false;
