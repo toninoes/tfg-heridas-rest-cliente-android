@@ -21,6 +21,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.Login;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ImgResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
+import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
 import uca.ruiz.antonio.tfgapp.data.api.model.Imagen;
 import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
@@ -150,6 +151,11 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/salas")
     Call<ArrayList<Sala>> getSalas(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/salas/user/{userId}")
+    Call<ArrayList<Sala>> getSalasByUserId(@Path("userId") Long userId,
+                                           @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @GET("api/salas/recientes")
@@ -418,6 +424,13 @@ public interface MyApiService {
     @GET("api/imagenes/{id}")
     Call<ResponseBody> descargarImagenId(@Path("id") Long id,
                                        @Header("Authorization") String token);
+
+
+    /* ======================= CITACIONES ======================= */
+    @Headers("Content-Type: application/json")
+    @POST("api/citas/agenda/{sanitarioId}")
+    Call<ArrayList<Cita>> getCitasBySanitarioId(@Path("sanitarioId") Long sanitarioId, @Body Cita c,
+                                                @Header("Authorization") String token);
 
 
 }

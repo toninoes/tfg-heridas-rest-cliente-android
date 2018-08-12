@@ -47,7 +47,7 @@ public class SanitarioNewEditActivity extends AppCompatActivity {
 
     private static final String TAG = SanitarioNewEditActivity.class.getSimpleName();
     private EditText et_nombre, et_apellidos, et_dni, et_email, et_fnac, et_colegiado;
-    DatePickerDialog dpd_fnac;
+    private DatePickerDialog dpd_fnac;
     private CheckBox chk_activo;
     private Sanitario sanitario;
     private Centro centro;

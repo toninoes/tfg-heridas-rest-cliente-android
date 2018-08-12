@@ -16,6 +16,7 @@ public class MainSanitarioActivity extends AppCompatActivity  {
 
     private ProgressDialog progressDialog;
     private LinearLayout ll_asistencias, ll_cuidados, ll_valoraciones;
+    private LinearLayout ll_citas;
 
 
     @Override
@@ -30,6 +31,7 @@ public class MainSanitarioActivity extends AppCompatActivity  {
         ll_asistencias = (LinearLayout) findViewById(R.id.ll_asistencias);
         ll_cuidados = (LinearLayout) findViewById(R.id.ll_cuidados);
         ll_valoraciones = (LinearLayout) findViewById(R.id.ll_valoraciones);
+        ll_citas = (LinearLayout) findViewById(R.id.ll_citas);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.cargando));
@@ -74,6 +76,14 @@ public class MainSanitarioActivity extends AppCompatActivity  {
         progressDialog.show();
 
         Intent intent = new Intent(this, ValoracionesResultsActivity.class);
+        startActivity(intent);
+    }
+
+    public  void agenda(View view) {
+        ll_citas.setBackgroundResource(R.color.grisFondoLL);
+        progressDialog.show();
+
+        Intent intent = new Intent(this, CitacionesActivity.class);
         startActivity(intent);
     }
 

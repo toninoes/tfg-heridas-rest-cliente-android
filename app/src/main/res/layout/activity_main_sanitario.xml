@@ -146,13 +146,14 @@
         android:layout_weight="1"
         android:baselineAligned="false"
         android:orientation="horizontal">
-<!--
+
         <LinearLayout
-            android:id="@+id/ll_asistencias"
+            android:id="@+id/ll_citas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -162,21 +163,21 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/ib_asistencia"
+                    android:id="@+id/ib_citas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/nueva_asistencia"
-                    android:onClick="asistencias"
-                    app:srcCompat="@drawable/ic_asistencia" />
+                    android:contentDescription="@string/diagnosticos"
+                    android:onClick="agenda"
+                    app:srcCompat="@drawable/ic_agenda" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/nueva_asistencia"
+                    android:text="@string/agenda_citas"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 
@@ -184,11 +185,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_cuidados"
+            android:id="@+id/ll_procedimientos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -198,21 +200,21 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/ib_cuidados"
+                    android:id="@+id/ib_procedimientos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/gestion_cuidados"
-                    android:onClick="cuidados"
-                    app:srcCompat="@drawable/ic_cuidado" />
+                    android:contentDescription="@string/procedimientos"
+                    android:onClick="procedimientos"
+                    app:srcCompat="@drawable/ic_procedimiento" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/gestion_cuidados"
+                    android:text="@string/procedimientos"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 
@@ -220,11 +222,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_valoraciones"
+            android:id="@+id/ll_administradores"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -234,27 +237,27 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/ib_valoraciones"
+                    android:id="@+id/ib_administradores"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/valoraciones"
-                    android:onClick="valoraciones"
-                    app:srcCompat="@drawable/ic_valoracion" />
+                    android:contentDescription="@string/administradores"
+                    android:onClick="administradores"
+                    app:srcCompat="@drawable/ic_admin" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/valoraciones"
+                    android:text="@string/administradores"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 
             </LinearLayout>
         </LinearLayout>
--->
+
     </LinearLayout>
 
     <LinearLayout
@@ -264,13 +267,14 @@
         android:layout_weight="1"
         android:baselineAligned="false"
         android:orientation="horizontal">
-<!--
+
         <LinearLayout
-            android:id="@+id/ll_asistencias"
+            android:id="@+id/ll_sanitarios"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -280,21 +284,21 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/ib_asistencia"
+                    android:id="@+id/ib_sanitarios"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/nueva_asistencia"
-                    android:onClick="asistencias"
-                    app:srcCompat="@drawable/ic_asistencia" />
+                    android:contentDescription="@string/sanitarios"
+                    android:onClick="sanitarios"
+                    app:srcCompat="@drawable/ic_sanitario" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/nueva_asistencia"
+                    android:text="@string/sanitarios"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 
@@ -302,11 +306,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_cuidados"
+            android:id="@+id/ll_pacientes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -316,21 +321,21 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/ib_cuidados"
+                    android:id="@+id/ib_pacientes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/gestion_cuidados"
-                    android:onClick="cuidados"
-                    app:srcCompat="@drawable/ic_cuidado" />
+                    android:contentDescription="@string/pacientes"
+                    android:onClick="pacientes"
+                    app:srcCompat="@drawable/ic_paciente" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/gestion_cuidados"
+                    android:text="@string/pacientes"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 
@@ -338,11 +343,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_valoraciones"
+            android:id="@+id/ll_aa"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -352,7 +358,7 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/ib_valoraciones"
+                    android:id="@+id/ib_aa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -372,7 +378,7 @@
 
             </LinearLayout>
         </LinearLayout>
--->
+
     </LinearLayout>
 
 </LinearLayout>

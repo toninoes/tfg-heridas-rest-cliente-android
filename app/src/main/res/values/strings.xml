@@ -88,6 +88,8 @@
     <string name="sala">Sala</string>
     <string name="seleccione_centro">Seleccione un Centro</string>
     <string name="debes_seleccionar_centro">Debes seleccionar un Centro.</string>
+    <string name="seleccione_sala">Seleccione una Sala</string>
+    <string name="debes_seleccionar_sala">Debes seleccionar una Sala.</string>
     <string name="buscar">Buscar</string>
     <string name="introduce_palabras_clave">Introduce palabras clave</string>
     <string name="grupo_diagnostico">Grupo Diagnóstico</string>
@@ -169,4 +171,8 @@
     <string name="horario">Horario</string>
     <string name="dias_disponibles">Días disponibles</string>
     <string name="no_definido">No definido.</string>
+    <string name="agenda_citas">Agenda de Citas</string>
+    <string name="orden">Orden</string>
+    <string name="fecha_citas">Fecha de Citas</string>
+    <string name="numero_citas">Número de Citas</string>
 </resources>

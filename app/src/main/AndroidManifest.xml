@@ -211,6 +211,11 @@
             android:configChanges="orientation"
             android:label="@string/sala"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CitacionesActivity"
+            android:configChanges="orientation"
+            android:label="@string/agenda_citas"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
