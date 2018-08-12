@@ -7,6 +7,7 @@ public class SalaConfig implements Serializable
 
     private Long id;
     private Long cupo;
+    private Long minutosPaciente;
     private Integer horaini;
     private Integer minini;
     private Boolean lunes;
@@ -21,10 +22,11 @@ public class SalaConfig implements Serializable
     public SalaConfig() {
     }
 
-    public SalaConfig(Long cupo, Integer horaini, Integer minini, Boolean lunes, Boolean martes,
-                      Boolean miercoles, Boolean jueves, Boolean viernes, Boolean sabado,
+    public SalaConfig(Long cupo, Long minutosPaciente, Integer horaini, Integer minini, Boolean lunes,
+                      Boolean martes, Boolean miercoles, Boolean jueves, Boolean viernes, Boolean sabado,
                       Boolean domingo) {
         this.cupo = cupo;
+        this.minutosPaciente = minutosPaciente;
         this.horaini = horaini;
         this.minini = minini;
         this.lunes = lunes;
@@ -36,10 +38,11 @@ public class SalaConfig implements Serializable
         this.domingo = domingo;
     }
 
-    public SalaConfig(Long cupo, Integer horaini, Integer minini, Boolean lunes, Boolean martes,
-                      Boolean miercoles, Boolean jueves, Boolean viernes, Boolean sabado,
+    public SalaConfig(Long cupo, Long minutosPaciente, Integer horaini, Integer minini, Boolean lunes,
+                      Boolean martes, Boolean miercoles, Boolean jueves, Boolean viernes, Boolean sabado,
                       Boolean domingo, Sala sala) {
         this.cupo = cupo;
+        this.minutosPaciente = minutosPaciente;
         this.horaini = horaini;
         this.minini = minini;
         this.lunes = lunes;
@@ -146,5 +149,13 @@ public class SalaConfig implements Serializable
 
     public void setSala(Sala sala) {
         this.sala = sala;
+    }
+
+    public Long getMinutosPaciente() {
+        return minutosPaciente;
+    }
+
+    public void setMinutosPaciente(Long minutosPaciente) {
+        this.minutosPaciente = minutosPaciente;
     }
 }

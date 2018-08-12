@@ -35,7 +35,7 @@ public class SalaConfigActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private TextView tv_sala, tv_centro;
-    private EditText et_horaini, et_minini, et_cupo;
+    private EditText et_horaini, et_minini, et_cupo, et_minutos;
     private CheckBox chk_lunes, chk_martes, chk_miercoles, chk_jueves;
     private CheckBox chk_viernes, chk_sabado, chk_domingo;
 
@@ -54,6 +54,7 @@ public class SalaConfigActivity extends AppCompatActivity {
         et_horaini = (EditText) findViewById(R.id.et_horaini);
         et_minini = (EditText) findViewById(R.id.et_minini);
         et_cupo = (EditText) findViewById(R.id.et_cupo);
+        et_minutos = (EditText) findViewById(R.id.et_minutos);
 
         chk_lunes = (CheckBox) findViewById(R.id.chk_lunes);
         chk_martes = (CheckBox) findViewById(R.id.chk_martes);
@@ -77,6 +78,7 @@ public class SalaConfigActivity extends AppCompatActivity {
             et_horaini.setText(salaConfig.getHoraini().toString());
             et_minini.setText(salaConfig.getMinini().toString());
             et_cupo.setText(salaConfig.getCupo().toString());
+            et_minutos.setText(salaConfig.getMinutosPaciente().toString());
 
             chk_lunes.setChecked(salaConfig.getLunes());
             chk_martes.setChecked(salaConfig.getMartes());
@@ -92,8 +94,6 @@ public class SalaConfigActivity extends AppCompatActivity {
 
         tv_sala.setText(sala.getNombre());
         tv_centro.setText(sala.getCentro().getNombre());
-
-
     }
 
     @Override
@@ -127,6 +127,7 @@ public class SalaConfigActivity extends AppCompatActivity {
         et_horaini.setError(null);
         et_minini.setError(null);
         et_cupo.setError(null);
+        et_minutos.setError(null);
 
         //tomo el contenido de los campos
         if(et_horaini.getText().toString().isEmpty())
@@ -135,14 +136,23 @@ public class SalaConfigActivity extends AppCompatActivity {
             et_minini.setText("-1");
         if(et_cupo.getText().toString().isEmpty())
             et_cupo.setText("-1");
+        if(et_minutos.getText().toString().isEmpty())
+            et_minutos.setText("-1");
 
         Integer horaini = Integer.valueOf(et_horaini.getText().toString());
         Integer minini = Integer.valueOf(et_minini.getText().toString());
         Long cupo = Long.valueOf(et_cupo.getText().toString());
+        Long minutos = Long.valueOf(et_minutos.getText().toString());
 
 
         boolean cancel = false;
         View focusView = null;
+
+        if(minutos < 1 || minutos > 60) {
+            et_minutos.setError(getString(R.string.valor_1_60));
+            focusView = et_minutos;
+            cancel = true;
+        }
 
         if(cupo < 0) {
             et_cupo.setError(getString(R.string.valor_mayor_cero));
@@ -168,7 +178,7 @@ public class SalaConfigActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             // ha ido bien, luego se procede a crear o editar.
-            SalaConfig sC = new SalaConfig(cupo, horaini, minini, chk_lunes.isChecked(),
+            SalaConfig sC = new SalaConfig(cupo, minutos, horaini, minini, chk_lunes.isChecked(),
                     chk_martes.isChecked(), chk_miercoles.isChecked(), chk_jueves.isChecked(),
                     chk_viernes.isChecked(), chk_sabado.isChecked(), chk_domingo.isChecked(),
                     sala);

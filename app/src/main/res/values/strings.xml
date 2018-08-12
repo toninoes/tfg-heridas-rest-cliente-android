@@ -142,6 +142,7 @@
     <string name="hora_inicio">Hora de Inicio</string>
     <string name="horario_fin">Horario Fin</string>
     <string name="cupo_dia">Cupo/Día</string>
+    <string name="minutos_paciente">Minutos/Paciente</string>
 
     <string name="lunes">Lunes</string>
     <string name="martes">Martes</string>
@@ -162,6 +163,7 @@
 
     <string name="valor_0_23">Éste debe ser un valor entre 0 y 23</string>
     <string name="valor_0_59">Éste debe ser un valor entre 0 y 59</string>
+    <string name="valor_1_60">Éste debe ser un valor entre 1 y 60</string>
     <string name="hora_fin_mayor_inicio">Hora fin debe ser posterior a la de inicio</string>
     <string name="valor_mayor_cero">Éste debe ser un valor mayor que cero.</string>
     <string name="horario">Horario</string>

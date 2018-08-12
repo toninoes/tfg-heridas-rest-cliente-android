@@ -87,9 +87,9 @@
 
             <TextView
                 android:id="@+id/tv_ini"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="50dp"
                 android:text="@string/hora_inicio"
                 android:textStyle="bold" />
 
@@ -124,20 +124,46 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_cupo"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="50dp"
                 android:text="@string/cupo_dia"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/et_cupo"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="55dp"
+                android:ems="2"
+                android:inputType="numberSigned"
+                android:maxEms="5"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_minutos"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="@string/minutos_paciente"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_minutos"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="55dp"
