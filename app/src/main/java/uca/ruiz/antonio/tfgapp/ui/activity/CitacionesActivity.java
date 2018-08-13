@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -38,7 +40,6 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CitaAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
-import uca.ruiz.antonio.tfgapp.utils.Utils;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
 public class CitacionesActivity extends AppCompatActivity {
@@ -47,7 +48,6 @@ public class CitacionesActivity extends AppCompatActivity {
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
     private CitaAdapter mAdapter;
-    //private SwipeRefreshLayout srl_listado;
     private ProgressDialog progressDialog;
     private EditText et_fecha;
     private DatePickerDialog dpd_fecha;
@@ -55,6 +55,7 @@ public class CitacionesActivity extends AppCompatActivity {
     private TextView sp_salas_text;
     private Button bt_buscar;
     private Sala sala;
+    private LinearLayout ll_busqueda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,71 +80,75 @@ public class CitacionesActivity extends AppCompatActivity {
         mAdapter = new CitaAdapter(this);
         rv_listado.setAdapter(mAdapter);
 
-        et_fecha = (EditText) findViewById(R.id.et_fecha);
-
-        sp_salas = (Spinner) findViewById(R.id.sp_salas);
-        sp_salas_text = (TextView) findViewById(R.id.sp_salas_error);
-
-        bt_buscar = (Button) findViewById(R.id.bt_buscar);
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.cargando));
 
-        cargarSalas(sp_salas);
+        if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false)) {
+            ll_busqueda = (LinearLayout) findViewById(R.id.ll_busqueda);
+            ll_busqueda.setVisibility(View.GONE);
+            cargarCitacionesByPaciente();
+        } else if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false)) {
+            et_fecha = (EditText) findViewById(R.id.et_fecha);
+            sp_salas = (Spinner) findViewById(R.id.sp_salas);
+            sp_salas_text = (TextView) findViewById(R.id.sp_salas_error);
 
-        et_fecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar cal;
-                int day, month, year;
-                cal = Calendar.getInstance();
+            bt_buscar = (Button) findViewById(R.id.bt_buscar);
 
-                day = cal.get(Calendar.DAY_OF_MONTH);
-                month = cal.get(Calendar.MONTH);
-                year = cal.get(Calendar.YEAR);
+            cargarSalas(sp_salas);
 
-                // date picker dialog
-                dpd_fecha = new DatePickerDialog(CitacionesActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int day) {
-                                // +1 porque enero es cero
-                                final String fechaElegida = FechaHoraUtils.dosDigitos(day) + "/" +
-                                        FechaHoraUtils.dosDigitos(month+1) + "/" + year;
-                                et_fecha.setText(fechaElegida);
-                            }
-                        }, year, month, day);
+            et_fecha.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar cal;
+                    int day, month, year;
+                    cal = Calendar.getInstance();
 
-                dpd_fecha.show();
-            }
-        });
+                    day = cal.get(Calendar.DAY_OF_MONTH);
+                    month = cal.get(Calendar.MONTH);
+                    year = cal.get(Calendar.YEAR);
 
-        sp_salas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                sala = (Sala) adapterView.getAdapter().getItem(i);
-            }
+                    // date picker dialog
+                    dpd_fecha = new DatePickerDialog(CitacionesActivity.this,
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int day) {
+                                    // +1 porque enero es cero
+                                    final String fechaElegida = FechaHoraUtils.dosDigitos(day) + "/" +
+                                            FechaHoraUtils.dosDigitos(month+1) + "/" + year;
+                                    et_fecha.setText(fechaElegida);
+                                }
+                            }, year, month, day);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+                    dpd_fecha.show();
+                }
+            });
 
-            }
-        });
+            sp_salas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    sala = (Sala) adapterView.getAdapter().getItem(i);
+                }
 
-        bt_buscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                intentarCargarCitaciones();
-            }
-        });
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+            bt_buscar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    intentarCargarCitaciones();
+                }
+            });
+        }
 
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.menu_nuevo_item, menu);
+        if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false))
+            getMenuInflater().inflate(R.menu.menu_nuevo_item, menu);
         return true;
     }
 
@@ -155,9 +160,9 @@ public class CitacionesActivity extends AppCompatActivity {
             case android.R.id.home:
                 volverAtras();
                 return true;
-            /*case R.id.add_item:
-                startActivity(new Intent(this, PacienteNewEditActivity.class));
-                return true;*/
+            case R.id.add_item:
+                //startActivity(new Intent(this, CitaNewEditActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -206,14 +211,60 @@ public class CitacionesActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             Cita c = new Cita(sala, FechaHoraUtils.getFechaFromString(fecha));
-            cargarCitaciones(c);
+            cargarCitacionesBySanitario(c);
         }
-
-
-
     }
 
-    private void cargarCitaciones(Cita c) {
+    private void cargarCitacionesByPaciente() {
+        progressDialog.show();
+        Call<ArrayList<Cita>> call = MyApiAdapter.getApiService().getCitasByPacienteId(Pref.getUserId(),
+                Pref.getToken());
+        call.enqueue(new Callback<ArrayList<Cita>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Cita>> call, Response<ArrayList<Cita>> response) {
+                progressDialog.cancel();
+                if(response.isSuccessful()) {
+                    ArrayList<Cita> citas = response.body();
+
+                    if(citas != null)
+                        Log.d("CITAS", "Tamaño ==> " + citas.size());
+
+                    Toasty.success(CitacionesActivity.this, getString(R.string.numero_citas) + ": " +
+                            citas.size(), Toast.LENGTH_SHORT, true).show();
+                    mAdapter.setDataSet(citas);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(CitacionesActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Cita>> call, Throwable t) {
+                progressDialog.cancel();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(CitacionesActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(CitacionesActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
+            }
+        });
+    }
+
+    private void cargarCitacionesBySanitario(Cita c) {
         progressDialog.show();
         Call<ArrayList<Cita>> call = MyApiAdapter.getApiService().getCitasBySanitarioId(Pref.getUserId(),
                 c, Pref.getToken());
@@ -225,7 +276,7 @@ public class CitacionesActivity extends AppCompatActivity {
                     ArrayList<Cita> citas = response.body();
 
                     if(citas != null)
-                        Log.d("SALAS", "Tamaño ==> " + citas.size());
+                        Log.d("CITAS", "Tamaño ==> " + citas.size());
 
                     Toasty.success(CitacionesActivity.this, getString(R.string.numero_citas) + ": " +
                             citas.size(), Toast.LENGTH_SHORT, true).show();

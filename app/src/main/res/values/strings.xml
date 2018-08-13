@@ -177,4 +177,8 @@
     <string name="fecha_citas">Fecha de Citas</string>
     <string name="numero_citas">Número de Citas</string>
     <string name="hora">Hora</string>
+    <string name="asistencias">Asistencias</string>
+    <string name="mis_cuidados">Mis Cuidados</string>
+    <string name="valorar_asistencias">Valorar Asistencias</string>
+    <string name="mis_citas">Mis Citas</string>
 </resources>

@@ -9,13 +9,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.MainSanitarioActivity">
+    tools:context="uca.ruiz.antonio.tfgapp.ui.activity.MainPacienteActivity">
 
     <TextView
         android:id="@+id/tituloSanitario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/portal_del_sanitario"
+        android:text="@string/portal_del_paciente"
         android:textAlignment="center"
         android:textColor="@color/naranja"
         android:textSize="24sp"
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/nueva_asistencia"
+                    android:contentDescription="@string/asistencias"
                     android:onClick="asistencias"
                     app:srcCompat="@drawable/ic_asistencia" />
 
@@ -58,7 +58,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/nueva_asistencia"
+                    android:text="@string/asistencias"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/gestion_cuidados"
+                    android:contentDescription="@string/mis_cuidados"
                     android:onClick="cuidados"
                     app:srcCompat="@drawable/ic_cuidado" />
 
@@ -94,7 +94,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/gestion_cuidados"
+                    android:text="@string/mis_cuidados"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/valoraciones"
+                    android:contentDescription="@string/valorar_asistencias"
                     android:onClick="valoraciones"
                     app:srcCompat="@drawable/ic_valoracion" />
 
@@ -130,7 +130,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/valoraciones"
+                    android:text="@string/valorar_asistencias"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 
@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/agenda_citas"
+                    android:contentDescription="@string/mis_citas"
                     android:onClick="agenda"
                     app:srcCompat="@drawable/ic_agenda" />
 
@@ -177,7 +177,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:clickable="false"
-                    android:text="@string/agenda_citas"
+                    android:text="@string/mis_citas"
                     android:textAlignment="center"
                     android:textColor="@color/naranja" />
 

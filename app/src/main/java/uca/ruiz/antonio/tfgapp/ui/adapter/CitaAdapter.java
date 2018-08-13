@@ -2,6 +2,7 @@ package uca.ruiz.antonio.tfgapp.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,14 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
 import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
+import static uca.ruiz.antonio.tfgapp.R.id.ll_item;
 
 public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
 
     private ArrayList<Cita> mDataSet;
     private Context context;
+
+    private Date hoy = FechaHoraUtils.getHoySinTiempo();
 
     // Obtener referencias de los componentes visuales para cada elemento
     // es decir, referencias de los EditText, TextView, Button...
@@ -40,11 +44,9 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
             tv_titulo = (TextView) v.findViewById(R.id.tv_titulo);
             tv_subtitulo = (TextView) v.findViewById(R.id.tv_subtitulo);
             ib_delete = (ImageButton) v.findViewById(R.id.ib_delete);
-            if(Preferencias.get(v.getContext()).getBoolean("ROLE_SANITARIO", false))
-                ib_delete.setVisibility(View.GONE); // no borran citas los sanitarios
+            ib_delete.setVisibility(View.GONE); // no borrar citas desde aquí
             ib_edit = (ImageButton) v.findViewById(R.id.ib_edit);
-            if(Preferencias.get(v.getContext()).getBoolean("ROLE_SANITARIO", false))
-                ib_edit.setVisibility(View.GONE); // no editan citas los sanitarios
+            ib_edit.setVisibility(View.GONE); // no editar citas desde aquí
         }
     }
 
@@ -76,8 +78,6 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
         // obtenemos un elemento del dataset según su posición
         // reemplazamos el contenido de los views según tales datos
         Cita cita = mDataSet.get(position);
-        holder.tv_titulo.setText(cita.getPaciente().getLastnameComaAndFirstname());
-        String subtitulo ="";
 
         SalaConfig sC = cita.getSala().getSalaConfig();
         Date dia = cita.getFecha();
@@ -86,19 +86,30 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
         Integer minini = sC.getMinini();
         Long minutos_paciente = sC.getMinutosPaciente();
 
+
+        if(dia.before(hoy)) {
+            holder.ll_item.setBackgroundResource(R.color.grisFondoLL);
+        } else {
+            holder.ll_item.setBackgroundResource(R.color.blanco);
+        }
+
         Date fechaHoraCita = calcularFechaHoraCita(dia, horaini, minini, orden, minutos_paciente);
 
+        String titulo = "";
+        String subtitulo = "";
         if(Preferencias.get(context).getBoolean("ROLE_PACIENTE", false)){
-            subtitulo = context.getString(R.string.sala) + ": " + cita.getSala().getNombre() + " - " +
-                    context.getString(R.string.orden) + ": " + cita.getOrden();
+            titulo = FechaHoraUtils.formatoFechaHoraUI(fechaHoraCita) + " (" + orden + ")";
+            subtitulo = cita.getSala().getCentro().getNombre() + " (" + cita.getSala().getNombre() + ")";
         } else if(Preferencias.get(context).getBoolean("ROLE_SANITARIO", false)) {
+            titulo = cita.getPaciente().getLastnameComaAndFirstname();
             subtitulo = context.getString(R.string.orden) + ": " + orden + " - " +
                     context.getString(R.string.hora) + ": " + FechaHoraUtils.formatoHoraUI(fechaHoraCita);
         }
 
+        holder.tv_titulo.setText(titulo);
         holder.tv_subtitulo.setText(subtitulo);
 
-        // click sobre cada elemento
+        // click sobre cada elemento para ver más detalles de la cita
         /*holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

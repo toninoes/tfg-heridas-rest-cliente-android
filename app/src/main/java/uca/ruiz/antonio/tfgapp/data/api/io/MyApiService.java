@@ -433,4 +433,10 @@ public interface MyApiService {
                                                 @Header("Authorization") String token);
 
 
+    @Headers("Content-Type: application/json")
+    @GET("api/citas/realizadas/{pacienteId}")
+    Call<ArrayList<Cita>> getCitasByPacienteId(@Path("pacienteId") Long pacienteId,
+                                                @Header("Authorization") String token);
+
+
 }

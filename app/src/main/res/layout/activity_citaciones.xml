@@ -75,6 +75,7 @@
         android:layout_weight="100"
         android:background="@drawable/border_naranja_fondo_blanco"
         android:overScrollMode="ifContentScrolls"
+        android:padding="5dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="16dp" />
 

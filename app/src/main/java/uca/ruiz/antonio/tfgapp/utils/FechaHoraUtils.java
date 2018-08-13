@@ -26,6 +26,27 @@ public class FechaHoraUtils {
         return (n<=9) ? ("0"+n) : String.valueOf(n);
     }
 
+    public static Date FechaSinTiempo(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        return cal.getTime();
+    }
+
+    public static Date getHoySinTiempo() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        return cal.getTime();
+    }
+
     public static Date getFechaFromString(String txt) {
         SimpleDateFormat format = new SimpleDateFormat(UI_FECHA, Locale.getDefault());
         Date fecha = new Date();
