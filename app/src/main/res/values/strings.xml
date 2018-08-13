@@ -115,6 +115,7 @@
     <string name="valoracion_media">Valoración Media</string>
     <string name="valoraciones_recientes">Valoraciones Recientes</string>
     <string name="portal_del_sanitario">Portal del Sanitario</string>
+    <string name="portal_del_paciente">Portal del Paciente</string>
     <string name="nueva_asistencia">Nueva Asistencia</string>
     <string name="gestion_cuidados">Gestionar Cuidados</string>
     <string name="seleccione_Gdiagnostico">Seleccione un Grupo de Diagnósticos</string>

@@ -66,6 +66,7 @@ import static uca.ruiz.antonio.tfgapp.R.id.et_email;
 import static uca.ruiz.antonio.tfgapp.R.id.et_fnac;
 import static uca.ruiz.antonio.tfgapp.R.id.et_nombre;
 import static uca.ruiz.antonio.tfgapp.R.id.sp_centros;
+import static uca.ruiz.antonio.tfgapp.R.id.srl_listado;
 import static uca.ruiz.antonio.tfgapp.R.string.centro;
 import static uca.ruiz.antonio.tfgapp.R.string.centros;
 import static uca.ruiz.antonio.tfgapp.R.string.salas;
@@ -77,7 +78,7 @@ public class CitacionesActivity extends AppCompatActivity {
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
     private CitaAdapter mAdapter;
-    private SwipeRefreshLayout srl_listado;
+    //private SwipeRefreshLayout srl_listado;
     private ProgressDialog progressDialog;
     private EditText et_fecha;
     private DatePickerDialog dpd_fecha;
@@ -122,15 +123,15 @@ public class CitacionesActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.cargando));
 
         cargarSalas(sp_salas);
-
-        srl_listado = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
+/*
+        srl_listado = (SwipeRefreshLayout) findViewById(srl_listado);
         srl_listado.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 recreate();
             }
         });
-
+*/
         et_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +151,7 @@ public class CitacionesActivity extends AppCompatActivity {
                                 et_fecha.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         }, year, month, day);
+
                 dpd_fecha.show();
             }
         });

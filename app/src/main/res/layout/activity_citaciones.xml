@@ -1,90 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/srl_listado"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_busqueda"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/border_naranja"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_busqueda"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_weight="1"
-            android:background="@drawable/border_naranja"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@drawable/border_naranja">
 
-            <android.support.design.widget.TextInputLayout
+            <EditText
+                android:id="@+id/et_fecha"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:background="@drawable/border_naranja">
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="@string/fecha_citas"
+                android:inputType="date"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/et_fecha"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/fecha_citas"
-                    android:inputType="date" />
-            </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/sp_salas"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-                <Spinner
-                    android:id="@+id/sp_salas"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/sp_salas_error"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="10"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:paddingTop="0dp" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/bt_buscar"
+            <TextView
+                android:id="@+id/sp_salas_error"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:background="@drawable/bg_button_naranja"
-                android:text="@string/buscar"
-                android:textColor="@android:color/background_light" />
-
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="10"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingTop="0dp" />
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_listado"
+        <Button
+            android:id="@+id/bt_buscar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_weight="100"
-            android:background="@drawable/border_naranja_fondo_blanco"
-            android:overScrollMode="ifContentScrolls"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@drawable/bg_button_naranja"
+            android:text="@string/buscar"
+            android:textColor="@android:color/background_light" />
 
     </LinearLayout>
 
-</android.support.v4.widget.SwipeRefreshLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_listado"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_weight="100"
+        android:background="@drawable/border_naranja_fondo_blanco"
+        android:overScrollMode="ifContentScrolls"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+</LinearLayout>
