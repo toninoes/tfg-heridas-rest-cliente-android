@@ -138,8 +138,11 @@ public class SanitarioNewEditActivity extends AppCompatActivity {
                 dpd_fnac = new DatePickerDialog(SanitarioNewEditActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                et_fnac.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            public void onDateSet(DatePicker view, int year, int month, int day) {
+                                // +1 porque enero es cero
+                                final String fechaElegida = FechaHoraUtils.dosDigitos(day) + "/" +
+                                        FechaHoraUtils.dosDigitos(month+1) + "/" + year;
+                                et_fnac.setText(fechaElegida);
                             }
                         }, year, month, day);
                 dpd_fnac.show();

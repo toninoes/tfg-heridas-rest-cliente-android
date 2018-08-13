@@ -1,6 +1,7 @@
 package uca.ruiz.antonio.tfgapp.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
+import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
+import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
 
 public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
@@ -71,8 +77,25 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
         // reemplazamos el contenido de los views según tales datos
         Cita cita = mDataSet.get(position);
         holder.tv_titulo.setText(cita.getPaciente().getLastnameComaAndFirstname());
-        String subtitulo = context.getString(R.string.sala) + ": " + cita.getSala().getNombre() + " - " +
-                context.getString(R.string.orden) + ": " + cita.getOrden();
+        String subtitulo ="";
+
+        SalaConfig sC = cita.getSala().getSalaConfig();
+        Date dia = cita.getFecha();
+        Long orden = cita.getOrden();
+        Integer horaini = sC.getHoraini();
+        Integer minini = sC.getMinini();
+        Long minutos_paciente = sC.getMinutosPaciente();
+
+        Date fechaHoraCita = calcularFechaHoraCita(dia, horaini, minini, orden, minutos_paciente);
+
+        if(Preferencias.get(context).getBoolean("ROLE_PACIENTE", false)){
+            subtitulo = context.getString(R.string.sala) + ": " + cita.getSala().getNombre() + " - " +
+                    context.getString(R.string.orden) + ": " + cita.getOrden();
+        } else if(Preferencias.get(context).getBoolean("ROLE_SANITARIO", false)) {
+            subtitulo = context.getString(R.string.orden) + ": " + orden + " - " +
+                    context.getString(R.string.hora) + ": " + FechaHoraUtils.formatoHoraUI(fechaHoraCita);
+        }
+
         holder.tv_subtitulo.setText(subtitulo);
 
         // click sobre cada elemento
@@ -87,6 +110,18 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
             }
         });*/
 
+    }
+
+    private Date calcularFechaHoraCita(Date dia, Integer horaini, Integer minini, Long orden, Long minutos_paciente) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dia);
+        cal.set(Calendar.HOUR, horaini);
+        cal.set(Calendar.MINUTE, minini);
+
+        Integer sumar = (orden.intValue()-1) * minutos_paciente.intValue();
+        cal.add(Calendar.MINUTE, sumar);
+
+        return cal.getTime();
     }
 
     // Indica el número de elementos de la colección de datos.

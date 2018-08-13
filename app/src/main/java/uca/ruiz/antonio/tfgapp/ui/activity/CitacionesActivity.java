@@ -3,13 +3,11 @@ package uca.ruiz.antonio.tfgapp.ui.activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,14 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -41,36 +33,13 @@ import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
-import uca.ruiz.antonio.tfgapp.data.api.mapping.Authority;
-import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
-import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
-import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
-import uca.ruiz.antonio.tfgapp.ui.activity.admin.MainAdminActivity;
-import uca.ruiz.antonio.tfgapp.ui.activity.admin.SalasActivity;
-import uca.ruiz.antonio.tfgapp.ui.activity.admin.SanitarioNewEditActivity;
-import uca.ruiz.antonio.tfgapp.ui.activity.admin.SanitariosActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CitaAdapter;
-import uca.ruiz.antonio.tfgapp.ui.adapter.PacienteAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
+import uca.ruiz.antonio.tfgapp.utils.Utils;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
-
-import static uca.ruiz.antonio.tfgapp.R.id.chk_activo;
-import static uca.ruiz.antonio.tfgapp.R.id.et_apellidos;
-import static uca.ruiz.antonio.tfgapp.R.id.et_buscar;
-import static uca.ruiz.antonio.tfgapp.R.id.et_colegiado;
-import static uca.ruiz.antonio.tfgapp.R.id.et_dni;
-import static uca.ruiz.antonio.tfgapp.R.id.et_email;
-import static uca.ruiz.antonio.tfgapp.R.id.et_fnac;
-import static uca.ruiz.antonio.tfgapp.R.id.et_nombre;
-import static uca.ruiz.antonio.tfgapp.R.id.sp_centros;
-import static uca.ruiz.antonio.tfgapp.R.id.srl_listado;
-import static uca.ruiz.antonio.tfgapp.R.string.centro;
-import static uca.ruiz.antonio.tfgapp.R.string.centros;
-import static uca.ruiz.antonio.tfgapp.R.string.salas;
-import static uca.ruiz.antonio.tfgapp.R.string.sanitario;
 
 public class CitacionesActivity extends AppCompatActivity {
 
@@ -111,8 +80,6 @@ public class CitacionesActivity extends AppCompatActivity {
         rv_listado.setAdapter(mAdapter);
 
         et_fecha = (EditText) findViewById(R.id.et_fecha);
-        et_fecha.setText(DateFormat.getDateInstance().format(new Date()));
-        et_fecha.setInputType(InputType.TYPE_NULL);
 
         sp_salas = (Spinner) findViewById(R.id.sp_salas);
         sp_salas_text = (TextView) findViewById(R.id.sp_salas_error);
@@ -123,15 +90,7 @@ public class CitacionesActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.cargando));
 
         cargarSalas(sp_salas);
-/*
-        srl_listado = (SwipeRefreshLayout) findViewById(srl_listado);
-        srl_listado.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                recreate();
-            }
-        });
-*/
+
         et_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,8 +106,11 @@ public class CitacionesActivity extends AppCompatActivity {
                 dpd_fecha = new DatePickerDialog(CitacionesActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                et_fecha.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            public void onDateSet(DatePicker view, int year, int month, int day) {
+                                // +1 porque enero es cero
+                                final String fechaElegida = FechaHoraUtils.dosDigitos(day) + "/" +
+                                        FechaHoraUtils.dosDigitos(month+1) + "/" + year;
+                                et_fecha.setText(fechaElegida);
                             }
                         }, year, month, day);
 
@@ -202,8 +164,8 @@ public class CitacionesActivity extends AppCompatActivity {
     }
 
     private void volverAtras() {
-        if(Preferencias.get(this).getBoolean("ROLE_ADMIN", false))
-            startActivity(new Intent(this, MainAdminActivity.class));
+        if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false))
+            startActivity(new Intent(this, MainPacienteActivity.class));
         else if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false))
             startActivity(new Intent(this, MainSanitarioActivity.class));
     }

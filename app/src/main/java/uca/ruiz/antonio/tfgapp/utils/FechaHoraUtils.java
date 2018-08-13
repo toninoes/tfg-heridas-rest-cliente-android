@@ -14,11 +14,16 @@ public class FechaHoraUtils {
     private static final String UI_FECHA = "dd/MM/yyyy";
     private static final String API_FECHA = "yyyy-MM-dd";
     private static final String UI_HORA = "h:mma";
+    private static final String UI_HORA2 = "hh:mm";
     private static final String API_HORA = "HH:mm:ss";
     private static final String API_FECHA_HORA = "yyyy-MM-dd HH:mm:ss";
     private static final String FILE_FECHA_HORA = "yyyy-MM-dd_HHmmssSSS";
 
     private FechaHoraUtils() {
+    }
+
+    public static String dosDigitos(int n) {
+        return (n<=9) ? ("0"+n) : String.valueOf(n);
     }
 
     public static Date getFechaFromString(String txt) {
@@ -86,6 +91,11 @@ public class FechaHoraUtils {
             e.printStackTrace();
         }
         return time;
+    }
+
+    public static String formatoHoraUI(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(UI_HORA2, Locale.getDefault());
+        return simpleDateFormat.format(date);
     }
 
     public static Date parseoHoraUI(String timeSchedule) {
