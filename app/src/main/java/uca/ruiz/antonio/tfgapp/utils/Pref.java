@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
 
+import static android.R.attr.port;
+
 /**
  * Created by toni on 21/06/2018.
  */
@@ -24,6 +26,27 @@ public class Pref {
 
     public static String getNombre() {
         return Preferencias.get(ctx).getString("nombre", "nombre");
+    }
+
+    public static String getProtocoloServidor() {
+        return Preferencias.get(ctx).getString("protocolo", "http");
+    }
+
+    public static String getUrlServidor() {
+        return Preferencias.get(ctx).getString("url", "10.0.2.2");
+    }
+
+    public static String getPuertoServidor() {
+        return Preferencias.get(ctx).getString("puerto", "8080");
+    }
+
+    public static String getBaseUrl() {
+        String prot = Pref.getProtocoloServidor();
+        String url = Pref.getUrlServidor();
+        String port = Pref.getPuertoServidor();
+        String baseUrl = String.format("%s://%s:%s/", prot, url, port);
+
+        return baseUrl;
     }
 
     public static String getApellidos() {

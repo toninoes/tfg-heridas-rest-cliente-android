@@ -193,4 +193,11 @@
     <string name="buscar_disponibilidad">Buscar Disponibilidad</string>
     <string name="quiere_reservar_cita">¿Quiere reservar esta cita?</string>
     <string name="quiere_borrar_cita">¿Realmente quiere borrar esta cita?</string>
+    <string name="configuracion_servidor">Configuración del Servidor</string>
+    <string name="ip_url_servidor">IP o url del Servidor</string>
+    <string name="puerto">Puerto</string>
+    <string name="puerto_0_65535">Puerto (del 0 al 65535)</string>
+    <string name="usar_https">Usar https</string>
+    <string name="debes_escribir_ip_url">Debes escribir IP o URL válida</string>
+    <string name="conf_servidor_guardada">Configuración guardada correctamente</string>
 </resources>
