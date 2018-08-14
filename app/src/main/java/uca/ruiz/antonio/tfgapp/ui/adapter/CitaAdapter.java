@@ -28,14 +28,15 @@ import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
-import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
-import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
 import uca.ruiz.antonio.tfgapp.ui.activity.CitaActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.CitacionesActivity;
+import uca.ruiz.antonio.tfgapp.ui.activity.CitacionesEditActivity;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
+
+import static uca.ruiz.antonio.tfgapp.R.string.cita;
 
 public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
 
@@ -43,6 +44,8 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
     private ArrayList<Cita> mDataSet;
     private Context context;
     private Boolean nuevo = false;
+    private Boolean editar = false;
+    private Long citaId;
     private Date hoy = FechaHoraUtils.getHoySinTiempo();
     private ProgressDialog progressDialog;
 
@@ -75,10 +78,12 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
         mDataSet = new ArrayList<>();
     }
 
-    public CitaAdapter(Context context, Boolean nuevo) {
+    public CitaAdapter(Context context, Boolean nuevo, Boolean editar, Long citaId) {
         this.context = context;
         mDataSet = new ArrayList<>();
         this.nuevo = nuevo;
+        this.editar = editar;
+        this.citaId = citaId;
     }
 
     public void setDataSet(ArrayList<Cita> dataSet) {
@@ -116,7 +121,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
             holder.ll_item.setBackgroundResource(R.color.grisFondoLL);
             holder.ib_edit.setVisibility(View.GONE);
             holder.ib_delete.setVisibility(View.GONE);
-        } else if (nuevo) {
+        } else if (nuevo || editar) {
             holder.ib_edit.setVisibility(View.GONE);
             holder.ib_delete.setVisibility(View.GONE);
         } else {
@@ -146,7 +151,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
                 int pos = holder.getAdapterPosition();
                 final Cita cita = mDataSet.get(pos);
 
-                if(nuevo && Preferencias.get(context).getBoolean("ROLE_PACIENTE", false)) {
+                if((nuevo || editar) && Preferencias.get(context).getBoolean("ROLE_PACIENTE", false)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                     // Establecer un título para el diálogo de alerta
@@ -162,7 +167,10 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
                             switch(which){
                                 case DialogInterface.BUTTON_POSITIVE:
                                     // Usuario confirma la acción
-                                    intentarReservarCita(cita);
+                                    if(nuevo)
+                                        intentarReservarCita(cita);
+                                    else if (editar)
+                                        intentarEditarCita(cita);
                                     break;
 
                                 case DialogInterface.BUTTON_NEGATIVE:
@@ -190,6 +198,18 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
                         context.startActivity(intent);
                     }
                 }
+            }
+        });
+
+        // para editar la cita
+        holder.ib_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = holder.getAdapterPosition();
+                final Cita cita = mDataSet.get(pos);
+                Intent intent = new Intent(context, CitacionesEditActivity.class);
+                intent.putExtra("cita", cita);
+                context.startActivity(intent);
             }
         });
 
@@ -286,6 +306,53 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
             }
         });
 
+    }
+
+    private void intentarEditarCita(Cita c) {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(context.getString(R.string.cargando));
+        progressDialog.show();
+
+        Call<Cita> call = MyApiAdapter.getApiService().editarCita(citaId, c, Pref.getToken());
+        call.enqueue(new Callback<Cita>() {
+            @Override
+            public void onResponse(Call<Cita> call, Response<Cita> response) {
+                progressDialog.cancel();
+                if(response.isSuccessful()) {
+                    Toasty.success(context, context.getString(R.string.cita_editada),
+                            Toast.LENGTH_SHORT, true).show();
+                    Intent intent = new Intent(context, CitacionesActivity.class);
+                    context.startActivity(intent);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(context, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Cita> call, Throwable t) {
+                progressDialog.cancel();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(context, context.getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(context, context.getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, context.getString(R.string.error_conversion));
+                }
+            }
+        });
     }
 
     // Indica el número de elementos de la colección de datos.

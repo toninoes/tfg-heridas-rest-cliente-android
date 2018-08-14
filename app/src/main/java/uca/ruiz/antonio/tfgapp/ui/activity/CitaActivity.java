@@ -70,7 +70,7 @@ public class CitaActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_editar:
-                Intent intent = new Intent(this, CentroNewEditActivity.class);
+                Intent intent = new Intent(this, CitacionesEditActivity.class);
                 intent.putExtra("cita", cita);
                 startActivity(intent);
                 return true;

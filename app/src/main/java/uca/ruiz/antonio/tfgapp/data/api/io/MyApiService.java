@@ -452,4 +452,9 @@ public interface MyApiService {
     @DELETE("api/citas/{id}")
     Call<String> borrarCita(@Path("id") Long id, @Header("Authorization") String token);
 
+    @Headers("Content-Type: application/json")
+    @PUT("api/citas/{id}")
+    Call<Cita> editarCita(@Path("id") Long id, @Body Cita c, @Header("Authorization") String token);
+
+
 }

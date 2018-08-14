@@ -20,7 +20,7 @@ public class FechaHoraUtils {
     private static final String UI_FECHA = "dd/MM/yyyy";
     private static final String API_FECHA = "yyyy-MM-dd";
     private static final String UI_HORA = "h:mma";
-    private static final String UI_HORA2 = "hh:mm";
+    private static final String UI_HORA2 = "HH:mm";
     private static final String API_HORA = "HH:mm:ss";
     private static final String API_FECHA_HORA = "yyyy-MM-dd HH:mm:ss";
     private static final String FILE_FECHA_HORA = "yyyy-MM-dd_HHmmssSSS";

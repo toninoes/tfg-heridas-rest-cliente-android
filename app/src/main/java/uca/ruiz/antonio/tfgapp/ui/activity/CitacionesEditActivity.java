@@ -12,12 +12,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,25 +40,24 @@ import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
-public class CitacionesNewActivity extends AppCompatActivity {
+public class CitacionesEditActivity extends AppCompatActivity {
 
-    private static final String TAG = CitacionesNewActivity.class.getSimpleName();
+    private static final String TAG = CitacionesEditActivity.class.getSimpleName();
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
     private CitaAdapter mAdapter;
     private ProgressDialog progressDialog;
     private EditText et_fecha;
     private DatePickerDialog dpd_fecha;
-    private Spinner sp_salas;
-    private TextView sp_salas_text;
+    private TextView tv_sala;
     private Button bt_buscar;
-    private Sala sala;
-    private Boolean nuevo = true;
+    private Boolean editar = true;
+    private Cita cita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_citaciones_new);
+        setContentView(R.layout.activity_citaciones_edit);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -76,22 +73,29 @@ public class CitacionesNewActivity extends AppCompatActivity {
         // añade línea divisoria entre cada elemento
         rv_listado.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
+        try {
+            cita = (Cita) getIntent().getExtras().getSerializable("cita");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // Asociamos un adapter. Define cómo se renderizará la información que tenemos
-        mAdapter = new CitaAdapter(this, nuevo, false, (long) 0);
+        mAdapter = new CitaAdapter(this, false, editar, cita.getId());
         rv_listado.setAdapter(mAdapter);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.cargando));
 
         if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false)) {
+
             et_fecha = (EditText) findViewById(R.id.et_fecha);
-            sp_salas = (Spinner) findViewById(R.id.sp_salas);
-            sp_salas_text = (TextView) findViewById(R.id.sp_salas_error);
+            tv_sala = (TextView) findViewById(R.id.tv_sala);
+
+            et_fecha.setText(FechaHoraUtils.formatoFechaUI(cita.getFecha()));
+            tv_sala.setText(cita.getSala().getNombre());
 
             bt_buscar = (Button) findViewById(R.id.bt_buscar);
             bt_buscar.setText(getString(R.string.buscar_disponibilidad));
-
-            cargarSalas(sp_salas);
 
             et_fecha.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,7 +109,7 @@ public class CitacionesNewActivity extends AppCompatActivity {
                     year = cal.get(Calendar.YEAR);
 
                     // date picker dialog
-                    dpd_fecha = new DatePickerDialog(CitacionesNewActivity.this,
+                    dpd_fecha = new DatePickerDialog(CitacionesEditActivity.this,
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -117,18 +121,6 @@ public class CitacionesNewActivity extends AppCompatActivity {
                             }, year, month, day);
 
                     dpd_fecha.show();
-                }
-            });
-
-            sp_salas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    sala = (Sala) adapterView.getAdapter().getItem(i);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
                 }
             });
 
@@ -174,20 +166,12 @@ public class CitacionesNewActivity extends AppCompatActivity {
     private void intentarCargarCitaciones() {
         // Resetear errores
         et_fecha.setError(null);
-        sp_salas_text.setError(null);
 
         //tomo el contenido de los campos
         String fecha = et_fecha.getText().toString().trim();
 
         boolean cancel = false;
         View focusView = null;
-
-        // Validar listado de Salas
-        if(sala.getId() == 0 || sala == null) {
-            sp_salas_text.setError(getString(R.string.debes_seleccionar_sala));
-            focusView = sp_salas_text;
-            cancel = true;
-        }
 
         // Valida campo Fecha
         if(Validacion.vacio(fecha)) {
@@ -202,7 +186,7 @@ public class CitacionesNewActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             Paciente p = new Paciente(Pref.getUserId());
-            Cita c = new Cita(p, sala, FechaHoraUtils.getFechaFromString(fecha));
+            Cita c = new Cita(p, cita.getSala(), FechaHoraUtils.getFechaFromString(fecha));
             cargarPosiblesCitacionesByPaciente(c);
         }
     }
@@ -221,13 +205,13 @@ public class CitacionesNewActivity extends AppCompatActivity {
                     if(citas != null)
                         Log.d("CITAS", "Tamaño ==> " + citas.size());
 
-                    Toasty.success(CitacionesNewActivity.this, getString(R.string.numero_citas) + ": " +
+                    Toasty.success(CitacionesEditActivity.this, getString(R.string.numero_citas) + ": " +
                             citas.size(), Toast.LENGTH_SHORT, true).show();
                     mAdapter.setDataSet(citas);
                 } else {
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toasty.error(CitacionesNewActivity.this, apiError.getMessage(),
+                        Toasty.error(CitacionesEditActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -245,10 +229,10 @@ public class CitacionesNewActivity extends AppCompatActivity {
                 progressDialog.cancel();
 
                 if (t instanceof IOException) {
-                    Toasty.warning(CitacionesNewActivity.this, getString(R.string.error_conexion_red),
+                    Toasty.warning(CitacionesEditActivity.this, getString(R.string.error_conexion_red),
                             Toast.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.error(CitacionesNewActivity.this, getString(R.string.error_conversion),
+                    Toasty.error(CitacionesEditActivity.this, getString(R.string.error_conversion),
                             Toast.LENGTH_LONG, true).show();
                     Log.d(TAG, getString(R.string.error_conversion));
                 }
@@ -268,7 +252,7 @@ public class CitacionesNewActivity extends AppCompatActivity {
                     ArrayList<Sala> salas = response.body();
                     if(salas != null) {
                         salas.add(0, new Sala(getString(R.string.seleccione_sala)));
-                        ArrayAdapter<Sala> arrayAdapter = new ArrayAdapter<Sala>(CitacionesNewActivity.this,
+                        ArrayAdapter<Sala> arrayAdapter = new ArrayAdapter<Sala>(CitacionesEditActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item, salas);
                         Log.d("SALAS", "Tamaño ==> " + salas.size());
                         sp_salas.setAdapter(arrayAdapter);
@@ -277,7 +261,7 @@ public class CitacionesNewActivity extends AppCompatActivity {
                 } else {
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toasty.error(CitacionesNewActivity.this, apiError.getMessage(),
+                        Toasty.error(CitacionesEditActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -295,10 +279,10 @@ public class CitacionesNewActivity extends AppCompatActivity {
                 progressDialog.cancel();
 
                 if (t instanceof IOException) {
-                    Toasty.warning(CitacionesNewActivity.this, getString(R.string.error_conexion_red),
+                    Toasty.warning(CitacionesEditActivity.this, getString(R.string.error_conexion_red),
                             Toast.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.error(CitacionesNewActivity.this, getString(R.string.error_conversion),
+                    Toasty.error(CitacionesEditActivity.this, getString(R.string.error_conversion),
                             Toast.LENGTH_LONG, true).show();
                     Log.d(TAG, getString(R.string.error_conversion));
                 }

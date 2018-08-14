@@ -200,4 +200,6 @@
     <string name="usar_https">Usar https</string>
     <string name="debes_escribir_ip_url">Debes escribir IP o URL válida</string>
     <string name="conf_servidor_guardada">Configuración guardada correctamente</string>
+    <string name="editar_cita">Editar Cita</string>
+    <string name="cita_editada">Cita editada correctamente</string>
 </resources>
