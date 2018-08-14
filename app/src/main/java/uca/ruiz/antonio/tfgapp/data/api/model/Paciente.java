@@ -9,8 +9,12 @@ public class Paciente extends User implements Serializable {
     public Paciente() {
     }
 
+    public Paciente(Long id) {
+        super(id);
+    }
+
     public Paciente(String username, String firstname, String lastname, String email,
-                     ArrayList<Boolean> permisos, String dni, Date nacimiento) {
+                    ArrayList<Boolean> permisos, String dni, Date nacimiento) {
         super(username, firstname, lastname, email, permisos, dni, nacimiento);
     }
 

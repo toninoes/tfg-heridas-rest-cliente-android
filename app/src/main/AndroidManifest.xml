@@ -10,15 +10,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_restheridapp"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_restheridapp_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.LoginActivity"
             android:configChanges="orientation"
-            android:label="@string/app_name"
+            android:label="@string/mi_tfg"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -215,6 +215,16 @@
             android:name=".ui.activity.CitacionesActivity"
             android:configChanges="orientation"
             android:label="@string/agenda_citas"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.CitaActivity"
+            android:configChanges="orientation"
+            android:label="@string/cita"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.CitacionesNewActivity"
+            android:configChanges="orientation"
+            android:label="@string/reservar_cita"
             android:screenOrientation="portrait"/>
     </application>
 

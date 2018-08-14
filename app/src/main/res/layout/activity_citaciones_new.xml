@@ -24,7 +24,7 @@
             android:drawableLeft="@mipmap/ic_calendar"
             android:drawableStart="@mipmap/ic_calendar"
             android:focusable="false"
-            android:hint="@string/fecha_citas"
+            android:hint="@string/seleccione_fecha"
             android:inputType="date"
             android:maxLines="1" />
 
@@ -57,7 +57,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:background="@drawable/bg_button_naranja"
-            android:text="@string/buscar"
+            android:text="@string/ver_disponibilidad"
             android:textColor="@android:color/background_light" />
 
     </LinearLayout>

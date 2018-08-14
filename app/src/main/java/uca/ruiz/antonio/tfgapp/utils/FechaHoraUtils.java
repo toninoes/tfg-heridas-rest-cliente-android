@@ -8,6 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
+import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
+
+import static uca.ruiz.antonio.tfgapp.R.string.minutos_paciente;
+import static uca.ruiz.antonio.tfgapp.R.string.orden;
+
 
 public class FechaHoraUtils {
     private static final String UI_FECHA_HORA = "dd/MM/yyyy HH:mm";
@@ -165,6 +171,56 @@ public class FechaHoraUtils {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return cal;
+    }
+
+    public static Date calcularFechaHoraCita(Date dia, Integer horaini, Integer minini, Long orden, Long minutos_paciente) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dia);
+        cal.set(Calendar.HOUR_OF_DAY, horaini);
+        cal.set(Calendar.MINUTE, minini);
+
+        Integer sumar = (orden.intValue()-1) * minutos_paciente.intValue();
+        cal.add(Calendar.MINUTE, sumar);
+
+        return cal.getTime();
+    }
+
+    public static Date calcularFechaHoraCita(Cita cita) {
+        SalaConfig sC = cita.getSala().getSalaConfig();
+        Date dia = cita.getFecha();
+        Long orden = cita.getOrden();
+        Integer horaini = sC.getHoraini();
+        Integer minini = sC.getMinini();
+        Long minutos_paciente = sC.getMinutosPaciente();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dia);
+        cal.set(Calendar.HOUR_OF_DAY, horaini);
+        cal.set(Calendar.MINUTE, minini);
+
+        Integer sumar = (orden.intValue()-1) * minutos_paciente.intValue();
+        cal.add(Calendar.MINUTE, sumar);
+
+        return cal.getTime();
+    }
+
+    public static String calcularFechaHoraCitaToString(Cita cita) {
+        SalaConfig sC = cita.getSala().getSalaConfig();
+        Date dia = cita.getFecha();
+        Long orden = cita.getOrden();
+        Integer horaini = sC.getHoraini();
+        Integer minini = sC.getMinini();
+        Long minutos_paciente = sC.getMinutosPaciente();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dia);
+        cal.set(Calendar.HOUR_OF_DAY, horaini);
+        cal.set(Calendar.MINUTE, minini);
+
+        Integer sumar = (orden.intValue()-1) * minutos_paciente.intValue();
+        cal.add(Calendar.MINUTE, sumar);
+
+        return formatoFechaHoraUI(cal.getTime());
     }
 }
 

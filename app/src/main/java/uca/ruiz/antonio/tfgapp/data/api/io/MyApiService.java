@@ -439,4 +439,17 @@ public interface MyApiService {
                                                 @Header("Authorization") String token);
 
 
+    @Headers("Content-Type: application/json")
+    @POST("api/citas/posibles")
+    Call<ArrayList<Cita>> getCitasPosiblesByPacienteAndSalaAndFecha(@Body Cita c,
+                                                                    @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/citas")
+    Call<Cita> crearCita(@Body Cita c, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @DELETE("api/citas/{id}")
+    Call<String> borrarCita(@Path("id") Long id, @Header("Authorization") String token);
+
 }

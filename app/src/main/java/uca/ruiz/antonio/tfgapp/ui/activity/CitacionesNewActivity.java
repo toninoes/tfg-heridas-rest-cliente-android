@@ -3,8 +3,8 @@ package uca.ruiz.antonio.tfgapp.ui.activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +25,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -36,15 +35,16 @@ import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
+import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CitaAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
-public class CitacionesActivity extends AppCompatActivity {
+public class CitacionesNewActivity extends AppCompatActivity {
 
-    private static final String TAG = CitacionesActivity.class.getSimpleName();
+    private static final String TAG = CitacionesNewActivity.class.getSimpleName();
     private RecyclerView rv_listado;
     private LinearLayoutManager mLayoutManager;
     private CitaAdapter mAdapter;
@@ -55,12 +55,12 @@ public class CitacionesActivity extends AppCompatActivity {
     private TextView sp_salas_text;
     private Button bt_buscar;
     private Sala sala;
-    private LinearLayout ll_busqueda;
+    private Boolean nuevo = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_citaciones);
+        setContentView(R.layout.activity_citaciones_new);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -77,22 +77,19 @@ public class CitacionesActivity extends AppCompatActivity {
         rv_listado.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         // Asociamos un adapter. Define cómo se renderizará la información que tenemos
-        mAdapter = new CitaAdapter(this);
+        mAdapter = new CitaAdapter(this, nuevo);
         rv_listado.setAdapter(mAdapter);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.cargando));
 
         if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false)) {
-            ll_busqueda = (LinearLayout) findViewById(R.id.ll_busqueda);
-            ll_busqueda.setVisibility(View.GONE);
-            cargarCitacionesByPaciente();
-        } else if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false)) {
             et_fecha = (EditText) findViewById(R.id.et_fecha);
             sp_salas = (Spinner) findViewById(R.id.sp_salas);
             sp_salas_text = (TextView) findViewById(R.id.sp_salas_error);
 
             bt_buscar = (Button) findViewById(R.id.bt_buscar);
+            bt_buscar.setText(getString(R.string.buscar_disponibilidad));
 
             cargarSalas(sp_salas);
 
@@ -108,7 +105,7 @@ public class CitacionesActivity extends AppCompatActivity {
                     year = cal.get(Calendar.YEAR);
 
                     // date picker dialog
-                    dpd_fecha = new DatePickerDialog(CitacionesActivity.this,
+                    dpd_fecha = new DatePickerDialog(CitacionesNewActivity.this,
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -147,8 +144,8 @@ public class CitacionesActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false))
-            getMenuInflater().inflate(R.menu.menu_nuevo_item, menu);
+        /*if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false))
+            getMenuInflater().inflate(R.menu.menu_nuevo_item, menu);*/
         return true;
     }
 
@@ -160,19 +157,13 @@ public class CitacionesActivity extends AppCompatActivity {
             case android.R.id.home:
                 volverAtras();
                 return true;
-            case R.id.add_item:
-                startActivity(new Intent(this, CitacionesNewActivity.class));
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     private void volverAtras() {
-        if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false))
-            startActivity(new Intent(this, MainPacienteActivity.class));
-        else if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false))
-            startActivity(new Intent(this, MainSanitarioActivity.class));
+        startActivity(new Intent(this, CitacionesActivity.class));
     }
 
     @Override
@@ -210,15 +201,16 @@ public class CitacionesActivity extends AppCompatActivity {
             // primer campo del formulario con error.
             focusView.requestFocus();
         } else {
-            Cita c = new Cita(sala, FechaHoraUtils.getFechaFromString(fecha));
-            cargarCitacionesBySanitario(c);
+            Paciente p = new Paciente(Pref.getUserId());
+            Cita c = new Cita(p, sala, FechaHoraUtils.getFechaFromString(fecha));
+            cargarPosiblesCitacionesByPaciente(c);
         }
     }
 
-    private void cargarCitacionesByPaciente() {
+    private void cargarPosiblesCitacionesByPaciente(Cita c) {
         progressDialog.show();
-        Call<ArrayList<Cita>> call = MyApiAdapter.getApiService().getCitasByPacienteId(Pref.getUserId(),
-                Pref.getToken());
+        Call<ArrayList<Cita>> call = MyApiAdapter.getApiService().
+                getCitasPosiblesByPacienteAndSalaAndFecha(c, Pref.getToken());
         call.enqueue(new Callback<ArrayList<Cita>>() {
             @Override
             public void onResponse(Call<ArrayList<Cita>> call, Response<ArrayList<Cita>> response) {
@@ -229,13 +221,13 @@ public class CitacionesActivity extends AppCompatActivity {
                     if(citas != null)
                         Log.d("CITAS", "Tamaño ==> " + citas.size());
 
-                    Toasty.success(CitacionesActivity.this, getString(R.string.numero_citas) + ": " +
+                    Toasty.success(CitacionesNewActivity.this, getString(R.string.numero_citas) + ": " +
                             citas.size(), Toast.LENGTH_SHORT, true).show();
                     mAdapter.setDataSet(citas);
                 } else {
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toasty.error(CitacionesActivity.this, apiError.getMessage(),
+                        Toasty.error(CitacionesNewActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -253,59 +245,10 @@ public class CitacionesActivity extends AppCompatActivity {
                 progressDialog.cancel();
 
                 if (t instanceof IOException) {
-                    Toasty.warning(CitacionesActivity.this, getString(R.string.error_conexion_red),
+                    Toasty.warning(CitacionesNewActivity.this, getString(R.string.error_conexion_red),
                             Toast.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.error(CitacionesActivity.this, getString(R.string.error_conversion),
-                            Toast.LENGTH_LONG, true).show();
-                    Log.d(TAG, getString(R.string.error_conversion));
-                }
-            }
-        });
-    }
-
-    private void cargarCitacionesBySanitario(Cita c) {
-        progressDialog.show();
-        Call<ArrayList<Cita>> call = MyApiAdapter.getApiService().getCitasBySanitarioId(Pref.getUserId(),
-                c, Pref.getToken());
-        call.enqueue(new Callback<ArrayList<Cita>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Cita>> call, Response<ArrayList<Cita>> response) {
-                progressDialog.cancel();
-                if(response.isSuccessful()) {
-                    ArrayList<Cita> citas = response.body();
-
-                    if(citas != null)
-                        Log.d("CITAS", "Tamaño ==> " + citas.size());
-
-                    Toasty.success(CitacionesActivity.this, getString(R.string.numero_citas) + ": " +
-                            citas.size(), Toast.LENGTH_SHORT, true).show();
-                    mAdapter.setDataSet(citas);
-                } else {
-                    if (response.errorBody().contentType().subtype().equals("json")) {
-                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toasty.error(CitacionesActivity.this, apiError.getMessage(),
-                                Toast.LENGTH_LONG, true).show();
-                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
-                    } else {
-                        try {
-                            Log.d(TAG, response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Cita>> call, Throwable t) {
-                progressDialog.cancel();
-
-                if (t instanceof IOException) {
-                    Toasty.warning(CitacionesActivity.this, getString(R.string.error_conexion_red),
-                            Toast.LENGTH_LONG, true).show();
-                } else {
-                    Toasty.error(CitacionesActivity.this, getString(R.string.error_conversion),
+                    Toasty.error(CitacionesNewActivity.this, getString(R.string.error_conversion),
                             Toast.LENGTH_LONG, true).show();
                     Log.d(TAG, getString(R.string.error_conversion));
                 }
@@ -325,7 +268,7 @@ public class CitacionesActivity extends AppCompatActivity {
                     ArrayList<Sala> salas = response.body();
                     if(salas != null) {
                         salas.add(0, new Sala(getString(R.string.seleccione_sala)));
-                        ArrayAdapter<Sala> arrayAdapter = new ArrayAdapter<Sala>(CitacionesActivity.this,
+                        ArrayAdapter<Sala> arrayAdapter = new ArrayAdapter<Sala>(CitacionesNewActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item, salas);
                         Log.d("SALAS", "Tamaño ==> " + salas.size());
                         sp_salas.setAdapter(arrayAdapter);
@@ -334,7 +277,7 @@ public class CitacionesActivity extends AppCompatActivity {
                 } else {
                     if (response.errorBody().contentType().subtype().equals("json")) {
                         ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-                        Toasty.error(CitacionesActivity.this, apiError.getMessage(),
+                        Toasty.error(CitacionesNewActivity.this, apiError.getMessage(),
                                 Toast.LENGTH_LONG, true).show();
                         Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
                     } else {
@@ -352,10 +295,10 @@ public class CitacionesActivity extends AppCompatActivity {
                 progressDialog.cancel();
 
                 if (t instanceof IOException) {
-                    Toasty.warning(CitacionesActivity.this, getString(R.string.error_conexion_red),
+                    Toasty.warning(CitacionesNewActivity.this, getString(R.string.error_conexion_red),
                             Toast.LENGTH_LONG, true).show();
                 } else {
-                    Toasty.error(CitacionesActivity.this, getString(R.string.error_conversion),
+                    Toasty.error(CitacionesNewActivity.this, getString(R.string.error_conversion),
                             Toast.LENGTH_LONG, true).show();
                     Log.d(TAG, getString(R.string.error_conversion));
                 }

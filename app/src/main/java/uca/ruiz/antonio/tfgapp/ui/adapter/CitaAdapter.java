@@ -1,33 +1,50 @@
 package uca.ruiz.antonio.tfgapp.ui.adapter;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
+import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
+import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
+import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
+import uca.ruiz.antonio.tfgapp.ui.activity.CitaActivity;
+import uca.ruiz.antonio.tfgapp.ui.activity.CitacionesActivity;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
-
-import static uca.ruiz.antonio.tfgapp.R.id.ll_item;
+import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
 
+    private static final String TAG = CitaAdapter.class.getSimpleName();
     private ArrayList<Cita> mDataSet;
     private Context context;
-
+    private Boolean nuevo = false;
     private Date hoy = FechaHoraUtils.getHoySinTiempo();
+    private ProgressDialog progressDialog;
 
     // Obtener referencias de los componentes visuales para cada elemento
     // es decir, referencias de los EditText, TextView, Button...
@@ -44,15 +61,24 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
             tv_titulo = (TextView) v.findViewById(R.id.tv_titulo);
             tv_subtitulo = (TextView) v.findViewById(R.id.tv_subtitulo);
             ib_delete = (ImageButton) v.findViewById(R.id.ib_delete);
-            ib_delete.setVisibility(View.GONE); // no borrar citas desde aquí
             ib_edit = (ImageButton) v.findViewById(R.id.ib_edit);
-            ib_edit.setVisibility(View.GONE); // no editar citas desde aquí
+            if(Preferencias.get(v.getContext()).getBoolean("ROLE_SANITARIO", false)){
+                ib_delete.setVisibility(View.GONE); // las citas sólo las borran los pacientes
+                ib_edit.setVisibility(View.GONE); // ...y la edición lo mismo.
+            }
+
         }
     }
 
     public CitaAdapter(Context context) {
         this.context = context;
         mDataSet = new ArrayList<>();
+    }
+
+    public CitaAdapter(Context context, Boolean nuevo) {
+        this.context = context;
+        mDataSet = new ArrayList<>();
+        this.nuevo = nuevo;
     }
 
     public void setDataSet(ArrayList<Cita> dataSet) {
@@ -80,28 +106,32 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
         Cita cita = mDataSet.get(position);
 
         SalaConfig sC = cita.getSala().getSalaConfig();
-        Date dia = cita.getFecha();
+        Date diaCita = cita.getFecha();
         Long orden = cita.getOrden();
         Integer horaini = sC.getHoraini();
         Integer minini = sC.getMinini();
         Long minutos_paciente = sC.getMinutosPaciente();
 
-
-        if(dia.before(hoy)) {
+        if(diaCita.before(hoy)) {
             holder.ll_item.setBackgroundResource(R.color.grisFondoLL);
+            holder.ib_edit.setVisibility(View.GONE);
+            holder.ib_delete.setVisibility(View.GONE);
+        } else if (nuevo) {
+            holder.ib_edit.setVisibility(View.GONE);
+            holder.ib_delete.setVisibility(View.GONE);
         } else {
             holder.ll_item.setBackgroundResource(R.color.blanco);
         }
 
-        Date fechaHoraCita = calcularFechaHoraCita(dia, horaini, minini, orden, minutos_paciente);
+        Date fechaHoraCita = FechaHoraUtils.calcularFechaHoraCita(diaCita, horaini, minini, orden,
+                minutos_paciente);
 
-        String titulo = "";
-        String subtitulo = "";
+        final String titulo, subtitulo;
         if(Preferencias.get(context).getBoolean("ROLE_PACIENTE", false)){
             titulo = FechaHoraUtils.formatoFechaHoraUI(fechaHoraCita) + " (" + orden + ")";
             subtitulo = cita.getSala().getCentro().getNombre() + " (" + cita.getSala().getNombre() + ")";
-        } else if(Preferencias.get(context).getBoolean("ROLE_SANITARIO", false)) {
-            titulo = cita.getPaciente().getLastnameComaAndFirstname();
+        } else {
+            titulo = cita.getPaciente().getFullName();
             subtitulo = context.getString(R.string.orden) + ": " + orden + " - " +
                     context.getString(R.string.hora) + ": " + FechaHoraUtils.formatoHoraUI(fechaHoraCita);
         }
@@ -109,30 +139,153 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
         holder.tv_titulo.setText(titulo);
         holder.tv_subtitulo.setText(subtitulo);
 
-        // click sobre cada elemento para ver más detalles de la cita
-        /*holder.ll_item.setOnClickListener(new View.OnClickListener() {
+        // click sobre cada elemento
+        holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int pos = holder.getAdapterPosition();
-                Cita cita = mDataSet.get(pos);
-                Intent intent = new Intent(context, PacienteActivity.class);
-                intent.putExtra("cita", cita);
-                context.startActivity(intent);
+                final Cita cita = mDataSet.get(pos);
+
+                if(nuevo && Preferencias.get(context).getBoolean("ROLE_PACIENTE", false)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                    // Establecer un título para el diálogo de alerta
+                    builder.setTitle(R.string.seleccione_opcion);
+                    // Preguntar si desea realizar la acción
+                    builder.setMessage(context.getString(R.string.quiere_reservar_cita) +
+                            "\n\n" + titulo);
+
+                    // Establecer listener para el click de los botones de diálogo de alerta
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch(which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    // Usuario confirma la acción
+                                    intentarReservarCita(cita);
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    // Usuario no confirma la acción
+                                    dialog.cancel();
+                                    break;
+                            }
+                        }
+                    };
+
+                    // Establecer el mensaje sobre el botón BUTTON_POSITIVE
+                    builder.setPositiveButton(R.string.si, dialogClickListener);
+
+                    // Establecer el mensaje sobre el botón BUTTON_NEGATIVE
+                    builder.setNegativeButton(R.string.no,dialogClickListener);
+
+                    AlertDialog dialog = builder.create();
+                    // Mostrar el diálogo de alerta
+                    dialog.show();
+
+                } else {
+                    if(!cita.getFecha().before(hoy)) {
+                        Intent intent = new Intent(context, CitaActivity.class);
+                        intent.putExtra("cita", cita);
+                        context.startActivity(intent);
+                    }
+                }
             }
-        });*/
+        });
+
+        // para borrar la cita
+        holder.ib_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                // Establecer un título para el diálogo de alerta
+                builder.setTitle(R.string.seleccione_opcion);
+
+                // Preguntar si desea realizar la acción
+                builder.setMessage(context.getString(R.string.quiere_borrar_cita) +
+                        "\n\n" + titulo);
+
+                // Establecer listener para el click de los botones de diálogo de alerta
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch(which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                // Usuario confirma la acción
+                                int pos = holder.getAdapterPosition();
+                                Cita cita = mDataSet.get(pos);
+                                borrarCita(cita.getId(), pos);
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                // Usuario no confirma la acción
+                                dialog.cancel();
+                                break;
+                        }
+                    }
+                };
+
+                // Establecer el mensaje sobre el botón BUTTON_POSITIVE
+                builder.setPositiveButton(R.string.si, dialogClickListener);
+
+                // Establecer el mensaje sobre el botón BUTTON_NEGATIVE
+                builder.setNegativeButton(R.string.no,dialogClickListener);
+
+                AlertDialog dialog = builder.create();
+                // Mostrar el diálogo de alerta
+                dialog.show();
+            }
+        });
 
     }
 
-    private Date calcularFechaHoraCita(Date dia, Integer horaini, Integer minini, Long orden, Long minutos_paciente) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dia);
-        cal.set(Calendar.HOUR, horaini);
-        cal.set(Calendar.MINUTE, minini);
+    private void intentarReservarCita(Cita cita) {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(context.getString(R.string.cargando));
+        progressDialog.show();
 
-        Integer sumar = (orden.intValue()-1) * minutos_paciente.intValue();
-        cal.add(Calendar.MINUTE, sumar);
+        Call<Cita> call = MyApiAdapter.getApiService().crearCita(cita, Pref.getToken());
+        call.enqueue(new Callback<Cita>() {
+            @Override
+            public void onResponse(Call<Cita> call, Response<Cita> response) {
+                progressDialog.cancel();
+                if(response.isSuccessful()) {
+                    Toasty.success(context, context.getString(R.string.cita_reservada),
+                            Toast.LENGTH_SHORT, true).show();
+                    Intent intent = new Intent(context, CitacionesActivity.class);
+                    context.startActivity(intent);
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(context, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
 
-        return cal.getTime();
+            @Override
+            public void onFailure(Call<Cita> call, Throwable t) {
+                progressDialog.cancel();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(context, context.getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(context, context.getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, context.getString(R.string.error_conversion));
+                }
+            }
+        });
+
     }
 
     // Indica el número de elementos de la colección de datos.
@@ -142,5 +295,49 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
         // calculando entonces el tamaño del dataset tras el filtrado.
         return mDataSet.size();
     }
+
+
+    private void borrarCita(final long id, final int pos) {
+        Call<String> call = MyApiAdapter.getApiService().borrarCita(id, Pref.getToken());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                if(response.isSuccessful()) {
+                    mDataSet.remove(pos);
+                    notifyItemRemoved(pos);
+                    Toasty.success(context, context.getString(R.string.borrado_registro),
+                            Toast.LENGTH_SHORT, true).show();
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        if (apiError != null) {
+                            Toasty.error(context, apiError.getMessage(), Toast.LENGTH_LONG, true).show();
+                            Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                        }
+
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                if (t instanceof IOException) {
+                    Toasty.warning(context, context.getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(context, context.getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, context.getString(R.string.error_conversion));
+                }
+            }
+        });
+    }
+
 
 }

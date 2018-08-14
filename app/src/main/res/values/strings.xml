@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">RestHeridApp</string>
+    <string name="mi_tfg">Mi TFG</string>
 
     <string name="paciente">Paciente</string>
     <string name="pacientes">Pacientes</string>
@@ -106,6 +107,7 @@
     <string name="activo">Activo</string>
     <string name="dni">Dni</string>
     <string name="fnac">Fecha de nacimiento</string>
+    <string name="fnac_formato">Fecha de nacimiento (dd/mm/yyyy)</string>
     <string name="error_tam_dni">El dni tiene que contener 9 dígitos</string>
     <string name="colegiado">Número de Colegiado</string>
     <string name="numero_historia">Número de Historia</string>
@@ -174,6 +176,7 @@
     <string name="no_definido">No definido.</string>
     <string name="agenda_citas">Agenda de Citas</string>
     <string name="orden">Orden</string>
+    <string name="numero_orden">Número de orden</string>
     <string name="fecha_citas">Fecha de Citas</string>
     <string name="numero_citas">Número de Citas</string>
     <string name="hora">Hora</string>
@@ -181,4 +184,13 @@
     <string name="mis_cuidados">Mis Cuidados</string>
     <string name="valorar_asistencias">Valorar Asistencias</string>
     <string name="mis_citas">Mis Citas</string>
+    <string name="cita">Cita</string>
+    <string name="fecha_hora">Fecha y hora</string>
+    <string name="seleccione_fecha">Seleccione Fecha</string>
+    <string name="ver_disponibilidad">Ver Disponibilidad</string>
+    <string name="reservar_cita">Reservar Cita</string>
+    <string name="cita_reservada">Cita Reservada Correctamente</string>
+    <string name="buscar_disponibilidad">Buscar Disponibilidad</string>
+    <string name="quiere_reservar_cita">¿Quiere reservar esta cita?</string>
+    <string name="quiere_borrar_cita">¿Realmente quiere borrar esta cita?</string>
 </resources>
