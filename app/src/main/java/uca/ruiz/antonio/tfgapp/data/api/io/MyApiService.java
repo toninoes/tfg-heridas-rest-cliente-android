@@ -17,6 +17,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.DosFechas;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Login;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ImgResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
@@ -384,6 +385,11 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/valoraciones/media")
     Call<ArrayList<ValoracionesResults>> getAVGValoraciones(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/valoraciones/media")
+    Call<ArrayList<ValoracionesResults>> getAVGValoracionesPeriodico(@Body DosFechas df,
+                                                                     @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @GET("api/valoraciones/media/filtro")

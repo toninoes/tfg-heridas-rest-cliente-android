@@ -202,4 +202,7 @@
     <string name="conf_servidor_guardada">Configuración guardada correctamente</string>
     <string name="editar_cita">Editar Cita</string>
     <string name="cita_editada">Cita editada correctamente</string>
+    <string name="desde">Desde</string>
+    <string name="hasta">Hasta</string>
+    <string name="mis_valoraciones_recientes">Mis Valoraciones Recientes</string>
 </resources>

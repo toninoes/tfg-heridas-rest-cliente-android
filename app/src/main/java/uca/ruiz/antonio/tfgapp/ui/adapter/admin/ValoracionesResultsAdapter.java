@@ -16,6 +16,8 @@ import uca.ruiz.antonio.tfgapp.R;
 
 import uca.ruiz.antonio.tfgapp.data.api.model.ValoracionesResults;
 
+import static uca.ruiz.antonio.tfgapp.R.id.tv_texto;
+
 
 public class ValoracionesResultsAdapter extends RecyclerView.Adapter<ValoracionesResultsAdapter.ViewHolder> {
 
@@ -25,20 +27,15 @@ public class ValoracionesResultsAdapter extends RecyclerView.Adapter<Valoracione
     // Obtener referencias de los componentes visuales para cada elemento
     // es decir, referencias de los EditText, TextView, Button...
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout ll_item;
         private TextView tv_titulo;
         private TextView tv_subtitulo;
-        private TextView tv_texto;
         private ImageButton ib_delete;
         private ImageButton ib_edit;
 
         public ViewHolder(View v) {
             super(v);
-            ll_item = (LinearLayout) v.findViewById(R.id.ll_item);
             tv_titulo = (TextView) v.findViewById(R.id.tv_titulo);
             tv_subtitulo = (TextView) v.findViewById(R.id.tv_subtitulo);
-            tv_texto = (TextView) v.findViewById(R.id.tv_texto);
-            tv_texto.setVisibility(View.VISIBLE);
             ib_delete = (ImageButton) v.findViewById(R.id.ib_delete);
             ib_delete.setVisibility(View.GONE); // no se pueden borrar valoraciones medias
             ib_edit = (ImageButton) v.findViewById(R.id.ib_edit);
@@ -74,12 +71,10 @@ public class ValoracionesResultsAdapter extends RecyclerView.Adapter<Valoracione
         // obtenemos un elemento del dataset según su posición
         // reemplazamos el contenido de los views según tales datos
         ValoracionesResults valoracionesResults = mDataSet.get(position);
-        holder.tv_titulo.setText(valoracionesResults.getSanitario().getLastnameComaAndFirstname());
+        holder.tv_titulo.setText((position+1) + " "  + valoracionesResults.getSanitario().getFullName());
         holder.tv_subtitulo.setText(context.getString(R.string.valoracion_media) + ": " +
                 String.format(Locale.getDefault(), "%.2f", valoracionesResults.getNotaMedia()));
 
-        holder.tv_texto.setText(context.getString(R.string.total_valoraciones) + ": " +
-                valoracionesResults.getTotalNotas());
 
     }
 
