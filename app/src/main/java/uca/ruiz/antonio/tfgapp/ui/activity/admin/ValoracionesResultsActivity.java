@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,19 +30,12 @@ import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.DosFechas;
-import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
-import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
 import uca.ruiz.antonio.tfgapp.data.api.model.ValoracionesResults;
-import uca.ruiz.antonio.tfgapp.ui.activity.CitacionesNewActivity;
-import uca.ruiz.antonio.tfgapp.ui.activity.CuraNewEditActivity;
 import uca.ruiz.antonio.tfgapp.ui.activity.MainSanitarioActivity;
 import uca.ruiz.antonio.tfgapp.ui.adapter.admin.ValoracionesResultsAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
-
-import static uca.ruiz.antonio.tfgapp.R.id.et_buscar;
-import static uca.ruiz.antonio.tfgapp.R.id.et_fecha;
 
 public class ValoracionesResultsActivity extends AppCompatActivity {
 
@@ -150,7 +142,11 @@ public class ValoracionesResultsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_valoraciones, menu);
+        if(Preferencias.get(this).getBoolean("ROLE_ADMIN", false))
+            getMenuInflater().inflate(R.menu.menu_valoraciones_admin, menu);
+        else if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false))
+            getMenuInflater().inflate(R.menu.menu_valoraciones_sanitario, menu);
+
         return true;
     }
 
@@ -162,7 +158,7 @@ public class ValoracionesResultsActivity extends AppCompatActivity {
             case android.R.id.home:
                 volverAtras();
                 return true;
-            case R.id.todas_valoraciones:
+            case R.id.detalle_valoraciones:
                 startActivity(new Intent(this, ValoracionesActivity.class));
                 return true;
             default:

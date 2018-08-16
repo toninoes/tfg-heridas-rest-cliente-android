@@ -4,9 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
-import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
-
-import static android.R.attr.port;
 
 /**
  * Created by toni on 21/06/2018.

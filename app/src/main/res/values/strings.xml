@@ -205,4 +205,24 @@
     <string name="desde">Desde</string>
     <string name="hasta">Hasta</string>
     <string name="mis_valoraciones_recientes">Mis Valoraciones Recientes</string>
+    <string name="valoraciones_individuales">Valoraciones individuales</string>
+    <string name="mis_valoraciones">Mis valoraciones</string>
+    <string name="indicaciones_valoraciones">A continuación un listado con las asistencias que se le
+        han prestado y aún no ha valorado. Usted podrá, de forma ANÓNIMA, asignar una nota de 0 a 10
+        a la asistencia prestada, además podrá aportar sus quejas o sugerencias que nos permitirán
+        mejorar el servicio. Cada elemento de la lista presenta la fecha de la atención y qué profesional
+        se la prestó, pulse sobre cada elemento para realizar su valoración. Gracias.</string>
+    <string name="debes_seleccionar_nota">Debes seleccionar una nota</string>
+    <string name="maximo_280">Has superado los 280 caracteres</string>
+    <string name="valoracion_creada">Valoración guardada correctamente</string>
+    <string name="valorar_asistencia">Valorar Asistencia</string>
+    <string name="val_0">No me ha gustado nada</string>
+    <string name="val_2_5">No me ha gustado</string>
+    <string name="val_5">No está mal</string>
+    <string name="val_7_5">Me ha gustado</string>
+    <string name="val_10">Me ha encantado</string>
+    <string name="conectando">Conectando con el servidor...</string>
+    <string name="error_conexion_servidor">Hay un problema con la conexión con el servidor. Haga los
+        ajustes adecuados en la configuración y si persiste el problema contacte con el
+        administrador.</string>
 </resources>

@@ -73,6 +73,10 @@ public interface MyApiService {
     @GET("user")
     Call<UserResponse> getUser(@Header("Authorization") String token);
 
+    @Headers("Content-Type: application/json")
+    @GET("ping")
+    Call<String> comprobarServidor();
+
 
     /* ======================= PROCESOS ======================= */
     @Headers("Content-Type: application/json")
@@ -102,6 +106,12 @@ public interface MyApiService {
     @GET("api/procesos/{id}/curas")
     Call<ArrayList<Cura>> getCurasByProcesoId(@Path("id") Long id,
                                               @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/curas/novaloradas/bypaciente/{pacienteId}")
+    Call<ArrayList<Cura>> getCurasNoValoradasByPacienteId(@Path("pacienteId") Long id,
+                                                          @Header("Authorization") String token);
+
 
     @Headers("Content-Type: application/json")
     @POST("api/curas/{sanitarioId}")
@@ -397,8 +407,9 @@ public interface MyApiService {
                                                    @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
-    @POST("api/valoraciones")
-    Call<Valoracion> crearValoracion(@Body Valoracion v, @Header("Authorization") String token);
+    @POST("api/valoraciones/cura/{id}")
+    Call<Valoracion> crearValoracion(@Path("id") Long id, @Body Valoracion v,
+                                     @Header("Authorization") String token);
 
     /* ======================= IMAGENES ======================= */
     // Sin token de autenticación.

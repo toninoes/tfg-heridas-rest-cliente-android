@@ -77,10 +77,8 @@ public class MainPacienteActivity extends AppCompatActivity  {
         ll_valoraciones.setBackgroundResource(R.color.grisFondoLL);
         progressDialog.show();
 
-        //Intent intent = new Intent(this, ValoracionesResultsActivity.class);
-        //startActivity(intent);
-        //AQUI TENDRÁ QUE IR DIRECTAMENTE A VALORAR LAS CURAS PENDIENTES DE VALORAR
-        //SINO QUEDA PENDIENTE NINGUNA NO VERÁ NADA
+        Intent intent = new Intent(this, CurasSinValorarActivity.class);
+        startActivity(intent);
     }
 
     public  void agenda(View view) {

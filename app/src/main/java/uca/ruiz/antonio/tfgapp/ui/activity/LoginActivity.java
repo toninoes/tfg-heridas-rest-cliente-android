@@ -32,15 +32,8 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.UserResponse;
 import uca.ruiz.antonio.tfgapp.ui.activity.admin.MainAdminActivity;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
-import uca.ruiz.antonio.tfgapp.utils.Utils;
 import uca.ruiz.antonio.tfgapp.utils.Validacion;
 
-import static uca.ruiz.antonio.tfgapp.utils.Utils.preguntarQuiereSalir;
-
-
-/**
- * Created by toni on 07/06/2018.
- */
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -73,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        //comprobarServidor();
 
         Button btn_entrar = (Button) findViewById(R.id.btn_entrar);
         btn_entrar.setOnClickListener(new OnClickListener() {
@@ -264,6 +259,30 @@ public class LoginActivity extends AppCompatActivity {
             intent = new Intent(this, MainPacienteActivity.class);
 
         startActivity(intent);
+    }
+
+    private void comprobarServidor() {
+        Call<String> call = MyApiAdapter.getApiService().comprobarServidor();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String cad = response.body();
+                Toasty.success(LoginActivity.this, cad,
+                        Toast.LENGTH_LONG, true).show();
+                //Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+               // startActivity(intent);
+                //finish();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toasty.warning(LoginActivity.this, getString(R.string.error_conexion_red),
+                        Toast.LENGTH_LONG, true).show();
+                //Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                //startActivity(intent);
+                //finish();
+            }
+        });
     }
 
 }

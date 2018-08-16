@@ -82,6 +82,7 @@ public class ValoracionesActivity extends AppCompatActivity {
         });
 
         if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false)) {
+            setTitle(getString(R.string.mis_valoraciones));
             ll_busqueda = (LinearLayout) findViewById(R.id.ll_busqueda);
             ll_busqueda.setVisibility(View.GONE);
             cargarMisValoraciones();

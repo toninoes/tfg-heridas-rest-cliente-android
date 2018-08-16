@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/todas_valoraciones"
+        android:id="@+id/detalle_valoraciones"
         android:orderInCategory="1"
-        android:title="@string/valoraciones_recientes"
+        android:title="@string/mis_valoraciones"
         android:icon="@drawable/ic_add_item" />
 </menu>

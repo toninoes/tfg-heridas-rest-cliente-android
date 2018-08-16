@@ -16,9 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.SplashActivity"
             android:configChanges="orientation"
-            android:label="@string/mi_tfg"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:configChanges="orientation"
+            android:label="@string/mi_tfg"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LoginConfigActivity"
             android:configChanges="orientation"
@@ -235,6 +239,16 @@
             android:name=".ui.activity.CitacionesEditActivity"
             android:configChanges="orientation"
             android:label="@string/editar_cita"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.CurasSinValorarActivity"
+            android:configChanges="orientation"
+            android:label="@string/valorar_asistencias"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.admin.ValoracionNewActivity"
+            android:configChanges="orientation"
+            android:label="@string/valorar_asistencia"
             android:screenOrientation="portrait"/>
     </application>
 
