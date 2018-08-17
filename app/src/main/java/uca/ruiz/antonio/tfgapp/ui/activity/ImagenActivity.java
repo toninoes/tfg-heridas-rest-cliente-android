@@ -85,24 +85,6 @@ public class ImagenActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private Bitmap resizeBitmap(InputStream is, int targetW, int targetH) {
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(is, null, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        int scaleFactor = 1;
-        if ((targetW > 0) || (targetH > 0)) {
-            scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-        }
-
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-
-        return BitmapFactory.decodeStream(is, null, bmOptions);
-    }
-
     @Override
     public void onBackPressed() {
         volverAtras();
@@ -116,16 +98,6 @@ public class ImagenActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()) {
                     try {
-                        /*InputStream is = response.body().byteStream();
-                        BitmapFactory.Options options = new BitmapFactory.Options();
-
-                        options.inSampleSize = 16;
-                        options.inJustDecodeBounds = false;
-                        Bitmap smallBitmap  = BitmapFactory.decodeStream(is, null, options);
-
-                        is.close();
-                        iv_imagen.setPadding(0, 0, 0, 0);
-                        iv_imagen.setImageBitmap(smallBitmap);*/
                         InputStream is = response.body().byteStream();
                         Bitmap bm = BitmapFactory.decodeStream(is);
                         Bitmap resized = Bitmap.createScaledBitmap(bm, 500, 500, true);
@@ -136,7 +108,6 @@ public class ImagenActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     progressDialog.cancel();
                 } else {
                     if (response.errorBody().contentType().subtype().equals("json")) {
@@ -168,29 +139,6 @@ public class ImagenActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
     }
 
 }

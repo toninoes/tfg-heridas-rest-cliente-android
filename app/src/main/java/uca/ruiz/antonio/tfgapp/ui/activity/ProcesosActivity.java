@@ -25,6 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uca.ruiz.antonio.tfgapp.R;
+import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Paciente;
@@ -32,6 +33,7 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.ProcesoAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
+
 
 public class ProcesosActivity extends AppCompatActivity {
 
@@ -61,8 +63,8 @@ public class ProcesosActivity extends AppCompatActivity {
         tv_dni = (TextView) findViewById(R.id.tv_dni);
         tv_historia = (TextView) findViewById(R.id.tv_historia);
         tv_edad = (TextView) findViewById(R.id.tv_edad);
-        fab_add_elemento = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
         rv_listado = (RecyclerView) findViewById(R.id.rv_listado);
+        fab_add_elemento = (FloatingActionButton) findViewById(R.id.fab_add_elemento);
         srl_listado = (SwipeRefreshLayout) findViewById(R.id.srl_listado);
 
         tv_listado_titulo.setText(R.string.procesos);
@@ -88,12 +90,18 @@ public class ProcesosActivity extends AppCompatActivity {
             tv_edad.setText(getString(R.string.edad).toUpperCase() + ": " +
                     FechaHoraUtils.getEdad(paciente.getNacimiento()).toString());
 
-            fab_add_elemento.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    irProcesoNuevoActivity();
-                }
-            });
+
+            if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false)) {
+                fab_add_elemento.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        irProcesoNuevoActivity();
+                    }
+                });
+            } else if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false)) {
+                fab_add_elemento.setVisibility(View.GONE);
+            }
+
 
             cargarProcesos();
         }
@@ -126,7 +134,12 @@ public class ProcesosActivity extends AppCompatActivity {
     }
 
     private void volverAtras() {
-        startActivity(new Intent(this, PacientesActivity.class));
+        if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false)) {
+            startActivity(new Intent(this, PacientesActivity.class));
+        } else if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false)) {
+            startActivity(new Intent(this, MainPacienteActivity.class));
+        }
+
     }
 
 

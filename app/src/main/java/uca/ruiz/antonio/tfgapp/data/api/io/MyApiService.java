@@ -88,6 +88,10 @@ public interface MyApiService {
     Call<Proceso> getProceso(@Path("id") Long id, @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
+    @GET("api/procesos/pdf/{id}")
+    Call<ResponseBody> getPdfProceso(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
     @GET("api/procesos/paciente/{id}")
     Call<ArrayList<Proceso>> getProcesosByPacienteId(@Path("id") Long id, @Header("Authorization") String token);
 

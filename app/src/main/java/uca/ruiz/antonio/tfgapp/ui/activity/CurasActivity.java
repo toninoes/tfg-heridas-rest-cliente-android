@@ -1,9 +1,14 @@
 package uca.ruiz.antonio.tfgapp.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,17 +20,27 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import uca.ruiz.antonio.tfgapp.R;
+import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiAdapter;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ApiError;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
@@ -34,6 +49,8 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.ui.adapter.CuraAdapter;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
+
+import java.util.Date;
 
 
 public class CurasActivity extends AppCompatActivity {
@@ -100,12 +117,16 @@ public class CurasActivity extends AppCompatActivity {
             tv_observaciones_tit.setText(getText(R.string.observaciones));
             tv_observaciones.setText(proceso.getObservaciones());
 
-            fab_add_elemento.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    irCuraNuevaActivity();
-                }
-            });
+            if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false)) {
+                fab_add_elemento.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        irCuraNuevaActivity();
+                    }
+                });
+            } else if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false)) {
+                fab_add_elemento.setVisibility(View.GONE);
+            }
 
             cargarCuras();
         }
@@ -120,7 +141,14 @@ public class CurasActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_editar_item, menu);
+
+        if(Preferencias.get(this).getBoolean("ROLE_SANITARIO", false)) {
+            getMenuInflater().inflate(R.menu.menu_editar_item, menu);
+        } else if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false)) {
+            getMenuInflater().inflate(R.menu.menu_descargar_pdf, menu);
+        }
+
+
         return true;
     }
 
@@ -136,6 +164,9 @@ public class CurasActivity extends AppCompatActivity {
                 Intent intentEditar = new Intent(this, ProcesoNewEditActivity.class);
                 intentEditar.putExtra("proceso", proceso);
                 startActivity(intentEditar);
+                return true;
+            case R.id.action_descargar_pdf:
+                descargarPDF();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -214,5 +245,152 @@ public class CurasActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CuraNewEditActivity.class);
         intent.putExtra("proceso", proceso);
         startActivity(intent);
+    }
+
+    private void descargarPDF() {
+        Call<ResponseBody> call = MyApiAdapter.getApiService().getPdfProceso(proceso.getId(), Pref.getToken());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()) {
+                    try {
+                        // Lo guardamos en la carpeta Downloads
+                        File ruta = Environment.getExternalStoragePublicDirectory(
+                                Environment.DIRECTORY_DOWNLOADS);
+                        String fecha = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(new Date());
+                        String nombreFichero = "informe_" + fecha + ".pdf";
+
+                        File fichero = new File(ruta, nombreFichero);
+                        FileOutputStream fileOutputStream = new FileOutputStream(fichero);
+                        IOUtils.write(response.body().bytes(), fileOutputStream);
+
+                        // Y ahora lo abrimos
+                        Intent leerPDF = new Intent(Intent.ACTION_VIEW);
+                        leerPDF.setDataAndType(Uri.fromFile(fichero), "application/pdf");
+                        leerPDF.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+                        // Este intent te permite elegir entre las diferentes Apps instaladas en
+                        // el dispositivos que son capaces de leer PDFs
+                        Intent intent = Intent.createChooser(leerPDF, "Open File");
+                        startActivity(intent);
+
+                    } catch (ActivityNotFoundException e) {
+                        // si no existe ninguna App capaz de leer PDFs muestra mensaje indiándolo.
+                        Toasty.warning(CurasActivity.this, getString(R.string.error_lector_pdf),
+                                Toast.LENGTH_LONG, true).show();
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                } else {
+                    if (response.errorBody().contentType().subtype().equals("json")) {
+                        ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+                        Toasty.error(CurasActivity.this, apiError.getMessage(),
+                                Toast.LENGTH_LONG, true).show();
+                        Log.d(TAG, apiError.getPath() + " " + apiError.getMessage());
+                    } else {
+                        try {
+                            Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressDialog.cancel();
+
+                if (t instanceof IOException) {
+                    Toasty.warning(CurasActivity.this, getString(R.string.error_conexion_red),
+                            Toast.LENGTH_LONG, true).show();
+                } else {
+                    Toasty.error(CurasActivity.this, getString(R.string.error_conversion),
+                            Toast.LENGTH_LONG, true).show();
+                    Log.d(TAG, getString(R.string.error_conversion));
+                }
+            }
+        });
+    }
+
+    private boolean writeResponseBodyToDisk(ResponseBody body) {
+        try {
+            File mediaStorageDir = new File(
+                    Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    "PDF");
+
+            // Create the storage directory if it does not exist
+            if (!mediaStorageDir.exists()) {
+                if (!mediaStorageDir.mkdirs()) {
+                    Log.d("door tracker", "Oops! Failed create "
+                            + "door tracker" + " directory");
+                }
+            }
+
+            // Create a media file name
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                    Locale.getDefault()).format(new Date());
+            File mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + "informe "+ timeStamp + ".pdf");
+
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+                byte[] fileReader = new byte[4096];
+
+                long fileSize = body.contentLength();
+                long fileSizeDownloaded = 0;
+
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(mediaFile);
+
+                while (true) {
+                    int read = inputStream.read(fileReader);
+
+                    if (read == -1) {
+                        break;
+                    }
+
+                    outputStream.write(fileReader, 0, read);
+
+                    fileSizeDownloaded += read;
+
+                    Log.d(TAG, "file download: " + fileSizeDownloaded + " of " + fileSize);
+                }
+
+                outputStream.flush();
+
+                return true;
+            } catch (IOException e) {
+                return false;
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    private File getOutputMediaFile(){
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), getString(R.string.app_name));
+
+        if (!mediaStorageDir.exists()){
+            if (!mediaStorageDir.mkdirs()){
+                Log.d(getString(R.string.app_name), getString(R.string.error_crear_directorio));
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(new Date());
+        return new File(mediaStorageDir.getPath() + File.separator + timeStamp + ".jpg");
     }
 }

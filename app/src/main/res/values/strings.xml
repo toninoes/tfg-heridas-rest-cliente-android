@@ -225,4 +225,6 @@
     <string name="error_conexion_servidor">Hay un problema con la conexión con el servidor. Haga los
         ajustes adecuados en la configuración y si persiste el problema contacte con el
         administrador.</string>
+    <string name="descargar_pdf">Descargar PDF</string>
+    <string name="error_lector_pdf">Necesitar instalar un lector de PDF</string>
 </resources>

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import uca.ruiz.antonio.tfgapp.R;
+import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cura;
 import uca.ruiz.antonio.tfgapp.ui.activity.ImagenesActivity;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
@@ -65,14 +66,16 @@ public class CuraAdapter extends RecyclerView.Adapter<CuraAdapter.ViewHolder> {
         holder.textView.setText(cad);
 
         // click sobre cada elemento de las curas
-        holder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ImagenesActivity.class);
-                intent.putExtra("cura", mDataSet.get(position));
-                context.startActivity(intent);
-            }
-        });
+        if(Preferencias.get(context).getBoolean("ROLE_SANITARIO", false)) {
+            holder.textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ImagenesActivity.class);
+                    intent.putExtra("cura", mDataSet.get(position));
+                    context.startActivity(intent);
+                }
+            });
+        }
 
     }
 
