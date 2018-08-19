@@ -130,7 +130,8 @@ public class MainPacienteActivity extends AppCompatActivity  {
         ll_cuidados.setBackgroundResource(R.color.grisFondoLL);
         progressDialog.show();
 
-        //intent aqui
+        Intent intent = new Intent(this, CuidadosActivity.class);
+        startActivity(intent);
     }
 
 

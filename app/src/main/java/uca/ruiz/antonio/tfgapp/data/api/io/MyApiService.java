@@ -23,6 +23,7 @@ import uca.ruiz.antonio.tfgapp.data.api.mapping.ImgResponse;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.TokenResponse;
 import uca.ruiz.antonio.tfgapp.data.api.model.Administrador;
 import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
+import uca.ruiz.antonio.tfgapp.data.api.model.Cuidado;
 import uca.ruiz.antonio.tfgapp.data.api.model.Imagen;
 import uca.ruiz.antonio.tfgapp.data.api.model.SalaConfig;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sanitario;
@@ -38,8 +39,6 @@ import uca.ruiz.antonio.tfgapp.data.api.model.Proceso;
 import uca.ruiz.antonio.tfgapp.data.api.model.Sala;
 import uca.ruiz.antonio.tfgapp.data.api.model.Valoracion;
 import uca.ruiz.antonio.tfgapp.data.api.model.ValoracionesResults;
-
-import static android.R.attr.id;
 
 
 public interface MyApiService {
@@ -212,6 +211,11 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("api/gruposdiagnosticos")
     Call<ArrayList<Grupodiagnostico>> getGruposdiagnosticos(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/pacientes/{pacienteId}/gruposdiagnosticos")
+    Call<ArrayList<Grupodiagnostico>> getMisGruposdiagnosticos(@Path("pacienteId") Long pacienteId,
+                                                               @Header("Authorization") String token);
 
     @Headers("Content-Type: application/json")
     @GET("api/gruposdiagnosticos/filtro")
@@ -478,4 +482,36 @@ public interface MyApiService {
     Call<Cita> editarCita(@Path("id") Long id, @Body Cita c, @Header("Authorization") String token);
 
 
+    /* ======================= CUIDADOS ======================= */
+    @Headers("Content-Type: application/json")
+    @GET("api/cuidados")
+    Call<ArrayList<Cuidado>> getCuidados(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/cuidados/{id}")
+    Call<Cuidado> getCuidado(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @DELETE("api/cuidados/{id}")
+    Call<String> borrarCuidado(@Path("id") Long id, @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/cuidados/{sanitarioId}")
+    Call<Cuidado> crearCuidado(@Path("sanitarioId") Long sanitarioId, @Body Cuidado c,
+                               @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/cuidados/{id}")
+    Call<Cuidado> editarCuidado(@Path("id") Long id, @Body Cuidado c,
+                                @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/cuidados/grupodiagnostico/{id}")
+    Call<ArrayList<Cuidado>> getCuidadosByGDiagnosticoId(@Path("id") Long id,
+                                                         @Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @GET("api/cuidados/grupodiagnostico/{id}/pdf")
+    Call<ResponseBody> getPdfCuidadosByGrupoDiagnostico(@Path("id") Long id,
+                                                        @Header("Authorization") String token);
 }

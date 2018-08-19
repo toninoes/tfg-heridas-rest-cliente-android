@@ -2,6 +2,7 @@ package uca.ruiz.antonio.tfgapp.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,7 @@ public class CuraNoValoradaAdapter extends RecyclerView.Adapter<CuraNoValoradaAd
     //este método reemplaza el contenido de cada view,
     // para cada elemento de la lista
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // obtenemos un elemento del dataset según su posición
         // reemplazamos el contenido de los views según tales datos
 
@@ -71,6 +72,7 @@ public class CuraNoValoradaAdapter extends RecyclerView.Adapter<CuraNoValoradaAd
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.textView.setTextColor(ContextCompat.getColor(context, R.color.azul));
                 Intent intent = new Intent(context, ValoracionNewActivity.class);
                 intent.putExtra("cura", mDataSet.get(position));
                 context.startActivity(intent);

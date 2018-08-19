@@ -250,6 +250,21 @@
             android:configChanges="orientation"
             android:label="@string/valorar_asistencia"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.CuidadosActivity"
+            android:configChanges="orientation"
+            android:label="@string/cuidados"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.CuidadoNewEditActivity"
+            android:configChanges="orientation"
+            android:label="@string/nuevo_cuidado"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.CuidadoActivity"
+            android:configChanges="orientation"
+            android:label="@string/cuidado"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

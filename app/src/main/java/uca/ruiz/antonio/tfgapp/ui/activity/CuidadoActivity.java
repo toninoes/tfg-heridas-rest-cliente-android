@@ -1,5 +1,6 @@
 package uca.ruiz.antonio.tfgapp.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,21 +10,20 @@ import android.view.View;
 import android.widget.TextView;
 
 import uca.ruiz.antonio.tfgapp.R;
-import uca.ruiz.antonio.tfgapp.data.Preferencias;
-import uca.ruiz.antonio.tfgapp.data.api.model.Centro;
-import uca.ruiz.antonio.tfgapp.data.api.model.Cita;
-import uca.ruiz.antonio.tfgapp.ui.activity.admin.CentroNewEditActivity;
-import uca.ruiz.antonio.tfgapp.ui.activity.admin.CentrosActivity;
+import uca.ruiz.antonio.tfgapp.data.api.model.Cuidado;
 import uca.ruiz.antonio.tfgapp.utils.FechaHoraUtils;
 
-public class CitaActivity extends AppCompatActivity {
+public class CuidadoActivity extends AppCompatActivity {
 
-    private Cita cita;
+    private static final String TAG = CuidadoActivity.class.getSimpleName();
+    private Cuidado cuidado;
 
     private TextView tv_1_1, tv_1_2, tv_2_1, tv_2_2, tv_3_1, tv_3_2, tv_4_1, tv_4_2, tv_5_1, tv_5_2;
     private TextView tv_6_1, tv_6_2, tv_7_1, tv_7_2, tv_8_1, tv_8_2, tv_9_1, tv_9_2, tv_10_1, tv_10_2;
 
     private final int CAMPOS = 5;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,30 +34,32 @@ public class CitaActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.cargando));
+
         usar(CAMPOS);
 
-        cita = (Cita) getIntent().getExtras().getSerializable("cita");
+        cuidado = (Cuidado) getIntent().getExtras().getSerializable("cuidado");
 
-        tv_1_1.setText(getString(R.string.fecha_hora));
-        tv_1_2.setText(FechaHoraUtils.calcularFechaHoraCitaToString(cita));
+        tv_1_1.setText(getString(R.string.nombre_cuidado));
+        tv_1_2.setText(cuidado.getNombre());
 
-        tv_2_1.setText(getString(R.string.centro));
-        tv_2_2.setText(cita.getSala().getCentro().getNombre());
+        tv_2_1.setText(getString(R.string.fecha_subida));
+        tv_2_2.setText(FechaHoraUtils.formatoFechaHoraUI(cuidado.getCreacion()));
 
-        tv_3_1.setText(getString(R.string.sala));
-        tv_3_2.setText(cita.getSala().getNombre());
+        tv_3_1.setText(getString(R.string.subido_por));
+        tv_3_2.setText(cuidado.getSanitario().getFullName());
 
-        tv_4_1.setText(getString(R.string.paciente));
-        tv_4_2.setText(cita.getPaciente().getFullName());
+        tv_4_1.setText(getString(R.string.para_grupo_diagnostico));
+        tv_4_2.setText(cuidado.getGrupodiagnostico().getNombre());
 
-        tv_5_1.setText(getString(R.string.numero_orden));
-        tv_5_2.setText(cita.getOrden().toString());
+        tv_5_1.setText(getString(R.string.descripcion));
+        tv_5_2.setText(cuidado.getDescripcion());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(Preferencias.get(this).getBoolean("ROLE_PACIENTE", false))
-            getMenuInflater().inflate(R.menu.menu_editar_item, menu);
+        getMenuInflater().inflate(R.menu.menu_editar_item, menu);
         return true;
     }
 
@@ -70,14 +72,15 @@ public class CitaActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_editar:
-                Intent intent = new Intent(this, CitacionesEditActivity.class);
-                intent.putExtra("cita", cita);
-                startActivity(intent);
+                Intent i = new Intent(this, CuidadoNewEditActivity.class);
+                i.putExtra("cuidado", cuidado);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     private void usar(int i) {
         if(i >= 1) {
@@ -150,4 +153,6 @@ public class CitaActivity extends AppCompatActivity {
             tv_10_2.setVisibility(View.VISIBLE);
         }
     }
+
+
 }

@@ -248,10 +248,12 @@ public class CurasActivity extends AppCompatActivity {
     }
 
     private void descargarPDF() {
+        progressDialog.show();
         Call<ResponseBody> call = MyApiAdapter.getApiService().getPdfProceso(proceso.getId(), Pref.getToken());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progressDialog.cancel();
                 if(response.isSuccessful()) {
                     try {
                         // Lo guardamos en la carpeta Downloads

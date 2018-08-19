@@ -208,7 +208,7 @@
     <string name="valoraciones_individuales">Valoraciones individuales</string>
     <string name="mis_valoraciones">Mis valoraciones</string>
     <string name="indicaciones_valoraciones">A continuación un listado con las asistencias que se le
-        han prestado y aún no ha valorado. Usted podrá, de forma ANÓNIMA, asignar una nota de 0 a 10
+        han prestado y aún no ha valorado. Usted podrá, de forma ANÓNIMA, asignar una valoración
         a la asistencia prestada, además podrá aportar sus quejas o sugerencias que nos permitirán
         mejorar el servicio. Cada elemento de la lista presenta la fecha de la atención y qué profesional
         se la prestó, pulse sobre cada elemento para realizar su valoración. Gracias.</string>
@@ -227,4 +227,13 @@
         administrador.</string>
     <string name="descargar_pdf">Descargar PDF</string>
     <string name="error_lector_pdf">Necesitar instalar un lector de PDF</string>
+    <string name="cuidados">Cuidados</string>
+    <string name="nuevo_cuidado">Nuevo Cuidado</string>
+    <string name="fecha_subida">Fecha subida</string>
+    <string name="subido_por">Subido por</string>
+    <string name="nombre_fichero">Nombre fichero</string>
+    <string name="para_grupo_diagnostico">Para grupo diagnóstico</string>
+    <string name="cuidado">Cuidado</string>
+    <string name="seleccione_pdf">Seleccionar PDF...</string>
+    <string name="nombre_cuidado">Nombre cuidado</string>
 </resources>

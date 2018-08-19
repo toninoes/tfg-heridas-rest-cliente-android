@@ -153,7 +153,7 @@ public class ValoracionNewActivity extends AppCompatActivity {
 
         switch (id) {
             case android.R.id.home:
-                startActivity(new Intent(this, CurasSinValorarActivity.class));
+                volverAtras();
                 return true;
             case R.id.action_guardar:
                 intentarGuardar();
@@ -162,6 +162,16 @@ public class ValoracionNewActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void volverAtras() {
+        startActivity(new Intent(this, CurasSinValorarActivity.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+        volverAtras();
+    }
+
 
     /**
      * Intenta guardar: Si hay errores de formulario (campo no válido, campos faltantes, etc.), se
