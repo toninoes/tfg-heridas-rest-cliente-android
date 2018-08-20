@@ -261,5 +261,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void resetPassword(View view) {
+        startActivity(new Intent(this, OlvidoPasswordActivity.class));
+    }
+
 }
 

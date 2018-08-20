@@ -82,6 +82,10 @@ public interface MyApiService {
     Call<User> solicitarCambiarPassword(@Path("id") Long id, @Body CambiarPassword cp,
                                         @Header("Authorization") String token);
 
+    @Headers("Content-Type: application/json")
+    @POST("resetpassword")
+    Call<String> resetPassword(@Body User user);
+
 
     /* ======================= PROCESOS ======================= */
     @Headers("Content-Type: application/json")
