@@ -6,6 +6,6 @@
         android:id="@+id/action_guardar"
         android:orderInCategory="5"
         android:title="@string/guardar"
-        android:icon="@drawable/ic_action_save"
+        android:icon="@drawable/img_btn_save"
         app:showAsAction="always" />
 </menu>

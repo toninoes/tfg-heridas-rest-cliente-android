@@ -17,6 +17,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import uca.ruiz.antonio.tfgapp.data.api.mapping.CambiarPassword;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.DosFechas;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.Login;
 import uca.ruiz.antonio.tfgapp.data.api.mapping.ImgResponse;
@@ -75,6 +76,11 @@ public interface MyApiService {
     @Headers("Content-Type: application/json")
     @GET("ping")
     Call<String> comprobarServidor();
+
+    @Headers("Content-Type: application/json")
+    @POST("cambiarpassword/{id}")
+    Call<User> solicitarCambiarPassword(@Path("id") Long id, @Body CambiarPassword cp,
+                                        @Header("Authorization") String token);
 
 
     /* ======================= PROCESOS ======================= */

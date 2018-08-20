@@ -261,29 +261,5 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void comprobarServidor() {
-        Call<String> call = MyApiAdapter.getApiService().comprobarServidor();
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                String cad = response.body();
-                Toasty.success(LoginActivity.this, cad,
-                        Toast.LENGTH_LONG, true).show();
-                //Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-               // startActivity(intent);
-                //finish();
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toasty.warning(LoginActivity.this, getString(R.string.error_conexion_red),
-                        Toast.LENGTH_LONG, true).show();
-                //Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-                //startActivity(intent);
-                //finish();
-            }
-        });
-    }
-
 }
 

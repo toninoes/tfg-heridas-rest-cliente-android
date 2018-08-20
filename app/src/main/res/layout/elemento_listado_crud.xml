@@ -22,6 +22,7 @@
             android:layout_marginTop="20dp"
             android:maxLines="1"
             android:text="@string/titulo"
+            android:textColor="@color/selector_azul_gris"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -34,6 +35,7 @@
             android:layout_marginTop="10dp"
             android:maxLines="1"
             android:text="@string/subtitulo"
+            android:textColor="@color/selector_azul_gris"
             tools:ignore="NestedWeights" />
 
         <TextView
@@ -44,6 +46,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:text="@string/subtitulo"
+            android:textColor="@color/selector_azul_gris"
             android:visibility="gone"
             tools:ignore="NestedWeights" />
 
@@ -66,7 +69,7 @@
         android:layout_weight="1"
         android:background="@android:color/background_light"
         android:contentDescription="@string/editar"
-        app:srcCompat="@drawable/ic_action_edit_naranja" />
+        app:srcCompat="@drawable/img_btn_edit" />
 
     <ImageButton
         android:id="@+id/ib_delete"
@@ -75,6 +78,6 @@
         android:layout_weight="1"
         android:background="@android:color/background_light"
         android:contentDescription="@string/borrar"
-        app:srcCompat="@drawable/ic_action_delete_naranja" />
+        app:srcCompat="@drawable/img_btn_delete" />
 
 </LinearLayout>

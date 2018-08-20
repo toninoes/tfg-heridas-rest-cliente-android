@@ -265,6 +265,12 @@
             android:configChanges="orientation"
             android:label="@string/cuidado"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.CambioPassActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

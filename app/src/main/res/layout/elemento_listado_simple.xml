@@ -7,5 +7,5 @@
     android:layout_marginRight="15dp"
     android:layout_marginTop="20dp"
     android:maxLines="1"
-    android:textColor="@color/naranja"
+    android:textColor="@color/selector_naranja_azul"
     android:textSize="16sp" />

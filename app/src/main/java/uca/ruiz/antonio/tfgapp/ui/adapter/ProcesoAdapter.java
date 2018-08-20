@@ -72,7 +72,7 @@ public class ProcesoAdapter extends RecyclerView.Adapter<ProcesoAdapter.ViewHold
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.textView.setTextColor(ContextCompat.getColor(context, R.color.azul));
+                //holder.textView.setTextColor(ContextCompat.getColor(context, R.color.azul));
                 Intent intent = new Intent(context, CurasActivity.class);
                 intent.putExtra("proceso", mDataSet.get(position));
                 context.startActivity(intent);

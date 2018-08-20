@@ -5,5 +5,5 @@
         android:id="@+id/detalle_valoraciones"
         android:orderInCategory="1"
         android:title="@string/mis_valoraciones"
-        android:icon="@drawable/ic_add_item" />
+        android:icon="@drawable/img_btn_add" />
 </menu>

@@ -6,6 +6,6 @@
         android:id="@+id/action_editar"
         android:orderInCategory="5"
         android:title="@string/editar"
-        android:icon="@drawable/ic_action_edit"
+        android:icon="@drawable/img_btn_edit_blanco_gris"
         app:showAsAction="always" />
 </menu>

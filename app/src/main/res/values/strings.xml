@@ -236,4 +236,12 @@
     <string name="cuidado">Cuidado</string>
     <string name="seleccione_pdf">Seleccionar PDF...</string>
     <string name="nombre_cuidado">Nombre cuidado</string>
+    <string name="cambiar_mis_datos">Cambiar mis datos</string>
+    <string name="cambiar_mi_pass">Cambiar mi contraseña</string>
+    <string name="prompt_password_actual">Introduzca contraseña ACTUAL</string>
+    <string name="prompt_password_nueva">Introduzca contraseña NUEVA</string>
+    <string name="prompt_password_nueva_repetida">Repita contraseña NUEVA</string>
+    <string name="error_repeticion_password">Debes introducir dos veces la misma nueva contraseña. En este campo y en el anterior.</string>
+    <string name="password_cambiada">Contraseña cambiada correctamente</string>
+    <string name="cambiar">Cambiar</string>
 </resources>

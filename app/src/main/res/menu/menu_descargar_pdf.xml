@@ -6,6 +6,6 @@
         android:id="@+id/action_descargar_pdf"
         android:orderInCategory="5"
         android:title="@string/descargar_pdf"
-        android:icon="@drawable/ic_action_pdf"
+        android:icon="@drawable/img_btn_pdf"
         app:showAsAction="always" />
 </menu>

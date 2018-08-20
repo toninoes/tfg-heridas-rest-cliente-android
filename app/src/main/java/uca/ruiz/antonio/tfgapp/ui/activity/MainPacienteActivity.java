@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -59,12 +60,21 @@ public class MainPacienteActivity extends AppCompatActivity  {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_personal, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         switch (id) {
             case android.R.id.home:
                 Utils.preguntarQuiereSalir(this);
+                return true;
+            case R.id.cambiar_mi_pass:
+                startActivity(new Intent(this, CambioPassActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
