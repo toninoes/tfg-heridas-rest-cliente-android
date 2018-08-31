@@ -15,11 +15,13 @@ import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
+import static uca.ruiz.antonio.tfgapp.R.id.et_puerto;
+
 
 public class LoginConfigActivity extends AppCompatActivity {
 
     private static final String TAG = LoginConfigActivity.class.getSimpleName();
-    private EditText et_url, et_puerto;
+    private EditText et_url, et_servicio, et_puerto;
     private CheckBox chk_https;
 
     @Override
@@ -32,10 +34,12 @@ public class LoginConfigActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         et_url = (EditText) findViewById(R.id.et_url);
+        et_servicio = (EditText) findViewById(R.id.et_servicio);
         et_puerto = (EditText) findViewById(R.id.et_puerto);
         chk_https = (CheckBox) findViewById(R.id.chk_https);
 
         et_url.setText(Pref.getUrlServidor());
+        et_servicio.setText(Pref.getServicioServidor());
         et_puerto.setText(Pref.getPuertoServidor());
         String protocolo = Pref.getProtocoloServidor();
         if (protocolo.equals("https"))
@@ -82,6 +86,7 @@ public class LoginConfigActivity extends AppCompatActivity {
      */
     private void intentarGuardar() {
         et_url.setError(null);
+        et_servicio.setError(null);
         et_puerto.setError(null);
 
         //tomo el contenido de los campos
@@ -90,6 +95,7 @@ public class LoginConfigActivity extends AppCompatActivity {
 
         Long puerto = Long.valueOf(et_puerto.getText().toString());
         String url = et_url.getText().toString();
+        String servicio = et_servicio.getText().toString();
         String protocolo;
         if (chk_https.isChecked())
             protocolo = "https";
@@ -123,6 +129,7 @@ public class LoginConfigActivity extends AppCompatActivity {
             Preferencias.getEditor(this).putString("protocolo", protocolo).commit();
             Preferencias.getEditor(this).putString("url", url).commit();
             Preferencias.getEditor(this).putString("puerto", puerto.toString()).commit();
+            Preferencias.getEditor(this).putString("servicio", servicio).commit();
 
             String msg = getString(R.string.conf_servidor_guardada) + "\n\n" + Pref.getBaseUrl();
             Toasty.success(LoginConfigActivity.this, msg, Toast.LENGTH_LONG, true).show();

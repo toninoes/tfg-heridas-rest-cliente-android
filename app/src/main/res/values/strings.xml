@@ -250,4 +250,6 @@
     <string name="prompt_email_pass_olvidada">Introduce tu correo electrónico</string>
     <string name="action_sign_in_restablecer">Restablecer contraseña</string>
     <string name="solicitud_correcta">!Ok!. Vaya a su correo para seguir instrucciones.</string>
+    <string name="servicio">Servicio</string>
+    <string name="nombre_del_servicio">Nombre del Servicio</string>
 </resources>

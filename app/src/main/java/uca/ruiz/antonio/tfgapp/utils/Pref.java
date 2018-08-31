@@ -37,11 +37,20 @@ public class Pref {
         return Preferencias.get(ctx).getString("puerto", "8080");
     }
 
+    public static String getServicioServidor() {
+        return Preferencias.get(ctx).getString("servicio", "");
+    }
+
     public static String getBaseUrl() {
         String prot = Pref.getProtocoloServidor();
         String url = Pref.getUrlServidor();
         String port = Pref.getPuertoServidor();
-        String baseUrl = String.format("%s://%s:%s/", prot, url, port);
+        String servicio = Pref.getServicioServidor();
+        String baseUrl;
+        if(servicio.isEmpty())
+            baseUrl = String.format("%s://%s:%s/", prot, url, port);
+        else
+            baseUrl = String.format("%s://%s:%s/%s/", prot, url, port, servicio);
 
         return baseUrl;
     }

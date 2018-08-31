@@ -33,11 +33,10 @@
             android:id="@+id/et_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="0123456789."
             android:drawableLeft="@drawable/ic_server"
             android:drawableStart="@drawable/ic_server"
             android:hint="@string/ip_url_servidor"
-            android:inputType="number"
+            android:inputType="textWebEditText"
             android:maxLines="1" />
 
     </android.support.design.widget.TextInputLayout>
@@ -56,6 +55,22 @@
             android:drawableStart="@drawable/ic_port"
             android:hint="@string/puerto_0_65535"
             android:inputType="number"
+            android:maxLines="1" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_servicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_service"
+            android:drawableStart="@drawable/ic_service"
+            android:hint="Nombre del Servicio"
+            android:inputType="textWebEditText"
             android:maxLines="1" />
 
     </android.support.design.widget.TextInputLayout>
