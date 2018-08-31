@@ -16,6 +16,7 @@ import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 import static uca.ruiz.antonio.tfgapp.R.id.et_puerto;
+import static uca.ruiz.antonio.tfgapp.R.string.puerto;
 
 
 public class LoginConfigActivity extends AppCompatActivity {
@@ -89,11 +90,8 @@ public class LoginConfigActivity extends AppCompatActivity {
         et_servicio.setError(null);
         et_puerto.setError(null);
 
-        //tomo el contenido de los campos
-        if (et_puerto.getText().toString().isEmpty())
-            et_puerto.setText("-1");
-
-        Long puerto = Long.valueOf(et_puerto.getText().toString());
+        //Long puerto = Long.valueOf(et_puerto.getText().toString());
+        String puerto = et_puerto.getText().toString();
         String url = et_url.getText().toString();
         String servicio = et_servicio.getText().toString();
         String protocolo;
@@ -106,11 +104,15 @@ public class LoginConfigActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        // Validar puerto
-        if (puerto < 0 || puerto > 65535) {
-            et_puerto.setError(getString(R.string.puerto_0_65535));
-            focusView = et_puerto;
-            cancel = true;
+        if(!puerto.isEmpty()) {
+            Long puertoL = Long.valueOf(et_puerto.getText().toString());
+            // Validar puerto
+            if (puertoL < 0 || puertoL > 65535) {
+                et_puerto.setError(getString(R.string.puerto_0_65535));
+                focusView = et_puerto;
+                cancel = true;
+            }
+            puerto = puertoL.toString();
         }
 
         // Validar la URL o IP
@@ -128,7 +130,7 @@ public class LoginConfigActivity extends AppCompatActivity {
             // ha ido bien, luego se procede guardar estos datos en las preferencias.
             Preferencias.getEditor(this).putString("protocolo", protocolo).commit();
             Preferencias.getEditor(this).putString("url", url).commit();
-            Preferencias.getEditor(this).putString("puerto", puerto.toString()).commit();
+            Preferencias.getEditor(this).putString("puerto", puerto).commit();
             Preferencias.getEditor(this).putString("servicio", servicio).commit();
 
             String msg = getString(R.string.conf_servidor_guardada) + "\n\n" + Pref.getBaseUrl();

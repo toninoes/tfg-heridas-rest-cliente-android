@@ -47,10 +47,20 @@ public class Pref {
         String port = Pref.getPuertoServidor();
         String servicio = Pref.getServicioServidor();
         String baseUrl;
-        if(servicio.isEmpty())
+
+        if(port.isEmpty() && servicio.isEmpty())
+            baseUrl = String.format("%s://%s/", prot, url);
+        else if (!port.isEmpty() && servicio.isEmpty())
             baseUrl = String.format("%s://%s:%s/", prot, url, port);
+        else if (port.isEmpty() && !servicio.isEmpty())
+            baseUrl = String.format("%s://%s/%s/", prot, url, servicio);
         else
             baseUrl = String.format("%s://%s:%s/%s/", prot, url, port, servicio);
+
+        /*if(servicio.isEmpty())
+            baseUrl = String.format("%s://%s:%s/", prot, url, port);
+        else
+            baseUrl = String.format("%s://%s:%s/%s/", prot, url, port, servicio);*/
 
         return baseUrl;
     }
