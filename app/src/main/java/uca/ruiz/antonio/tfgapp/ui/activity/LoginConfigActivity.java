@@ -16,13 +16,14 @@ import uca.ruiz.antonio.tfgapp.data.Preferencias;
 import uca.ruiz.antonio.tfgapp.utils.Pref;
 
 import static uca.ruiz.antonio.tfgapp.R.id.et_puerto;
+import static uca.ruiz.antonio.tfgapp.R.id.et_servicio;
 import static uca.ruiz.antonio.tfgapp.R.string.puerto;
 
 
 public class LoginConfigActivity extends AppCompatActivity {
 
     private static final String TAG = LoginConfigActivity.class.getSimpleName();
-    private EditText et_url, et_servicio, et_puerto;
+    private EditText et_url, et_puerto, et_servicio;
     private CheckBox chk_https;
 
     @Override
@@ -35,13 +36,13 @@ public class LoginConfigActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         et_url = (EditText) findViewById(R.id.et_url);
-        et_servicio = (EditText) findViewById(R.id.et_servicio);
         et_puerto = (EditText) findViewById(R.id.et_puerto);
+        et_servicio = (EditText) findViewById(R.id.et_servicio);
         chk_https = (CheckBox) findViewById(R.id.chk_https);
 
         et_url.setText(Pref.getUrlServidor());
-        et_servicio.setText(Pref.getServicioServidor());
         et_puerto.setText(Pref.getPuertoServidor());
+        et_servicio.setText(Pref.getServicioServidor());
         String protocolo = Pref.getProtocoloServidor();
         if (protocolo.equals("https"))
             chk_https.setChecked(true);
@@ -87,13 +88,11 @@ public class LoginConfigActivity extends AppCompatActivity {
      */
     private void intentarGuardar() {
         et_url.setError(null);
-        et_servicio.setError(null);
         et_puerto.setError(null);
 
-        //Long puerto = Long.valueOf(et_puerto.getText().toString());
+        String servicio = et_servicio.getText().toString();
         String puerto = et_puerto.getText().toString();
         String url = et_url.getText().toString();
-        String servicio = et_servicio.getText().toString();
         String protocolo;
         if (chk_https.isChecked())
             protocolo = "https";

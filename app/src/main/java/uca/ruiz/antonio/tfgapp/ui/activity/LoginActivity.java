@@ -67,8 +67,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //comprobarServidor();
-
         Button btn_entrar = (Button) findViewById(R.id.btn_entrar);
         btn_entrar.setOnClickListener(new OnClickListener() {
             @Override

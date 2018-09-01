@@ -33,7 +33,14 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        comprobarServidor();
+        //comprobarServidor();
+        new Handler().postDelayed(new Runnable(){
+            public void run(){
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            };
+        }, DURACION_SPLASH);
     }
 
     private void comprobarServidor() {

@@ -46,21 +46,16 @@ public class Pref {
         String url = Pref.getUrlServidor();
         String port = Pref.getPuertoServidor();
         String servicio = Pref.getServicioServidor();
-        String baseUrl;
 
+        String baseUrl;
         if(port.isEmpty() && servicio.isEmpty())
             baseUrl = String.format("%s://%s/", prot, url);
-        else if (!port.isEmpty() && servicio.isEmpty())
-            baseUrl = String.format("%s://%s:%s/", prot, url, port);
-        else if (port.isEmpty() && !servicio.isEmpty())
+        else if(port.isEmpty() && !servicio.isEmpty())
             baseUrl = String.format("%s://%s/%s/", prot, url, servicio);
+        else if(!port.isEmpty() && servicio.isEmpty())
+            baseUrl = String.format("%s://%s:%s/", prot, url, port);
         else
             baseUrl = String.format("%s://%s:%s/%s/", prot, url, port, servicio);
-
-        /*if(servicio.isEmpty())
-            baseUrl = String.format("%s://%s:%s/", prot, url, port);
-        else
-            baseUrl = String.format("%s://%s:%s/%s/", prot, url, port, servicio);*/
 
         return baseUrl;
     }
