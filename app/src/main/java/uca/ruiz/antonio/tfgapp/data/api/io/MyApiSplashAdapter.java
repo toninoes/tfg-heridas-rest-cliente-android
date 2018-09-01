@@ -16,7 +16,7 @@ import uca.ruiz.antonio.tfgapp.utils.Pref;
 public class MyApiSplashAdapter {
 
     private static MyApiService API_SERVICE = null;
-    public static MyApiService getApiService(String prot, String url, String port) {
+    public static MyApiService getApiService(String prot, String url, String port, String servicio) {
 
         // Creamos un interceptor y le indicamos el log level a usar
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -26,8 +26,16 @@ public class MyApiSplashAdapter {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
 
-        //String baseUrl = "http://10.0.2.2:8080/";
-        String baseUrl = String.format("%s://%s:%s/", prot, url, port);
+        //String baseUrl = String.format("%s://%s:%s/", prot, url, port);
+        String baseUrl;
+        if(port.isEmpty() && servicio.isEmpty())
+            baseUrl = String.format("%s://%s/", prot, url);
+        else if(port.isEmpty() && !servicio.isEmpty())
+            baseUrl = String.format("%s://%s/%s/", prot, url, servicio);
+        else if(!port.isEmpty() && servicio.isEmpty())
+            baseUrl = String.format("%s://%s:%s/", prot, url, port);
+        else
+            baseUrl = String.format("%s://%s:%s/%s/", prot, url, port, servicio);
 
         /*
          * Patrón Singleton, sólo creo instancia Retrofit nueva si no hay creada una previamente

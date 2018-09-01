@@ -252,4 +252,5 @@
     <string name="solicitud_correcta">!Ok!. Vaya a su correo para seguir instrucciones.</string>
     <string name="servicio">Servicio</string>
     <string name="nombre_del_servicio">Nombre del Servicio</string>
+    <string name="conexion_correcta">Conexión con servidor correcta</string>
 </resources>

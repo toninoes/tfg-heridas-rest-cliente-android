@@ -19,7 +19,7 @@ import uca.ruiz.antonio.tfgapp.R;
 import uca.ruiz.antonio.tfgapp.data.api.io.MyApiSplashAdapter;
 
 public class SplashActivity extends AppCompatActivity {
-    private final int DURACION_SPLASH = 3000;
+    private final int DURACION_SPLASH = 1000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,35 +33,37 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        //comprobarServidor();
-        new Handler().postDelayed(new Runnable(){
-            public void run(){
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            };
-        }, DURACION_SPLASH);
+        comprobarServidor();
     }
 
     private void comprobarServidor() {
-        String protocolo, url, puerto;
+        String protocolo, url, puerto, servicio;
         SharedPreferences prefs = this.getSharedPreferences(getString(R.string.app_name),
                 Context.MODE_PRIVATE);
         protocolo = prefs.getString("protocolo", "http");
         url = prefs.getString("url", "10.0.2.2");
         puerto = prefs.getString("puerto", "8080");
-        Call<String> call = MyApiSplashAdapter.getApiService(protocolo, url, puerto).comprobarServidor();
+        servicio = prefs.getString("servicio", "");
+        Call<String> call = MyApiSplashAdapter.getApiService(protocolo, url, puerto, servicio).comprobarServidor();
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()) {
                     new Handler().postDelayed(new Runnable(){
                         public void run(){
+                            Toasty.success(SplashActivity.this, getString(R.string.conexion_correcta),
+                                    Toast.LENGTH_SHORT, true).show();
                             Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         };
                     }, DURACION_SPLASH);
+                } else {
+                    Toasty.error(SplashActivity.this, getString(R.string.error_conexion_servidor),
+                            Toast.LENGTH_LONG, true).show();
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
 
