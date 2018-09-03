@@ -13,12 +13,12 @@
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="512px"
-        android:layout_height="512px"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
         android:layout_marginTop="80dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/logotipo_de_la_aplicacion"
-        android:src="@mipmap/ic_launcher_tirita" />
+        android:src="@drawable/tirita512" />
 
     <TextView
         android:id="@+id/textView"
