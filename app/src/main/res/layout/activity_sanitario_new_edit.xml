@@ -92,9 +92,10 @@
                 android:id="@+id/et_colegiado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:digits="0123456789"
                 android:hint="@string/colegiado"
-                android:inputType="text" />
+                android:inputType="number"
+                android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox
