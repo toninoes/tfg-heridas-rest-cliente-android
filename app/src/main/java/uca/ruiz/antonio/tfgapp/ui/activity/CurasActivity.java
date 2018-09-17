@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -99,6 +100,9 @@ public class CurasActivity extends AppCompatActivity {
         //El RecyclerView usará un LinearLayoutManager
         mLayoutManager = new LinearLayoutManager(this);
         rv_listado.setLayoutManager(mLayoutManager);
+
+        // añade línea divisoria entre cada elemento
+        rv_listado.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         //Asociamos un adapter. Define cómo se renderizará la informacion que tenemos
         mAdapter = new CuraAdapter(this);
