@@ -29,7 +29,32 @@ El funcionamiento del sistema es sencillo, tratando que las diferentes pantallas
 
 En primer lugar, tras autenticarse nos encontraremos con una pantalla principal. Esta pantalla contiene el menú que lleva hasta las distintas funcionalidades de la aplicación, pero dicha pantalla principal será diferente dependiendo del rol del usuario:
 - Administrador. Podrá gestionar desde ese panel: 
-  - Centros, 
-  - Salas, Grupos diagnósticos, Diagnósticos, Procedimientos, Administradores, Sanitarios, Pacientes, Valoraciones y Modificar su contraseña.
-- Sanitario. El cual, desde ese panel podrá: Realizar y registrar las distintas actuaciones desde el punto de vista sanitario, Planificar cuidados para los diferentes grupos de diagnósticos, Ver la valoración de sus actuaciones, Acceder a la agenda de citaciones y Modificar su contraseña.
-- Paciente. Podrá tener acceso a: La evolución de sus procesos, Gestionar sus citas, Acceder a las recomendaciones de cuidados de sus procesos y Modificar su contraseña.
+  - Centros.
+  - Salas.
+  - Grupos diagnósticos.
+  - Diagnósticos.
+  - Procedimientos.
+  - Administradores.
+  - Sanitarios.
+  - Pacientes.
+  - Valoraciones.
+  - Modificar su contraseña.
+- Sanitario. El cual, desde ese panel podrá: 
+  - Realizar y registrar las distintas actuaciones desde el punto de vista sanitario.
+  - Planificar cuidados para los diferentes grupos de diagnósticos.
+  - Ver la valoración de sus actuaciones.
+  - Acceder a la agenda de citaciones.
+  - Modificar su contraseña.
+- Paciente. Podrá tener acceso a: 
+  - La evolución de sus procesos.
+  - Gestionar sus citas.
+  - Acceder a las recomendaciones de cuidados de sus procesos.
+  - Modificar su contraseña.
+  
+Otro aspecto muy importante es el registro. Aunque es un registro sencillo, éste es necesario para poder utilizar la aplicación, pero será un registro delegado, es decir, no parte del propio usuario, así de esta forma:
+-Los administradores podrán registrar a:
+  - Otros administradores
+  - Sanitarios
+  - Pacientes
+- Los sanitarios podrán registrar sólo a pacientes.
+- Los pacientes no pueden realizar el registro de ningún tipo de usuario.
