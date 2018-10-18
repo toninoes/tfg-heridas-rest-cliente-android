@@ -58,3 +58,35 @@ Otro aspecto muy importante es el registro. Aunque es un registro sencillo, ést
   - Pacientes
 - Los sanitarios podrán registrar sólo a pacientes.
 - Los pacientes no pueden realizar el registro de ningún tipo de usuario.
+
+Veamos un ejemplo de registro en el que un administrador registra a un sanitario. Para ello el administrador primero se tiene que identificar, tal y como puede verse en la siguiente imagen:
+
+<img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/identificacion.png" width="90%">
+
+El administrador debe pulsar sobre el icono de «Sanitarios», tras ello, aparece un listado con los sanitarios del sistema, pulsará en el icono destinado a añadir un nuevo sanitario indicado con un «+» y verá una nueva pantalla donde indicar los datos de éste. Muy importante es el email, ya que será ahí donde se enviará un correo electrónico para que el interesado active su cuenta y defina su contraseña. Pueden verse estos pasos en la siguiente imagen:
+
+<img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/registroSanitario.png" width="90%">
+
+En dicha figura puede apreciarse que ya aparece el sanitario recién registrado, pero aún no ha sido activado ni tiene contraseña para poder éste acceder al sistema.
+
+Automáticamente el [servidor](https://github.com/toninoes/tfg-heridas-rest-servicio-web-spring "servidor") envía un correo electrónico al interesado para que pulse sobre un enlace. Esta acción implicará la activación del usuario en el sistema (y de esta forma se corrobora que el email facilitado es válido) y además el sanitario podrá definir su contraseña. Pueden observarse dichos pasos en la siguiente imagen:
+
+<img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/activarSanitario.png" width="90%">
+
+Tras todo lo anterior el interesado podrá hacer uso de la aplicación.
+
+### Requisitos previos
+Además de estar registrado y haber completado el proceso de activación descrito en el apartado anterior, será necesario en cualquier caso disponer de un dispositivo móvil con Android (versión mínima 4.1) y conexión a Internet. Pero además:
+- Obviamente en el caso de los sanitarios, se necesitará que este dispositivo cuente con cámara para realizar las fotografías.
+- Los pacientes deberán contar con una aplicación que permita la lectura de ficheros en formato PDF.
+
+Indicar que al haberse desarrollado una aplicación genérica para cualquier tipo de organización, deberá cada usuario configurar (con los datos que ésta le proporcione) la aplicación con los datos necesarios para que se conecte con el [servicio](https://github.com/toninoes/tfg-heridas-rest-servicio-web-spring "servicio"). Dicho servicio podrá estar alojado en instalaciones propias de la organización o en otras ajenas, pero en cualquier caso es necesario que se proporcionen al interesado.
+
+Para acceder a la configuración de estos parámetros habrá que pulsar sobre un icono habilitado en la pantalla de login, este icono se encuentra situado en la parte superior a la derecha, como puede verse en la imagen que se mostrará a continuación. 
+
+<img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/configurarConexion.png" width="90%">
+
+En la anterior imagen puede verse que la aplicación está avisando que no se ha conectado correctamente con el servidor, indicando al usuario que debe realizar los ajustes oportunos para conseguirlo.
+
+
+
