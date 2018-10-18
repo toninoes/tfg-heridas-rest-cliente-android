@@ -132,7 +132,7 @@ pertinente valoración será eliminada de ese listado.
 
 ...y esto es todo amigos!!. Quedan aún más funcionalidades por explicar, pero lo esencial está ya mostrado. 
 
-Para finalizar decir que son libres de copiar, mejorar, adaptar o hacer lo que os plazca con este proyecto, pero por favor, no modifiquen el logotipo de la aplicación, no me van a negar que no es bonito ;)
+Para finalizar decir que son libres de copiar, mejorar, adaptar o hacer lo que os plazca con este proyecto, pero por favor, no modifiquen el logotipo de la aplicación, no me van a negar que es superkuki ;)
 
 <img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/logotipoapp.png">
 
