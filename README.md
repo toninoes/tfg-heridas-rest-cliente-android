@@ -76,7 +76,7 @@ Automáticamente el [servidor](https://github.com/toninoes/tfg-heridas-rest-serv
 Tras todo lo anterior el interesado podrá hacer uso de la aplicación.
 
 ### Requisitos previos
-Además de estar registrado y haber completado el proceso de activación descrito en el apartado anterior, será necesario en cualquier caso disponer de un dispositivo móvil con Android (versión mínima 4.1) y conexión a Internet. Pero además:
+Además de estar registrado y haber completado el proceso de activación descrito en el apartado anterior, será necesario en cualquier caso disponer de un dispositivo móvil con Android (versión mínima 4.1) y conexión a Internet, pero además:
 - Obviamente en el caso de los sanitarios, se necesitará que este dispositivo cuente con cámara para realizar las fotografías.
 - Los pacientes deberán contar con una aplicación que permita la lectura de ficheros en formato PDF.
 
@@ -88,5 +88,9 @@ Para acceder a la configuración de estos parámetros habrá que pulsar sobre un
 
 En la anterior imagen puede verse que la aplicación está avisando que no se ha conectado correctamente con el servidor, indicando al usuario que debe realizar los ajustes oportunos para conseguirlo.
 
+### Utilización
+Vamos a pasar a detallar las instrucciones de uso de la aplicación. En concreto vamos a simular el proceso completo del uso de la aplicación que contemplará:
+1. El paciente reserva cita para ser atendido en su centro de referencia.
+2. Una vez en el centro, el sanitario atiende a éste y registra en el sistema las anotaciones pertinentes, es decir, proceso que presenta y sus sucesivas curas. Dichas curas podrán llevar asociadas una o más imágenes.
 
 
