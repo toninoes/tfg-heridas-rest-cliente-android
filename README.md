@@ -102,14 +102,18 @@ Ya hemos visto anteriormente el menú principal del administrador, ahora present
 <img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/menusInicio.png" width="90%">
 
 #### Reservar cita
-Una vez autenticado el paciente, deberá pulsar sobre el icono «Mis citas» que se encuentra en el menú principal. Tras esto, deberá seleccionar una de las salas del centro al que pertenece y una fecha deseada, tras pulsar en el botón «mostrar disponibilidad», el sistema le presenta los horarios disponibles para esa sala en la fecha seleccionada. El paciente pulsará sobre la que desea reservar y tras confirmación la cita será registrada a su nombre. Dicha cita podrá ser modificada o anulada por el propio paciente.
+Una vez autenticado el paciente, deberá pulsar sobre el icono «Mis citas» que se encuentra en el menú principal. Tras esto, deberá seleccionar una de las salas del centro al que pertenece y una fecha deseada, tras pulsar en el botón «mostrar disponibilidad», el sistema le presenta los horarios disponibles para esa sala en la fecha seleccionada. 
+
+El paciente pulsará sobre la que desea reservar y tras confirmación la cita será registrada a su nombre. Dicha cita podrá ser modificada o anulada por el propio paciente.
 
 <img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/registrarCita.png" width="90%">
 
 #### Atención de dicho paciente por parte de un sanitario
 Llegado el día de la cita, dicho paciente será atendido por un sanitario, el cual previamente habrá podido consultar la agenda de citas para saber el listado de pacientes que acudirán a una sala en una fecha determinada.
 
-A partir de ahí el sanitario verá un listado con todos los procesos anteriores que dicho paciente ha sufrido, podrá abrir uno nuevo o seguir trabajando sobre uno previo, para de esta forma realizar una nueva cura sobre este. Al ser este un paciente de nueva incorporación no tiene procesos previos asignados. Se registra uno nuevo en el icono indicado con «+» y se rellenan los datos sanitarios pertinentes, tras guardarlo, se le asocia una primera cura a ese proceso, tal y como puede verse seguidamente:
+A partir de ahí el sanitario verá un listado con todos los procesos anteriores que dicho paciente ha sufrido, podrá abrir uno nuevo o seguir trabajando sobre uno previo, para de esta forma realizar una nueva cura sobre este. Al ser este un paciente de nueva incorporación no tiene procesos previos asignados. 
+
+Se registra uno nuevo en el icono indicado con «+» y se rellenan los datos sanitarios pertinentes, tras guardarlo, se le asocia una primera cura a ese proceso, tal y como puede verse seguidamente:
 
 <img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/registrarProcesoCura.png" width="90%">
 
