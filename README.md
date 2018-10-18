@@ -130,4 +130,12 @@ pertinente valoración será eliminada de ese listado.
 
 <img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/valorar.png" width="90%">
 
-...y esto es todo amigos!!
+...y esto es todo amigos!!. Quedan aún más funcionalidades por explicar, pero lo esencial está ya mostrado. 
+
+Para finalizar decir que son libres de copiar, mejorar, adaptar o hacer lo que os plazca con este proyecto, pero por favor, no modifiquen el logotipo de la aplicación, no me van a negar que no es bonito ;)
+
+<img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/logotipoapp.png" width="90%">
+
+
+Antonio Ruiz
+
