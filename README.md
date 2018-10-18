@@ -28,7 +28,7 @@ Veremos el funcionamiento de la aplicación distinguiendo los siguientes roles:
 El funcionamiento del sistema es sencillo, tratando que las diferentes pantallas sean intuitivas y los pictogramas sean también descriptivos.
 
 En primer lugar, tras autenticarse nos encontraremos con una pantalla principal. Esta pantalla contiene el menú que lleva hasta las distintas funcionalidades de la aplicación, pero dicha pantalla principal será diferente dependiendo del rol del usuario:
-- Administrador. Podrá gestionar desde ese panel: 
+- **Administrador**. Podrá gestionar desde ese panel: 
   - Centros.
   - Salas.
   - Grupos diagnósticos.
@@ -39,13 +39,13 @@ En primer lugar, tras autenticarse nos encontraremos con una pantalla principal.
   - Pacientes.
   - Valoraciones.
   - Modificar su contraseña.
-- Sanitario. El cual, desde ese panel podrá: 
+- **Sanitario**. El cual, desde ese panel podrá: 
   - Realizar y registrar las distintas actuaciones desde el punto de vista sanitario.
   - Planificar cuidados para los diferentes grupos de diagnósticos.
   - Ver la valoración de sus actuaciones.
   - Acceder a la agenda de citaciones.
   - Modificar su contraseña.
-- Paciente. Podrá tener acceso a: 
+- **Paciente**. Podrá tener acceso a: 
   - La evolución de sus procesos.
   - Gestionar sus citas.
   - Acceder a las recomendaciones de cuidados de sus procesos.
@@ -53,9 +53,9 @@ En primer lugar, tras autenticarse nos encontraremos con una pantalla principal.
   
 Otro aspecto muy importante es el registro. Aunque es un registro sencillo, éste es necesario para poder utilizar la aplicación, pero será un registro delegado, es decir, no parte del propio usuario, así de esta forma:
 - Los administradores podrán registrar a:
-  - Otros administradores
-  - Sanitarios
-  - Pacientes
+  - Otros administradores.
+  - Sanitarios.
+  - Pacientes.
 - Los sanitarios podrán registrar sólo a pacientes.
 - Los pacientes no pueden realizar el registro de ningún tipo de usuario.
 
@@ -63,7 +63,9 @@ Veamos un ejemplo de registro en el que un administrador registra a un sanitario
 
 <img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/identificacion.png" width="90%">
 
-El administrador debe pulsar sobre el icono de «Sanitarios», tras ello, aparece un listado con los sanitarios del sistema, pulsará en el icono destinado a añadir un nuevo sanitario indicado con un «+» y verá una nueva pantalla donde indicar los datos de éste. Muy importante es el email, ya que será ahí donde se enviará un correo electrónico para que el interesado active su cuenta y defina su contraseña. Pueden verse estos pasos en la siguiente imagen:
+El administrador debe pulsar sobre el icono de «Sanitarios», tras ello, aparece un listado con los sanitarios del sistema, pulsará en el icono destinado a añadir un nuevo sanitario indicado con un «+» y verá una nueva pantalla donde indicar los datos de éste. 
+
+Muy importante es el email, ya que será ahí donde se enviará un correo electrónico para que el interesado active su cuenta y defina su contraseña. Pueden verse estos pasos en la siguiente imagen:
 
 <img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/registroSanitario.png" width="90%">
 
