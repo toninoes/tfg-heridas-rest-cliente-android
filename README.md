@@ -52,7 +52,7 @@ En primer lugar, tras autenticarse nos encontraremos con una pantalla principal.
   - Modificar su contraseña.
   
 Otro aspecto muy importante es el registro. Aunque es un registro sencillo, éste es necesario para poder utilizar la aplicación, pero será un registro delegado, es decir, no parte del propio usuario, así de esta forma:
--Los administradores podrán registrar a:
+- Los administradores podrán registrar a:
   - Otros administradores
   - Sanitarios
   - Pacientes
