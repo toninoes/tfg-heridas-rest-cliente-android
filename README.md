@@ -134,7 +134,7 @@ pertinente valoración será eliminada de ese listado.
 
 Para finalizar decir que son libres de copiar, mejorar, adaptar o hacer lo que os plazca con este proyecto, pero por favor, no modifiquen el logotipo de la aplicación, no me van a negar que no es bonito ;)
 
-<img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/logotipoapp.png" width="90%">
+<img src="https://github.com/toninoes/tfg-heridas-rest-cliente-android/blob/master/img/logotipoapp.png">
 
 
 Antonio Ruiz
