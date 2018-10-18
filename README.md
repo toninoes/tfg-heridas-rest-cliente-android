@@ -29,7 +29,7 @@ El funcionamiento del sistema es sencillo, tratando que las diferentes pantallas
 
 En primer lugar, tras autenticarse nos encontraremos con una pantalla principal. Esta pantalla contiene el menú que lleva hasta las distintas funcionalidades de la aplicación, pero dicha pantalla principal será diferente dependiendo del rol del usuario:
 - Administrador. Podrá gestionar desde ese panel: 
-** Centros, 
-** Salas, Grupos diagnósticos, Diagnósticos, Procedimientos, Administradores, Sanitarios, Pacientes, Valoraciones y Modificar su contraseña.
+  - Centros, 
+  - Salas, Grupos diagnósticos, Diagnósticos, Procedimientos, Administradores, Sanitarios, Pacientes, Valoraciones y Modificar su contraseña.
 - Sanitario. El cual, desde ese panel podrá: Realizar y registrar las distintas actuaciones desde el punto de vista sanitario, Planificar cuidados para los diferentes grupos de diagnósticos, Ver la valoración de sus actuaciones, Acceder a la agenda de citaciones y Modificar su contraseña.
 - Paciente. Podrá tener acceso a: La evolución de sus procesos, Gestionar sus citas, Acceder a las recomendaciones de cuidados de sus procesos y Modificar su contraseña.
